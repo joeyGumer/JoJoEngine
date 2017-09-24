@@ -1,4 +1,4 @@
-#include "PhysBody3D.h"
+/*#include "PhysBody3D.h"
 #include "glmath.h"
 #include "Bullet\include\btBulletDynamicsCommon.h"
 // =================================================
@@ -93,3 +93,4 @@ vec3 PhysBody3D::GetPosition()const
 	ret.z = body->getWorldTransform().getOrigin().getZ();
 	return ret;
 }
+*/

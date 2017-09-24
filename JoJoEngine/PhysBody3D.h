@@ -1,7 +1,7 @@
 #ifndef __PhysBody3D_H__
 #define __PhysBody3D_H__
 
-#include <list>
+/*#include <list>
 
 using namespace std;
 
@@ -38,5 +38,5 @@ private:
 public:
 	list<Module*> collision_listeners;
 };
-
+*/
 #endif // __PhysBody3D_H__

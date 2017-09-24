@@ -1,4 +1,4 @@
-#include "Globals.h"
+/*#include "Globals.h"
 #include "Application.h"
 #include "ModuleAudio.h"
 
@@ -156,4 +156,4 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
-}
+}*/
