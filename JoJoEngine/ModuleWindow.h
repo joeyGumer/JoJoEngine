@@ -16,9 +16,13 @@ public:
 	virtual ~ModuleWindow();
 
 	bool Init();
+
 	bool CleanUp();
 
 	void SetTitle(const char* title);
+
+private:
+	void SetWindowAttributes();
 
 public:
 	//The window we'll be rendering to

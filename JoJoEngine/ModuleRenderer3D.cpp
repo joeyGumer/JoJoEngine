@@ -28,7 +28,7 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
-	//Create context
+	//Create OpenGL context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
@@ -41,6 +41,10 @@ bool ModuleRenderer3D::Init()
 	if (GLEW_OK != gl_enum)
 	{
 		LOG("Glew failed");
+	}
+	else
+	{
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 	}
 	
 	if(ret == true)
@@ -61,6 +65,12 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 
+		//Detecting Hardware and driver compatibilities
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGl version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
 		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -73,11 +83,17 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 		
+		//OpenGl Initialization 
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
-		//Initialize clear color
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
+
 
 		//Check for error
 		error = glGetError();
@@ -102,11 +118,11 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
+		//glEnable(GL_LIGHTING);
+		//glEnable(GL_COLOR_MATERIAL);
 	}
 
 	// Projection matrix for
@@ -120,6 +136,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	//Color c = App->camera->background;
+	//glClearColor(c.r, c.g, c.b, c.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -139,7 +157,20 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	ImGui::Render();
+
+	//Draw 
+	/*App->level->Draw();
+	if (debug_draw == true)
+	{
+		BeginDebugDraw();
+		App->DebugDraw();
+		EndDebugDraw();
+	}
+	App->editor->Draw();*/
+	
+	//Swap window for next frame
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -148,6 +179,10 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 	ImGui_ImplSdlGL3_Shutdown();
+
+
+
+	//Delete OpenGl context
 	SDL_GL_DeleteContext(context);
 
 	return true;
