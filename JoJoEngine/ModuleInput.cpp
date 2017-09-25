@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
+#include "JSON\parson.h"
+
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"
 
@@ -21,7 +23,7 @@ ModuleInput::~ModuleInput()
 }
 
 // Called before render is available
-bool ModuleInput::Init()
+bool ModuleInput::Init(JSON_Object* data)
 {
 	LOG("Init SDL input event system");
 	bool ret = true;

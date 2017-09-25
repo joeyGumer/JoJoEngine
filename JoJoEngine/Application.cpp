@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "JSON\parson.h"
 
 Application::Application()
 {
@@ -41,21 +42,11 @@ Application::~Application()
 
 bool Application::Init()
 {
-	bool ret = true;
-
-	// Call Init() in all modules
-	list<Module*>::iterator i = list_modules.begin();
-
-	while (i != list_modules.end() && ret == true)
-	{
-		ret = (*i)->Init();
-		++i;
-	}
-
+	bool ret = InitModules();
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
-	i = list_modules.begin();
+	list<Module*>::iterator i = list_modules.begin();
 
 	while(i != list_modules.end() && ret == true)
 	{
@@ -132,4 +123,27 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+bool Application::InitModules()
+{
+	bool ret = true;
+
+	//LoadData from Config
+	JSON_Value* config = json_parse_file("config.json");
+
+	assert(config != nullptr);
+	
+	JSON_Object* data = json_value_get_object(config);
+
+	// Call Init() in all modules
+	list<Module*>::iterator i = list_modules.begin();
+
+	while (i != list_modules.end() && ret == true)
+	{
+		ret = (*i)->Init(data);
+		++i;
+	}
+
+	return ret;
 }

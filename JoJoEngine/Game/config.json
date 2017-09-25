@@ -1,0 +1,19 @@
+{
+"App":
+	{
+	"window":
+			{
+			"width":1280,
+			"height":1024,
+			"screen_size":1,
+			"fullscreen":false,
+			"resizable":true,
+			"borderless":false,
+			"fullscreen_desktop":false,
+			"vsync":true,
+			"title":"JOJOENGINE"
+			},
+	"name":"JoJoEngine",
+	"organization":"UPC_CITM"
+	}
+}

@@ -40,6 +40,9 @@
     <Filter Include="Resources\MathGeoLib\src">
       <UniqueIdentifier>{3726e3fc-c613-4c11-b311-1c20f8bca293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\JSON">
+      <UniqueIdentifier>{7041d670-191a-471f-9f17-47e7655d0ef7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -309,6 +312,9 @@
     <ClInclude Include="MathGeoLib\Include\Algorithm\SAT.h">
       <Filter>Resources\MathGeoLib\src</Filter>
     </ClInclude>
+    <ClInclude Include="JSON\parson.h">
+      <Filter>Sources\Tools\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -481,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Sources\Tools\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="JSON\parson.c">
+      <Filter>Sources\Tools\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

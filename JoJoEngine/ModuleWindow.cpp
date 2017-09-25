@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+#include "JSON\parson.h"
+
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
@@ -14,7 +16,7 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool ModuleWindow::Init(JSON_Object* data)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
