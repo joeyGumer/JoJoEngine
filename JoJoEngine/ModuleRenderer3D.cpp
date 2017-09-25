@@ -6,6 +6,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "JSON\parson.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") 
@@ -23,7 +25,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init()
+bool ModuleRenderer3D::Init(JSON_Object* data)
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
