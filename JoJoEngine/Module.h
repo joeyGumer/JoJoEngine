@@ -1,5 +1,6 @@
 #pragma once
 
+typedef struct json_object_t JSON_Object;
 class Application;
 struct PhysBody3D;
 
