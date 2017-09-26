@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#include "Brofiler/Brofiler.h"
+
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -54,6 +56,7 @@ bool ModuleEditor::CleanUp()
 // Update
 update_status ModuleEditor::Update(float dt)
 {
+	BROFILER_CATEGORY("ModuleEditor::Update", Profiler::Color::AliceBlue);
 	//Create the menu bar
 	if(ImGui::BeginMainMenuBar())
 	{
