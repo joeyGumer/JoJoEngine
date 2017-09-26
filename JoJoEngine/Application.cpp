@@ -6,7 +6,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	//audio = new ModuleAudio(this, true);
-	scene_intro = new ModuleSceneIntro(this);
+	editor = new ModuleEditor(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	//physics = new ModulePhysics3D(this);
@@ -23,7 +23,7 @@ Application::Application()
 	//AddModule(physics);
 	
 	// Scenes
-	AddModule(scene_intro);
+	AddModule(editor);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -144,6 +144,18 @@ bool Application::InitModules()
 		ret = (*i)->Init(data);
 		++i;
 	}
+
+	return ret;
+}
+
+const std::string Application::GetSDLVersion()
+{
+	SDL_version version;
+	SDL_VERSION(&version);
+	std::string ret = "SDL ";
+	ret += std::to_string(version.major);
+	ret += "." + std::to_string(version.minor);
+	ret += "." + std::to_string(version.patch);
 
 	return ret;
 }
