@@ -10,7 +10,7 @@ class WinConfiguration;
 class ModuleEditor : public Module
 {
 public:
-	ModuleEditor(Application* app, bool start_enabled = true);
+	ModuleEditor(bool start_enabled = true);
 	~ModuleEditor();
 
 	bool Start();

@@ -1,6 +1,7 @@
 #ifndef __EDITORWINDOW_H__
 #define __EDITORWINDOW_H__
 
+
 class EditorWindow
 {
 public:

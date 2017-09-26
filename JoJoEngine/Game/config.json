@@ -1,7 +1,9 @@
 {
 "App":
 	{
-	"window":
+	"name":"JoJoEngine",
+	"organization":"UPC_CITM",
+  "window":
 			{
 			"width":1280,
 			"height":1024,
@@ -12,8 +14,6 @@
 			"fullscreen_desktop":false,
 			"vsync":true,
 			"title":"JOJOENGINE"
-			},
-	"name":"JoJoEngine",
-	"organization":"UPC_CITM"
+			}
 	}
 }

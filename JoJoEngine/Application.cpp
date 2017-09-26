@@ -3,12 +3,12 @@
 
 Application::Application()
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
+	window = new ModuleWindow();
+	input = new ModuleInput();
 	//audio = new ModuleAudio(this, true);
-	editor = new ModuleEditor(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
+	editor = new ModuleEditor();
+	renderer3D = new ModuleRenderer3D();
+	camera = new ModuleCamera3D();
 	//physics = new ModulePhysics3D(this);
 
 	// The order of calls is very important!
@@ -134,7 +134,15 @@ bool Application::InitModules()
 
 	assert(config != nullptr);
 	
+	//Geting App data
 	JSON_Object* data = json_value_get_object(config);
+
+	//name = json_object_get_string(data, "name");
+	//organization = json_object_get_string(data, "organization");
+
+	//NOTE provisional data before having acces to JSON
+	name = "JoJo Engine";
+	organization = "CITM UPC";
 
 	// Call Init() in all modules
 	list<Module*>::iterator i = list_modules.begin();
@@ -158,4 +166,27 @@ const std::string Application::GetSDLVersion()
 	ret += "." + std::to_string(version.patch);
 
 	return ret;
+}
+
+//Getters
+//NOTE: maybe to harsh to return a direct string
+std::string Application::GetName() const
+{
+	return name;
+}
+
+std::string Application::GetOrganization() const
+{
+	return organization;
+}
+
+//Setters
+void Application::SetName(const char* str)
+{
+	name = str;
+}
+
+void Application::SetOrganization(const char* str)
+{
+	organization = str;
 }

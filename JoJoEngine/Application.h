@@ -41,10 +41,24 @@ public:
 	bool CleanUp();
 	const std::string GetSDLVersion();
 
+	//Getters
+	std::string GetName() const;
+	std::string GetOrganization() const;
+
+	//Setters
+	void SetName(const char* str);
+	void SetOrganization(const char* str);
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
 	bool InitModules();
+
+private:
+	std::string name;
+	std::string organization;
 };
+
+extern Application* App;
