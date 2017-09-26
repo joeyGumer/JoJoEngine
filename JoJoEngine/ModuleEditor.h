@@ -4,6 +4,8 @@
 #include "Primitive.h"
 
 
+class EditorWindow;
+class WinConfiguration;
 
 class ModuleEditor : public Module
 {
@@ -17,8 +19,13 @@ public:
 
 private:
 	void AboutUs();
+	void AddWindow(EditorWindow* win);
 
 private:
 	bool show_demo = false;
+
+	std::vector<EditorWindow*> editor_windows;
+	WinConfiguration* configuration = nullptr;
+
 	
 };

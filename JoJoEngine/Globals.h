@@ -22,6 +22,10 @@ enum update_status
 	UPDATE_ERROR
 };
 
+//Utiles
+//NOTE: tried to create as a safer version of delete
+//#define void RELEASE(void* x){(x==nullptr)? LOG("trying to delete null variable"): delete x};
+
 // Configuration -----------
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 800

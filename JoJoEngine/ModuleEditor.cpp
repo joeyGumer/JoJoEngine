@@ -1,11 +1,18 @@
 #include "Application.h"
+#include "Globals.h"
 #include "ModuleEditor.h"
 #include "PhysBody3D.h"
+#include "EditorWindow.h"
+#include "WinConfiguration.h"
 
 #include "Imgui\imgui.h"
+#include <vector>
+
+using namespace std;
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+
 }
 
 ModuleEditor::~ModuleEditor()
@@ -17,7 +24,12 @@ bool ModuleEditor::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	
+	//NOTE: create at Start or at Constructor
+	//Creating all editor windows
+	WinConfiguration* configuration = new WinConfiguration();
+
+	//Adding all editor windows to the vector (order is important)
+	AddWindow(configuration);
 
 	return ret;
 }
@@ -26,6 +38,15 @@ bool ModuleEditor::Start()
 bool ModuleEditor::CleanUp()
 {
 	LOG("Unloading Intro scene");
+
+	//Delete all windows
+	for (int i = editor_windows.size()-1; i >= 0; i--)
+	{
+		if (editor_windows[i] != nullptr)
+			delete editor_windows[i];
+	}
+
+	editor_windows.clear();
 
 	return true;
 }
@@ -72,6 +93,30 @@ update_status ModuleEditor::Update(float dt)
 	if(show_demo)
 		ImGui::ShowTestWindow();
 
+	//Iterate all editor windows
+	for (uint i = 0; i < editor_windows.size(); i++)
+	{
+		editor_windows[i]->Update();
+	}
+
+	//NOTE: this may go to another file
+	/*if (ImGui::Begin("Configuration"))
+	{
+		ImGui::Text("Options");
+
+		if (ImGui::BeginMenu("Application"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Window"))
+		{
+			ImGui::EndMenu();
+		}
+
+		ImGui::End();
+	}*/
+
 	return UPDATE_CONTINUE;
 }
 
@@ -104,4 +149,7 @@ void ModuleEditor::AboutUs()
 	ImGui::Text("Parson");
 }
 
-
+void ModuleEditor::AddWindow(EditorWindow* win)
+{
+	editor_windows.push_back(win);
+}
