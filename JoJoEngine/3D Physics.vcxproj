@@ -160,6 +160,7 @@
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleSceneEdit.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="OpenGl.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="Primitive.h" />

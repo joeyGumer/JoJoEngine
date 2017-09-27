@@ -43,6 +43,9 @@
     <Filter Include="Sources\Windows">
       <UniqueIdentifier>{da3792d0-25f0-4230-9db6-53a2648766f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\OpenGl">
+      <UniqueIdentifier>{0f9cb66f-d7db-4de7-af58-e97b6a9749ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="ModuleSceneEdit.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGl.h">
+      <Filter>Resources\OpenGl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
