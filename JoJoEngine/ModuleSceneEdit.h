@@ -4,6 +4,13 @@
 #include "Module.h"
 #include "Globals.h"
 
+
+class PCube;
+class PCylinder;
+class PWiredPlane;
+class PPlane;
+class PSphere;
+
 class ModuleSceneEdit : public Module
 {
 public:
@@ -18,6 +25,16 @@ public:
 	update_status PostUpdate(float dt);
 
 	void Draw();
+
+private:
+	//Example primitives
+	PWiredPlane* wplane;
+	//NOTE: temporal
+
+	PCube* ex_cube;
+	PCylinder* ex_cylinder;
+	PPlane* ex_plane;
+	PSphere* ex_sphere;
 };
 
 #endif  __MODULESCENEEDIT_H__
