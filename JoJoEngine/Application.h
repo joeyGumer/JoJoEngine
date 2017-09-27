@@ -11,7 +11,9 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
+#include "ModuleSceneEdit.h"
 
+//NOTE: change the includes to the cpp
 using namespace std; 
 
 class Application
@@ -23,6 +25,7 @@ public:
 	ModuleEditor* editor;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
+	ModuleSceneEdit* level;
 	//ModulePhysics3D* physics;
 
 private:

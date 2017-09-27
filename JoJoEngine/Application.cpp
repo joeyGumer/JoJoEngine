@@ -9,6 +9,7 @@ Application::Application()
 	editor = new ModuleEditor();
 	renderer3D = new ModuleRenderer3D();
 	camera = new ModuleCamera3D();
+	level = new ModuleSceneEdit();
 	//physics = new ModulePhysics3D(this);
 
 	// The order of calls is very important!
@@ -23,6 +24,7 @@ Application::Application()
 	//AddModule(physics);
 	
 	// Scenes
+	AddModule(level);
 	AddModule(editor);
 
 	// Renderer last!

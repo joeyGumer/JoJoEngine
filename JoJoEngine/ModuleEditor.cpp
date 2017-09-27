@@ -13,7 +13,13 @@ using namespace std;
 
 
 ModuleEditor::ModuleEditor( bool start_enabled) : Module(start_enabled)
-{}
+{
+	//Creating all editor windows
+	WinConfiguration* configuration = new WinConfiguration();
+
+	//Adding all editor windows to the vector (order is important)
+	AddWindow(configuration);
+}
 
 
 ModuleEditor::~ModuleEditor()
@@ -26,11 +32,7 @@ bool ModuleEditor::Start()
 	bool ret = true;
 
 	//NOTE: create at Start or at Constructor
-	//Creating all editor windows
-	WinConfiguration* configuration = new WinConfiguration();
-
-	//Adding all editor windows to the vector (order is important)
-	AddWindow(configuration);
+	
 
 	return ret;
 }
@@ -96,30 +98,25 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::ShowTestWindow();
 
 	//Iterate all editor windows
+	/*for (uint i = 0; i < editor_windows.size(); i++)
+	{
+		editor_windows[i]->Update();
+	}*/
+
+	return UPDATE_CONTINUE;
+}
+
+
+void ModuleEditor::Draw()
+{
+	//Iterate all editor windows
 	for (uint i = 0; i < editor_windows.size(); i++)
 	{
 		editor_windows[i]->Update();
 	}
 
-	//NOTE: this may go to another file
-	/*if (ImGui::Begin("Configuration"))
-	{
-		ImGui::Text("Options");
-
-		if (ImGui::BeginMenu("Application"))
-		{
-			ImGui::EndMenu();
-		}
-
-		if (ImGui::BeginMenu("Window"))
-		{
-			ImGui::EndMenu();
-		}
-
-		ImGui::End();
-	}*/
-
-	return UPDATE_CONTINUE;
+	//Render all ImGui elements defined
+	ImGui::Render();
 }
 
 void ModuleEditor::AboutUs()

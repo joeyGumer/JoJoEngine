@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+
 #include "Glew\include\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -158,17 +159,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	ImGui::Render();
-
 	//Draw 
-	/*App->level->Draw();
-	if (debug_draw == true)
+	App->level->Draw();
+	/*if (debug_draw == true)
 	{
 		BeginDebugDraw();
 		App->DebugDraw();
 		EndDebugDraw();
-	}
-	App->editor->Draw();*/
+	}*/
+	App->editor->Draw();
 	
 	//Swap window for next frame
 	SDL_GL_SwapWindow(App->window->window);

@@ -158,6 +158,7 @@
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleEditor.h" />
+    <ClInclude Include="ModuleSceneEdit.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="PhysBody3D.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="ModulePhysics3D.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
+    <ClCompile Include="ModuleSceneEdit.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="Primitive.cpp" />
