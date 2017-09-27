@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include "JSON\parson.h"
 

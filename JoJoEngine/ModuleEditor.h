@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include <vector>
 
 class EditorWindow;
 class WinConfiguration;

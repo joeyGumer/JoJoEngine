@@ -4,14 +4,15 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleEditor.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModulePhysics3D.h"
-#include "ModuleSceneEdit.h"
+
+class ModuleWindow;
+class ModuleInput;
+class ModuleAudio;
+class ModuleEditor;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModulePhysiscs3D;
+class ModuleSceneEdit;
 
 //NOTE: change the includes to the cpp
 using namespace std; 
