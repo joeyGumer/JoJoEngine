@@ -25,14 +25,21 @@ public:
 	void			Scale(float x, float y, float z);
 	PrimitiveTypes	GetType() const;
 	float3		GetPos()const;
+
+protected: 
+	virtual void	CreateGeometry();
+
 public:
 	
 	Color color;
 	float4x4 transform;
 	bool axis,wire;
+	std::vector<float> vertices;
+	std::vector<uint> indices;
 
 protected:
 	PrimitiveTypes type;
+
 };
 
 // ============================================
@@ -42,6 +49,10 @@ public :
 	PCube();
 	PCube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
+
+private :
+	void	CreateGeometry();
+
 public:
 	float3 size;
 };

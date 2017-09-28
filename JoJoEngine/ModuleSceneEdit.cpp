@@ -59,8 +59,8 @@ void ModuleSceneEdit::Draw()
 
 	
 	wplane->Render();
-	//ex_cube->Render();
-	ex_cylinder->Render();
+	ex_cube->Render();
+	//ex_cylinder->Render();
 	//ex_plane->Render();
 
 
