@@ -34,8 +34,10 @@ public:
 	Color color;
 	float4x4 transform;
 	bool axis,wire;
+
 	std::vector<float> vertices;
 	std::vector<uint> indices;
+	uint my_vertices, my_indices = 0;
 
 protected:
 	PrimitiveTypes type;
@@ -99,6 +101,10 @@ public:
 	PPlane();
 	PPlane(float size, float x, float y, float z, float d);
 	void InnerRender() const;
+
+private:
+	void CreateGeometry();
+
 public:
 	float3 normal;
 	float size;

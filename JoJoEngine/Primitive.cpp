@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "OpenGl.h"
+#include <vector>
 
 
 // ------------------------------------------------------------
@@ -119,45 +120,38 @@ float3 Primitive::GetPos()const
 PCube::PCube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+
+	CreateGeometry();
 }
 
 PCube::PCube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+
+	CreateGeometry();
 }
 
 void PCube::CreateGeometry()
 {
 
-}
-
-void PCube::InnerRender() const
-{	
-	
 	float sx = size.x * 0.5f;
 	float sy = size.y * 0.5f;
 	float sz = size.z * 0.5f;
 
 	//Cube vertex array
-	const uint num_vertices = 8;
-	/*vertices =
+	vertices =
 	{
-		sx, -sy,  sz,
-		sx,  sy,  sz,
-		-sx,  sy,  sz,
-		-sz, -sy,  sz,
+		sx, -sy, sz,
+		sx, sy, sz,
+		-sx, sy, sz,
+		-sz, -sy, sz,
 		sx, -sy, -sz,
-		sx,  sy, -sz,
-		-sx,  sy, -sz,
-		-sx, -sy, -sz,
+		sx, sy, -sz,
+		-sx, sy, -sz,
+		-sx, -sy, -sz
 	};
-	uint my_vertices = 0;
-	glGenBuffers(1, (GLuint*) &(my_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
 	//Cube index array
-	const uint num_indices = 36;
 	indices =
 	{
 		0,1,2,
@@ -174,11 +168,17 @@ void PCube::InnerRender() const
 		4,3,7
 	};
 
-	uint my_indices = 0;
+}
+
+void PCube::InnerRender() const
+{	
+	glGenBuffers(1, (GLuint*) &(my_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
 	glGenBuffers(1, (GLuint*) &(my_indices));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* indices.size(), &indices[0], GL_STATIC_DRAW);
-
 
 	//Draw 	
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -188,6 +188,7 @@ void PCube::InnerRender() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glDrawElements(GL_TRIANGLES, my_indices, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
 	/*
 	//Cube vertex array
 	const uint num_vertices = 8;
@@ -429,6 +430,8 @@ PLine::PLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destinat
 	type = PrimitiveTypes::Primitive_Line;
 }
 
+
+
 void PLine::InnerRender() const
 {
 	glLineWidth(2.0f);
@@ -447,21 +450,24 @@ void PLine::InnerRender() const
 PPlane::PPlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
+
+	CreateGeometry();
 }
 
 PPlane::PPlane(float s, float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d), size(s)
 {
 	size = s;
 	type = PrimitiveTypes::Primitive_Plane;
+
+	CreateGeometry();
 }
 
-void PPlane::InnerRender() const
+void PPlane::CreateGeometry()
 {
 	//Renders double face NOTE: look if there's another way to do it with OpenGL
 	float s = size * 0.5f;
 
-	const uint num_vertices = 4;
-	float vertices[12] =
+	vertices =
 	{
 		s, 0, s,
 		s, 0 ,-s,
@@ -469,24 +475,26 @@ void PPlane::InnerRender() const
 		-s, 0, s
 	};
 
-	uint my_vertices = 0;
-	glGenBuffers(1, (GLuint*) &(my_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*num_vertices * 3, vertices, GL_STATIC_DRAW);
-
-	const uint num_indices = 12;
-	uint indices[num_indices] =
+	indices =
 	{
 		0,1,2,
 		0,2,3,
 		0,2,1,
 		0,3,2
 	};
+}
 
-	uint my_indices = 0;
+void PPlane::InnerRender() const
+{
+
+	
+	glGenBuffers(1, (GLuint*) &(my_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
 	glGenBuffers(1, (GLuint*) &(my_indices));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_indices, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* indices.size(), &indices[0], GL_STATIC_DRAW);
 
 	//Draw 	
 	glEnableClientState(GL_VERTEX_ARRAY);
