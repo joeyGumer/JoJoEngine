@@ -4,6 +4,7 @@
 #include "OpenGl.h"
 #include <vector>
 
+//TODO : change all primitives inner render to VBO mode and separating geometry creation
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(transform.identity), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -487,7 +488,6 @@ void PPlane::CreateGeometry()
 void PPlane::InnerRender() const
 {
 
-	
 	glGenBuffers(1, (GLuint*) &(my_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* vertices.size(), &vertices[0], GL_STATIC_DRAW);
