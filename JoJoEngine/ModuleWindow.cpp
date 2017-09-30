@@ -36,22 +36,22 @@ bool ModuleWindow::Init(JSON_Object* data)
 		//Use OpenGL 2.1
 		SetWindowAttributes();
 
-		if(WIN_FULLSCREEN == true)
+		if(win_fullscreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true)
+		if(win_resizable == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(WIN_BORDERLESS == true)
+		if(win_borderless == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(WIN_FULLSCREEN_DESKTOP == true)
+		if(win_fullscreen_desktop == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
@@ -97,6 +97,61 @@ void ModuleWindow::SetTitle(const char* title)
 	SDL_SetWindowTitle(window, title);
 }
 
+//Getters
+bool  ModuleWindow::IsFullscreen() const
+{
+	return win_fullscreen;
+}
+bool  ModuleWindow::IsResizable() const
+{
+	return win_resizable;
+}
+bool  ModuleWindow::IsBorderless() const
+{
+	return win_borderless;
+}
+bool  ModuleWindow::IsFullScreenDesktop() const
+{
+	return win_fullscreen_desktop;
+}
+
+int ModuleWindow::GetWidth() const
+{
+	return width;
+}
+int ModuleWindow::GetHeight() const
+{
+	return height;
+}
+
+//Setters
+//NOTE: look how to make the screen attributes automatic change
+void ModuleWindow::SetFullscreen(bool full)
+{
+	win_fullscreen = full;
+}
+void ModuleWindow::SetResizable(bool res)
+{
+	win_resizable = res;
+}
+void ModuleWindow::SetBorderless(bool border)
+{
+	win_borderless = border;
+}
+void ModuleWindow::SetFullScreenDesktop(bool full_desk)
+{
+	win_fullscreen_desktop = full_desk;
+}
+
+void ModuleWindow::SetWidth(int w)
+{
+	width = w;
+}
+void ModuleWindow::SetHeight(int h)
+{
+	height = h;
+}
+//---------------
 void ModuleWindow::SetWindowAttributes()
 {
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);

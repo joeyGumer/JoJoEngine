@@ -107,7 +107,7 @@ update_status ModuleEditor::Update(float dt)
 }
 
 
-void ModuleEditor::Draw()
+void ModuleEditor::Draw() const
 {
 	//Iterate all editor windows
 	for (uint i = 0; i < editor_windows.size(); i++)
