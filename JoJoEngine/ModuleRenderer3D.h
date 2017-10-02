@@ -17,6 +17,9 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data);
+
 	void OnResize(int width, int height, float fovy);
 
 public:

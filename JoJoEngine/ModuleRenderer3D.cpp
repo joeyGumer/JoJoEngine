@@ -190,7 +190,6 @@ bool ModuleRenderer3D::CleanUp()
 	return true;
 }
 
-
 void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 {
 	glViewport(0, 0, width, height);
@@ -202,4 +201,19 @@ void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+
+bool ModuleRenderer3D::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
 }

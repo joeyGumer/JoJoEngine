@@ -205,3 +205,17 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
 	return true;
 }
+
+bool ModuleInput::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool ModuleInput::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}

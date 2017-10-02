@@ -59,8 +59,9 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 	bool InitModules();
-	bool LoadConfig();
 
+	bool LoadConfig();
+	bool SaveConfig();
 private:
 	std::string name;
 	std::string organization;

@@ -154,3 +154,17 @@ void ModuleEditor::AddWindow(EditorWindow* win)
 {
 	editor_windows.push_back(win);
 }
+
+bool ModuleEditor::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool ModuleEditor::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}

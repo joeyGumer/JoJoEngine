@@ -63,6 +63,9 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
+	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data);
+
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];

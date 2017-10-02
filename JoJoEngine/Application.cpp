@@ -120,6 +120,10 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
+	//Save all config before closing
+	//NOTE: do all json load/save assertions
+	SaveConfig();
+
 	list<Module*>::reverse_iterator i = list_modules.rbegin();
 
 	while (i != list_modules.rend() && ret == true)
@@ -171,6 +175,33 @@ bool Application::LoadConfig()
 	return ret;
 }
 
+bool Application::SaveConfig()
+{
+	bool ret = true;
+
+	JSON_Value* file = json_value_init_object();
+	JSON_Object* config = json_value_get_object(file);
+
+	json_object_dotset_string(config, "App.name", name.c_str());
+
+	JSON_Object* app_config = json_object_get_object(config, "App");
+
+	json_object_set_string(config, "organization", organization.c_str());
+	
+	//NOTE: creating each module object here or at the own SaveConfig module?
+	//RE NOTE: create a dummy value or an id to index the module
+	// Call SaceConfig() in all modules
+	list<Module*>::iterator i = list_modules.begin();
+	while (i != list_modules.end() && ret == true)
+	{
+		ret = (*i)->SaveConfig(app_config);
+		++i;
+	}
+
+	json_value_free(file);
+
+	return ret;
+}
 bool Application::InitModules()
 {
 	bool ret = true;

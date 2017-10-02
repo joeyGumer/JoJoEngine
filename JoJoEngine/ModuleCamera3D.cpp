@@ -242,4 +242,16 @@ void ModuleCamera3D::From3Dto2D(vec3 point, int& x, int& y)
 }
 
 // -----------------------------------------------------------------
+bool ModuleCamera3D::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
 
+	return ret;
+}
+
+bool ModuleCamera3D::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}

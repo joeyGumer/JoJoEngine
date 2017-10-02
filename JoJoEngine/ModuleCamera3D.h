@@ -29,6 +29,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data);
+
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void LookAt(const vec3 &Spot);
 	void Move(const vec3 &Movement);

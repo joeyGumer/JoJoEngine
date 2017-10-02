@@ -17,19 +17,6 @@ ModuleWindow::~ModuleWindow()
 {
 }
 
-//Called to load configuration variables
-bool ModuleWindow::LoadConfig(JSON_Object* data)
-{
-	bool ret = true;
-
-	win_fullscreen = json_object_get_boolean(data, "fullscreen");
-	win_resizable = json_object_get_boolean(data, "resizable");
-	win_borderless = json_object_get_boolean(data, "borderless");
-	win_fullscreen_desktop = json_object_get_boolean(data, "fullscreen_desktop");
-
-	return ret;
-}
-
 // Called before render is available
 bool ModuleWindow::Init()
 {
@@ -176,4 +163,43 @@ void ModuleWindow::SetWindowAttributes()
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+}
+
+
+//Called to load configuration variables
+bool ModuleWindow::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	width = json_object_get_number(data, "width");
+	height = json_object_get_number(data, "height");
+
+	win_fullscreen = json_object_get_boolean(data, "fullscreen");
+	win_resizable = json_object_get_boolean(data, "resizable");
+	win_borderless = json_object_get_boolean(data, "borderless");
+	win_fullscreen_desktop = json_object_get_boolean(data, "fullscreen_desktop");
+
+	return ret;
+}
+
+bool ModuleWindow::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	json_object_dotset_number(data, "window.width", width);
+	
+	JSON_Object* window_config = json_object_get_object(data, "window");
+	
+	json_object_set_number(window_config, "height", height);
+
+	json_object_set_boolean(window_config, "fullscreen", win_fullscreen);
+	json_object_set_boolean(window_config, "resizable", win_resizable);
+	json_object_set_boolean(window_config, "borderless", win_borderless);
+	json_object_set_boolean(window_config, "fullscreen_desktop", win_fullscreen_desktop);
+
+	//NOTE: add values : screen_size, vsync and title
+
+
+
+	return ret;
 }

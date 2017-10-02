@@ -116,3 +116,17 @@ void ModuleSceneEdit::Draw()
 
 	glLineWidth(1.0f);*/
 }
+
+bool ModuleSceneEdit::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool ModuleSceneEdit::SaveConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	return ret;
+}

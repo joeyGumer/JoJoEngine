@@ -17,6 +17,8 @@ public:
 	virtual ~ModuleWindow();
 
 	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data);
+
 	bool Init();
 	bool CleanUp();
 

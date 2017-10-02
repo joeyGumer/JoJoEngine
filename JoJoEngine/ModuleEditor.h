@@ -18,6 +18,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data);
+
 	void Draw() const;
 
 private:
