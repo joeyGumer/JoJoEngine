@@ -13,6 +13,7 @@ class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModulePhysiscs3D;
 class ModuleSceneEdit;
+class ModuleFileSystem;
 
 //NOTE: change the includes to the cpp
 using namespace std; 
@@ -20,6 +21,8 @@ using namespace std;
 class Application
 {
 public:
+	
+	ModuleFileSystem* fs;
 	ModuleWindow* window;
 	ModuleInput* input;
 	//ModuleAudio* audio;

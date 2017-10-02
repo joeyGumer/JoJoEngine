@@ -330,6 +330,9 @@
     <ClInclude Include="OpenGl.h">
       <Filter>Resources\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -513,6 +516,9 @@
       <Filter>Sources\Windows</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneEdit.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>

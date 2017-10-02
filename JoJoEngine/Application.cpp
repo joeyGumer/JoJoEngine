@@ -8,11 +8,13 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleSceneEdit.h"
+#include "ModuleFileSystem.h"
 
 #include "JSON\parson.h"
 
 Application::Application()
 {
+	//fs = new ModuleFileSystem();
 	window = new ModuleWindow();
 	input = new ModuleInput();
 	//audio = new ModuleAudio(this, true);
@@ -27,6 +29,7 @@ Application::Application()
 	// They will CleanUp() in reverse order
 
 	// Main Modules
+	//AddModule(fs);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
