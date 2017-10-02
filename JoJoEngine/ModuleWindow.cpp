@@ -8,6 +8,8 @@ ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
 {
 	window = NULL;
 	screen_surface = NULL;
+
+	name = "window";
 }
 
 // Destructor
@@ -15,8 +17,21 @@ ModuleWindow::~ModuleWindow()
 {
 }
 
+//Called to load configuration variables
+bool ModuleWindow::LoadConfig(JSON_Object* data)
+{
+	bool ret = true;
+
+	win_fullscreen = json_object_get_boolean(data, "fullscreen");
+	win_resizable = json_object_get_boolean(data, "resizable");
+	win_borderless = json_object_get_boolean(data, "borderless");
+	win_fullscreen_desktop = json_object_get_boolean(data, "fullscreen_desktop");
+
+	return ret;
+}
+
 // Called before render is available
-bool ModuleWindow::Init(JSON_Object* data)
+bool ModuleWindow::Init()
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;

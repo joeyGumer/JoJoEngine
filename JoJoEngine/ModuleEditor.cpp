@@ -14,6 +14,8 @@ using namespace std;
 
 ModuleEditor::ModuleEditor( bool start_enabled) : Module(start_enabled)
 {
+	name = "editor";
+
 	//Creating all editor windows
 	WinConfiguration* configuration = new WinConfiguration();
 

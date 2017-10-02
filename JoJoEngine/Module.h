@@ -1,8 +1,11 @@
 #pragma once
 
 #include "Globals.h"
+#include <string>
+
 typedef struct json_object_t JSON_Object;
 struct PhysBody3D;
+
 
 class Module
 {
@@ -17,7 +20,12 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init(JSON_Object* data)
+	virtual bool LoadConfig(JSON_Object* data)
+	{
+		return true;
+	}
+
+	virtual bool Init()
 	{
 		return true; 
 	}
@@ -49,4 +57,6 @@ public:
 
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{}
+
+	std::string name; 
 };

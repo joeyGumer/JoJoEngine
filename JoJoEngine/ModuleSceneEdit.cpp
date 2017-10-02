@@ -5,7 +5,7 @@
 
 ModuleSceneEdit::ModuleSceneEdit(bool start_enabled): Module(start_enabled)
 {
-
+	name = "scene editor";
 }
 
 ModuleSceneEdit::~ModuleSceneEdit()

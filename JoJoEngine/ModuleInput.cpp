@@ -13,6 +13,8 @@
 
 ModuleInput::ModuleInput(bool start_enabled) : Module(start_enabled)
 {
+	name = "input";
+
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
@@ -25,7 +27,7 @@ ModuleInput::~ModuleInput()
 }
 
 // Called before render is available
-bool ModuleInput::Init(JSON_Object* data)
+bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
 	bool ret = true;

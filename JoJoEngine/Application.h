@@ -59,6 +59,7 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 	bool InitModules();
+	bool LoadConfig();
 
 private:
 	std::string name;

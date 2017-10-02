@@ -137,7 +137,7 @@ void Application::AddModule(Module* mod)
 	list_modules.push_back(mod);
 }
 
-bool Application::InitModules()
+bool Application::LoadConfig()
 {
 	bool ret = true;
 
@@ -145,23 +145,45 @@ bool Application::InitModules()
 	JSON_Value* config = json_parse_file("config.json");
 
 	assert(config != nullptr);
-	
+
 	//Geting App data
 	JSON_Object* data = json_value_get_object(config);
+	JSON_Object* app_data = json_object_get_object(data, "App");
 
-	//name = json_object_get_string(data, "name");
-	//organization = json_object_get_string(data, "organization");
+	name = json_object_get_string(app_data, "name");
+	organization = json_object_get_string(app_data, "organization");
 
 	//NOTE provisional data before having acces to JSON
-	name = "JoJo Engine";
-	organization = "CITM UPC";
+	//name = "JoJo Engine";
+	//organization = "CITM UPC";
+
+	// Call LoadConfig() in all modules
+	list<Module*>::iterator i = list_modules.begin();
+
+	while (i != list_modules.end() && ret == true)
+	{
+		JSON_Object* module_config = json_object_get_object(app_data, (*i)->name.c_str());
+		ret = (*i)->LoadConfig(module_config);
+		++i;
+	}
+
+
+	return ret;
+}
+
+bool Application::InitModules()
+{
+	bool ret = true;
+
+	//Loading all configuration variables before config
+	LoadConfig();
 
 	// Call Init() in all modules
 	list<Module*>::iterator i = list_modules.begin();
 
 	while (i != list_modules.end() && ret == true)
 	{
-		ret = (*i)->Init(data);
+		ret = (*i)->Init();
 		++i;
 	}
 

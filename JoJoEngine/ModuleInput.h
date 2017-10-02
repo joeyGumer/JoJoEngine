@@ -59,7 +59,7 @@ public:
 	ModuleInput(bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init(JSON_Object* data);
+	bool Init();
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
