@@ -333,6 +333,9 @@
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFBXLoader.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -519,6 +522,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFBXLoader.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
