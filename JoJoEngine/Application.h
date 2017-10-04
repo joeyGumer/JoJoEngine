@@ -14,6 +14,7 @@ class ModuleCamera3D;
 class ModulePhysiscs3D;
 class ModuleSceneEdit;
 class ModuleFileSystem;
+class ModuleFBXLoader;
 
 //NOTE: change the includes to the cpp
 using namespace std; 
@@ -23,6 +24,7 @@ class Application
 public:
 	
 	ModuleFileSystem* fs;
+	ModuleFBXLoader* fbx;
 	ModuleWindow* window;
 	ModuleInput* input;
 	//ModuleAudio* audio;

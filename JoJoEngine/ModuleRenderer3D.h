@@ -6,6 +6,7 @@
 
 #define MAX_LIGHTS 8
 
+struct Model3D;
 class ModuleRenderer3D : public Module
 {
 public:
@@ -13,6 +14,7 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
@@ -22,10 +24,15 @@ public:
 
 	void OnResize(int width, int height, float fovy);
 
+	void Draw(Model3D mesh);
+	void DrawMeshes();
+
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	std::vector<Model3D> meshes_array;
 };

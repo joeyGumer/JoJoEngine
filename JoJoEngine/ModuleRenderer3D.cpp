@@ -1,10 +1,12 @@
 #include "Globals.h"
+
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "ModuleSceneEdit.h"
 #include "ModuleEditor.h"
+#include "ModuleFBXLoader.h"
 
 
 
@@ -137,6 +139,30 @@ bool ModuleRenderer3D::Init()
 	return ret;
 }
 
+//NOTE: look how to organize the order of loading
+bool ModuleRenderer3D::Start()
+{
+	bool ret = true;
+
+	//NOTE: temporal, have to configure library and assets directory
+	meshes_array = App->fbx->LoadFBX("warrior.FBX");
+
+	return true;
+}
+// Called before quitting
+bool ModuleRenderer3D::CleanUp()
+{
+	LOG("Destroying 3D Renderer");
+	ImGui_ImplSdlGL3_Shutdown();
+
+
+
+	//Delete OpenGl context
+	SDL_GL_DeleteContext(context);
+
+	return true;
+}
+
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
@@ -162,6 +188,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	//Draw 
 	App->level->Draw();
+	DrawMeshes();
 	/*if (debug_draw == true)
 	{
 		BeginDebugDraw();
@@ -176,18 +203,34 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
-bool ModuleRenderer3D::CleanUp()
+//NOTE: pass as references
+void ModuleRenderer3D::Draw(Model3D mesh)
 {
-	LOG("Destroying 3D Renderer");
-	ImGui_ImplSdlGL3_Shutdown();
+	//NOTE: separate buffer creation from rendering?
+	glGenBuffers(1, (GLuint*) &(mesh.id_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, (GLuint*) &(mesh.id_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
 
+	//Draw 	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	//Delete OpenGl context
-	SDL_GL_DeleteContext(context);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
+	glDrawElements(GL_TRIANGLES, mesh.id_indices, GL_UNSIGNED_INT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
 
-	return true;
+void ModuleRenderer3D::DrawMeshes()
+{
+		for (uint i = 0; i < meshes_array.size(); i++)
+		{
+			Draw(meshes_array[i]);
+		}
 }
 
 void ModuleRenderer3D::OnResize(int width, int height, float fovy)

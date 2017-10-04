@@ -9,12 +9,14 @@
 #include "ModulePhysics3D.h"
 #include "ModuleSceneEdit.h"
 #include "ModuleFileSystem.h"
+#include "ModuleFBXLoader.h"
 
 #include "JSON\parson.h"
 
 Application::Application()
 {
-	//fs = new ModuleFileSystem();
+	fs = new ModuleFileSystem();
+	fbx = new ModuleFBXLoader();
 	window = new ModuleWindow();
 	input = new ModuleInput();
 	//audio = new ModuleAudio(this, true);
@@ -29,7 +31,8 @@ Application::Application()
 	// They will CleanUp() in reverse order
 
 	// Main Modules
-	//AddModule(fs);
+	AddModule(fs);
+	AddModule(fbx);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);

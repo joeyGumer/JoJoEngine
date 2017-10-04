@@ -1,9 +1,10 @@
 #include "ModuleFileSystem.h"
+#include "Application.h"
 
-/*#include "PhysFS/include/physfs.h"
 #include "SDL/include/SDL.h"
+#include "PhysFS\include\physfs.h"
 
-#pragma comment( lib, "PhysFS/libx86/physfs.lib")
+#pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 ModuleFileSystem::ModuleFileSystem() : Module()
 {
@@ -32,7 +33,7 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 	bool ret = true;
 
 	// Add all paths in configuration in order
-	for (pugi::xml_node path = config.child("path"); path; path = path.next_sibling("path"))
+	/*for (pugi::xml_node path = config.child("path"); path; path = path.next_sibling("path"))
 	{
 		AddPath(path.child_value());
 	}
@@ -49,7 +50,7 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 		AddPath(write_path, GetSaveDirectory());
 	}
 
-	SDL_free(write_path);
+	SDL_free(write_path);*/
 
 	return ret;
 }
@@ -170,4 +171,4 @@ unsigned int ModuleFileSystem::Save(const char* file, const char* buffer, unsign
 		LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
 
 	return ret;
-}*/
+}
