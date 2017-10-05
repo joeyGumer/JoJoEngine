@@ -145,7 +145,12 @@ bool ModuleRenderer3D::Start()
 	bool ret = true;
 
 	//NOTE: temporal, have to configure library and assets directory
-	meshes_array = App->fbx->LoadFBX("warrior.FBX");
+	Model3D** meshes = App->fbx->LoadFBX("warrior.FBX", num_meshes);
+
+	for (uint i = 0; meshes[i] != nullptr; i++)
+	{
+		meshes_array.push_back(meshes[i]);
+	}
 
 	return true;
 }
@@ -204,30 +209,30 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 }
 
 //NOTE: pass as references
-void ModuleRenderer3D::Draw(Model3D mesh)
+void ModuleRenderer3D::Draw(Model3D* mesh)
 {
 	//NOTE: separate buffer creation from rendering?
-	glGenBuffers(1, (GLuint*) &(mesh.id_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_vertices * 3, mesh->vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, (GLuint*) &(mesh.id_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*) &(mesh->id_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 
 	//Draw 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
-	glDrawElements(GL_TRIANGLES, mesh.id_indices, GL_UNSIGNED_INT, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
+	glDrawElements(GL_TRIANGLES, mesh->id_indices, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void ModuleRenderer3D::DrawMeshes()
 {
-		for (uint i = 0; i < meshes_array.size(); i++)
+		for (uint i = 0; i < num_meshes; i++)
 		{
 			Draw(meshes_array[i]);
 		}

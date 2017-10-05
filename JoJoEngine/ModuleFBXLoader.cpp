@@ -42,19 +42,24 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-std::vector<Model3D> ModuleFBXLoader::LoadFBX(char* file_path)
+Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint& n_mesh)
 {
-	std::vector<Model3D> ret;
-
 	//bool ret = true;
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
+
+	uint num_meshes = scene->mNumMeshes;
+	Model3D** ret = new  Model3D* [num_meshes];
+
+	if (n_mesh)
+		n_mesh = num_meshes;
+
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (uint i = 0; i < scene->mNumMeshes; i++)
 		{
-			ret.push_back(LoadMesh(scene->mMeshes[i]));
+			ret[i] = LoadMesh(scene->mMeshes[i]);
 		}
 		aiReleaseImport(scene);
 	}
@@ -68,21 +73,23 @@ std::vector<Model3D> ModuleFBXLoader::LoadFBX(char* file_path)
 }
 
 //NOTE: using pointers?
-Model3D ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
+Model3D* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 {
-	Model3D m;
+	//NOTE: look for where to delete all the new Model3D created
+
+	Model3D* m = new Model3D();
 
 	//Copy vertices
-	m.num_vertices = new_mesh->mNumVertices;
-	m.vertices = new float[m.num_vertices * 3];
-	memcpy(m.vertices, new_mesh->mVertices, sizeof(float) * m.num_vertices * 3);
-	LOG("New mesh with %d vertices", m.num_vertices);
+	m->num_vertices = new_mesh->mNumVertices;
+	m->vertices = new float[m->num_vertices * 3];
+	memcpy(m->vertices, new_mesh->mVertices, sizeof(float) * m->num_vertices * 3);
+	LOG("New mesh with %d vertices", m->num_vertices);
 
-	// copy faces
+	//Copy faces/indices
 	if (new_mesh->HasFaces())
 	{
-		m.num_indices = new_mesh->mNumFaces * 3;
-		m.indices = new uint[m.num_indices]; // assume each face is a triangle
+		m->num_indices = new_mesh->mNumFaces * 3;
+		m->indices = new uint[m->num_indices]; // assume each face is a triangle
 		for (uint i = 0; i < new_mesh->mNumFaces; i++)
 		{
 			if (new_mesh->mFaces[i].mNumIndices != 3)
@@ -90,9 +97,19 @@ Model3D ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 				LOG("WARNING, geometry face with != 3 indices!");
 			}
 			else//NOTE: is memcopy really necesary instead of a for?
-				memcpy(&m.indices[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+				memcpy(&m->indices[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 		}
 	}
 
+	//Copy normals
+	if (new_mesh->HasNormals())
+	{
+		m->num_normals = new_mesh->mNumVertices;
+		m->normals = new float[m->num_normals];
+	}
+
+	//Copy textures
+
+	//Copy colors
 	return m;
 }

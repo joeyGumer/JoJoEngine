@@ -24,7 +24,7 @@ public:
 
 	void OnResize(int width, int height, float fovy);
 
-	void Draw(Model3D mesh);
+	void Draw(Model3D* mesh);
 	void DrawMeshes();
 
 public:
@@ -34,5 +34,6 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<Model3D> meshes_array;
+	std::vector<Model3D*> meshes_array;
+	uint num_meshes;
 };

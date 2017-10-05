@@ -17,6 +17,22 @@ struct Model3D
 	uint id_indices = 0; // id in VRAM
 	uint num_indices = 0;
 	uint* indices = nullptr;
+
+	//Normals
+	uint id_normals = 0;
+	uint num_normals = 0;
+	float* normals = nullptr;
+
+	//Textures
+	uint id_texture_UVs = 0;
+	uint num_texture_UVs = 0;
+	float* texture_UVs = nullptr;
+
+	//Colors
+	uint id_colors = 0;
+	uint num_colors = 0;
+	
+
 };
 
 class ModuleFBXLoader : public Module
@@ -29,9 +45,9 @@ public:
 	bool CleanUp();
 
 	//NOTE: use vector or array?
-	std::vector<Model3D> LoadFBX(char* file_path);
+	Model3D** LoadFBX(char* file_path, uint& n_mesh);
 private:
-	Model3D LoadMesh(aiMesh* new_mesh);
+	Model3D* LoadMesh(aiMesh* new_mesh);
 
 };
 #endif // !_MODULEFBXLOADER_H_
