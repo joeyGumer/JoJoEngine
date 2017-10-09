@@ -11,7 +11,10 @@ public:
 	~WinConfiguration();
 
 	void Update();
+
 private:
+	void TabApplication();
+	void TabWindow();
 	
 };
 
