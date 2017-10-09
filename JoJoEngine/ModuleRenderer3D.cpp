@@ -145,7 +145,7 @@ bool ModuleRenderer3D::Start()
 	bool ret = true;
 
 	//NOTE: temporal, have to configure library and assets directory
-	Model3D** meshes = App->fbx->LoadFBX("warrior.FBX", num_meshes);
+	Model3D** meshes = App->fbx->LoadFBX("BakerHouse.FBX", num_meshes);
 
 	for (uint i = 0; meshes[i] != nullptr; i++)
 	{

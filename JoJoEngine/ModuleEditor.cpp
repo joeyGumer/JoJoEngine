@@ -17,7 +17,7 @@ ModuleEditor::ModuleEditor( bool start_enabled) : Module(start_enabled)
 	name = "editor";
 
 	//Creating all editor windows
-	WinConfiguration* configuration = new WinConfiguration();
+	configuration = new WinConfiguration();
 
 	//Adding all editor windows to the vector (order is important)
 	AddWindow(configuration);
@@ -68,6 +68,15 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Quit", NULL))
 			{
 				return UPDATE_STOP;
+			}
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Window"))
+		{
+			if (ImGui::MenuItem("Configuration", NULL))
+			{
+				configuration->is_open = !configuration->is_open;
 			}
 			ImGui::EndMenu();
 		}

@@ -17,9 +17,10 @@ WinConfiguration::~WinConfiguration()
 
 void WinConfiguration::Update()
 {
-	if (ImGui::Begin("Configuration"))
+	if (is_open)
 	{
-		
+		ImGui::Begin("Configuration", &is_open);
+
 		ImGui::PushItemWidth(-140);
 		ImGui::Text("Options");
 
@@ -40,7 +41,7 @@ void WinConfiguration::Update()
 			{
 				App->SetOrganization(tmp_str);
 			}
-			
+
 			//sprintf_s(tmp_str, sizeof(tmp_str), "Framerate %.1f")
 		}
 

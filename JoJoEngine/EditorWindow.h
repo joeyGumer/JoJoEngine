@@ -11,6 +11,9 @@ public:
 
 	virtual void Update() = 0;
 
+public:
+	bool is_open = false;
+
 };
 #endif __EDITORWINDOW_H__
 
