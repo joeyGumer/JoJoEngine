@@ -22,6 +22,8 @@
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module( start_enabled)
 {
 	name = "renderer3D";
+
+	num_meshes = 0;
 }
 
 // Destructor
@@ -145,11 +147,19 @@ bool ModuleRenderer3D::Start()
 	bool ret = true;
 
 	//NOTE: temporal, have to configure library and assets directory
-	Model3D** meshes = App->fbx->LoadFBX("BakerHouse.FBX", num_meshes);
+	//Model3D** meshes = App->fbx->LoadFBX("BakerHouse.FBX", num_meshes);
+	Model3D** meshes = App->fbx->LoadFBX("", num_meshes);
 
-	for (uint i = 0; meshes[i] != nullptr; i++)
+	if (meshes != nullptr)
 	{
-		meshes_array.push_back(meshes[i]);
+		for (uint i = 0; meshes[i] != nullptr; i++)
+		{
+			meshes_array.push_back(meshes[i]);
+		}
+	}
+	else
+	{
+		LOG("Error: no meshes found to load");
 	}
 
 	return true;

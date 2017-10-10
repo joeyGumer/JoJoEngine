@@ -48,26 +48,29 @@ Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint& n_mesh)
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
-	uint num_meshes = scene->mNumMeshes;
-	Model3D** ret = new  Model3D* [num_meshes];
-
-	if (n_mesh)
-		n_mesh = num_meshes;
+	Model3D** ret = nullptr;
 
 	if (scene != nullptr && scene->HasMeshes())
-	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		for (uint i = 0; i < scene->mNumMeshes; i++)
 		{
-			ret[i] = LoadMesh(scene->mMeshes[i]);
+
+			uint num_meshes = scene->mNumMeshes;
+			ret = new  Model3D*[num_meshes];
+
+			if (n_mesh)
+				n_mesh = num_meshes;
+
+			// Use scene->mNumMeshes to iterate on scene->mMeshes array
+			for (uint i = 0; i < scene->mNumMeshes; i++)
+			{
+				ret[i] = LoadMesh(scene->mMeshes[i]);
+			}
+			aiReleaseImport(scene);
 		}
-		aiReleaseImport(scene);
-	}
-	else
-	{
-		LOG("Error loading scene %s", file_path);
-		//ret = false;
-	}
+		else
+		{
+			LOG("Error loading scene %s", file_path);
+			//ret = false;
+		}
 	
 	return ret;
 }
@@ -101,14 +104,25 @@ Model3D* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		}
 	}
 
-	//Copy normals
 	if (new_mesh->HasNormals())
 	{
 		m->num_normals = new_mesh->mNumVertices;
-		m->normals = new float[m->num_normals];
+		m->normals = new float[m->num_normals * 3];
+
+		memcpy(m->normals, new_mesh->mNormals, sizeof(float) * m->num_vertices * 3);
+		LOG("New mesh with %d normals", m->num_vertices);
 	}
 
-	//Copy textures
+	//Copy textures (only one set of UVs)
+	if (new_mesh->HasTextureCoords(0))
+	{
+		m->num_texture_UVs = new_mesh->mNumVertices;
+		m->texture_UVs = new float[m->num_texture_UVs * 2];
+
+		//NOTE: There may be an error here
+		memcpy(m->texture_UVs, new_mesh->mTextureCoords, sizeof(float) * m->num_vertices * 2);
+		LOG("New mesh with %d UVs", m->num_texture_UVs);
+	}
 
 	//Copy colors
 	return m;

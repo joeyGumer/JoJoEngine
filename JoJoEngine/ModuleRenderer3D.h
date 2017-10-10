@@ -35,5 +35,5 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	std::vector<Model3D*> meshes_array;
-	uint num_meshes;
+	uint num_meshes = 0;
 };

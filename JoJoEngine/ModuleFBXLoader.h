@@ -8,6 +8,8 @@ struct aiMesh;
 
 struct Model3D
 {
+	~Model3D();
+
 	//Vertices
 	uint id_vertices = 0; // id in VRAM
 	uint num_vertices = 0;
