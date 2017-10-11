@@ -26,6 +26,8 @@ private:
 	void Draw(const Mesh* mesh) const;
 	void DrawMeshes() const;
 
+	void DrawNormals(const Mesh* mesh) const;
+
 public:
 
 	void OnResize(int width, int height, float fovy);
@@ -33,6 +35,7 @@ public:
 	bool LoadMesh(char* file);
 
 public:
+	bool draw_normals = false;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

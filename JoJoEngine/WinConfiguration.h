@@ -15,6 +15,7 @@ public:
 private:
 	void TabApplication();
 	void TabWindow();
+	void TabRenderer();
 	
 };
 

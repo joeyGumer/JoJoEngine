@@ -235,6 +235,9 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 //NOTE: pass as references
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
+	//NOTE: temporal while i use the direct mode to draw normals
+	glColor3f(1.0f, 1.0f, 1.0f);
+
 	//NOTE: separate buffer creation from rendering?
 	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
@@ -254,12 +257,35 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
+void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
+{
+	if (draw_normals)
+	{
+		//NOTE: trying to draw them with direct mode, temporalt
+		glBegin(GL_LINES);
+
+		glLineWidth(1.0f);
+		glColor3f(0.0f, 1.0, 1.0);
+
+		for (int i = 0; i < mesh->num_normals * 3; i += 3)
+		{
+			float3 vertex = { mesh->vertices[i], mesh->vertices[i + 1], mesh->vertices[i + 2] };
+			float3 n_vertex = vertex + float3(mesh->normals[i], mesh->normals[i + 1], mesh->normals[i + 2]);
+
+			glVertex3f(vertex.x, vertex.y, vertex.z);
+			glVertex3f(n_vertex.x, n_vertex.y, n_vertex.z);
+		}
+
+		glEnd();
+	}
+}
 void ModuleRenderer3D::DrawMeshes() const
 {
 
 	for (uint i = 0; i < num_meshes; i++)
 	{
 		Draw(meshes_array[i]);
+		DrawNormals(meshes_array[i]);
 	}
 }
 
