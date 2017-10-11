@@ -147,6 +147,7 @@ bool ModuleRenderer3D::Start()
 	bool ret = true;
 
 	LoadMesh("BakerHouse.FBX");
+
 	return true;
 }
 // Called before quitting
@@ -155,7 +156,14 @@ bool ModuleRenderer3D::CleanUp()
 	LOG("Destroying 3D Renderer");
 	ImGui_ImplSdlGL3_Shutdown();
 
-
+	//Delete all meshes
+	uint size = meshes_array.capacity();
+	for (uint i = 0; i < size; i++)
+	{
+		RELEASE(meshes_array[i]);
+	}
+	
+	meshes_array.clear();
 
 	//Delete OpenGl context
 	SDL_GL_DeleteContext(context);
@@ -208,11 +216,11 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 	bool ret = true;
 
 	//NOTE: temporal, have to configure library and assets directory
-	Model3D** meshes = App->fbx->LoadFBX(file, &num_meshes);
+	Mesh** meshes = App->fbx->LoadFBX(file, &num_meshes);
 
 	if (meshes != nullptr)
 	{
-		for (uint i = 0; meshes[i] != nullptr; i++)
+		for (uint i = 0; i < num_meshes; i++)
 		{
 			meshes_array.push_back(meshes[i]);
 		}
@@ -226,7 +234,7 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 	return ret;
 }
 //NOTE: pass as references
-void ModuleRenderer3D::Draw(Model3D* mesh)
+void ModuleRenderer3D::Draw(Mesh* mesh)
 {
 	//NOTE: separate buffer creation from rendering?
 	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
@@ -249,10 +257,11 @@ void ModuleRenderer3D::Draw(Model3D* mesh)
 
 void ModuleRenderer3D::DrawMeshes()
 {
-		for (uint i = 0; i < num_meshes; i++)
-		{
-			Draw(meshes_array[i]);
-		}
+
+	for (uint i = 0; i < num_meshes; i++)
+	{
+		Draw(meshes_array[i]);
+	}
 }
 
 void ModuleRenderer3D::OnResize(int width, int height, float fovy)

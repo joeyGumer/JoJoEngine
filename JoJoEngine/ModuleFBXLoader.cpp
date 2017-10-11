@@ -12,6 +12,16 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
+Mesh::~Mesh()
+{
+	RELEASE(vertices);
+	RELEASE(indices);
+	RELEASE(normals);
+	RELEASE(texture_UVs);
+	RELEASE(colors);
+}
+
+
 ModuleFBXLoader::ModuleFBXLoader(bool start_enabled): Module(start_enabled)
 {
 
@@ -44,19 +54,19 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
+Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 {
 	//bool ret = true;
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
-	Model3D** ret = nullptr;
+	Mesh** ret = nullptr;
 
 	if (scene != nullptr && scene->HasMeshes())
 		{
 
 			uint num_meshes = scene->mNumMeshes;
-			ret = new  Model3D*[num_meshes];
+			ret = new  Mesh*[num_meshes];
 
 			if (n_mesh)
 				*n_mesh += num_meshes;
@@ -78,11 +88,11 @@ Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 }
 
 //NOTE: using pointers?
-Model3D* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
+Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 {
 	//NOTE: look for where to delete all the new Model3D created
 
-	Model3D* m = new Model3D();
+	Mesh* m = new Mesh();
 
 	//Copy vertices
 	m->num_vertices = new_mesh->mNumVertices;

@@ -6,7 +6,7 @@
 
 #define MAX_LIGHTS 8
 
-struct Model3D;
+struct Mesh;
 class ModuleRenderer3D : public Module
 {
 public:
@@ -26,7 +26,7 @@ public:
 
 	bool LoadMesh(char* file);
 
-	void Draw(Model3D* mesh);
+	void Draw(Mesh* mesh);
 	void DrawMeshes();
 
 public:
@@ -36,6 +36,6 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<Model3D*> meshes_array;
+	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;
 };
