@@ -13,6 +13,7 @@ public:
 	ModuleRenderer3D(bool start_enabled = true);
 	~ModuleRenderer3D();
 
+private:
 	bool Init();
 	bool Start();
 	update_status PreUpdate(float dt);
@@ -22,12 +23,14 @@ public:
 	bool LoadConfig(JSON_Object* data);
 	bool SaveConfig(JSON_Object* data);
 
+	void Draw(const Mesh* mesh) const;
+	void DrawMeshes() const;
+
+public:
+
 	void OnResize(int width, int height, float fovy);
 
 	bool LoadMesh(char* file);
-
-	void Draw(Mesh* mesh);
-	void DrawMeshes();
 
 public:
 

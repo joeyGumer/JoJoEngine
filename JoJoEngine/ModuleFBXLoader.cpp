@@ -58,6 +58,7 @@ Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 {
 	//bool ret = true;
 
+	
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	Mesh** ret = nullptr;

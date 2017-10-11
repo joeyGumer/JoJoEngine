@@ -9,7 +9,6 @@
 #include "ModuleFBXLoader.h"
 
 
-
 #include "JSON\parson.h"
 #include "OpenGl.h"
 
@@ -146,7 +145,7 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	LoadMesh("BakerHouse.FBX");
+	//LoadMesh("BakerHouse.FBX");
 
 	return true;
 }
@@ -234,7 +233,7 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 	return ret;
 }
 //NOTE: pass as references
-void ModuleRenderer3D::Draw(Mesh* mesh)
+void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
 	//NOTE: separate buffer creation from rendering?
 	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
@@ -255,7 +254,7 @@ void ModuleRenderer3D::Draw(Mesh* mesh)
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void ModuleRenderer3D::DrawMeshes()
+void ModuleRenderer3D::DrawMeshes() const
 {
 
 	for (uint i = 0; i < num_meshes; i++)
