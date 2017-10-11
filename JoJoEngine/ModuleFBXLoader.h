@@ -47,7 +47,7 @@ public:
 	bool CleanUp();
 
 	//NOTE: use vector or array?
-	Model3D** LoadFBX(char* file_path, uint& n_mesh);
+	Model3D** LoadFBX(char* file_path, uint* n_mesh);
 private:
 	Model3D* LoadMesh(aiMesh* new_mesh);
 

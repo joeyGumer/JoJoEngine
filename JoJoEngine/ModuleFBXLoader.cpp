@@ -8,6 +8,8 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+//Devil NOTE: not sure if had to use it here
+
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 ModuleFBXLoader::ModuleFBXLoader(bool start_enabled): Module(start_enabled)
@@ -42,7 +44,7 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint& n_mesh)
+Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 {
 	//bool ret = true;
 
@@ -57,7 +59,7 @@ Model3D** ModuleFBXLoader::LoadFBX(char* file_path, uint& n_mesh)
 			ret = new  Model3D*[num_meshes];
 
 			if (n_mesh)
-				n_mesh = num_meshes;
+				*n_mesh += num_meshes;
 
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			for (uint i = 0; i < scene->mNumMeshes; i++)

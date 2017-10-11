@@ -24,6 +24,8 @@ public:
 
 	void OnResize(int width, int height, float fovy);
 
+	bool LoadMesh(char* file);
+
 	void Draw(Model3D* mesh);
 	void DrawMeshes();
 

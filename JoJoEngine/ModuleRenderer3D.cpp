@@ -146,22 +146,7 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	//NOTE: temporal, have to configure library and assets directory
-	//Model3D** meshes = App->fbx->LoadFBX("BakerHouse.FBX", num_meshes);
-	Model3D** meshes = App->fbx->LoadFBX("", num_meshes);
-
-	if (meshes != nullptr)
-	{
-		for (uint i = 0; meshes[i] != nullptr; i++)
-		{
-			meshes_array.push_back(meshes[i]);
-		}
-	}
-	else
-	{
-		LOG("Error: no meshes found to load");
-	}
-
+	LoadMesh("BakerHouse.FBX");
 	return true;
 }
 // Called before quitting
@@ -218,6 +203,28 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+bool ModuleRenderer3D::LoadMesh(char* file)
+{
+	bool ret = true;
+
+	//NOTE: temporal, have to configure library and assets directory
+	Model3D** meshes = App->fbx->LoadFBX(file, &num_meshes);
+
+	if (meshes != nullptr)
+	{
+		for (uint i = 0; meshes[i] != nullptr; i++)
+		{
+			meshes_array.push_back(meshes[i]);
+		}
+	}
+	else
+	{
+		ret = false;
+		LOG("Error: no meshes found to load");
+	}
+
+	return ret;
+}
 //NOTE: pass as references
 void ModuleRenderer3D::Draw(Model3D* mesh)
 {
