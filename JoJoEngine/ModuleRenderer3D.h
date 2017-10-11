@@ -33,6 +33,7 @@ public:
 	void OnResize(int width, int height, float fovy);
 
 	bool LoadMesh(char* file);
+	bool LoadImageTexture(char* file);
 
 public:
 	bool draw_normals = false;
@@ -44,4 +45,7 @@ public:
 
 	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;
+
+
+	uint texture_channel = 0;
 };

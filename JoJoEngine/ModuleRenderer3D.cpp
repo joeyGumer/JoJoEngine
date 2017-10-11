@@ -17,6 +17,15 @@
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"
 
+//Devil NOTE: may not be better to put it here
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+
+#pragma comment(lib, "Devil/libx86/DevIL.lib")
+#pragma comment(lib, "Devil/libx86/ILU.lib")
+#pragma comment(lib, "Devil/libx86/ILUT.lib")
+
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module( start_enabled)
 {
@@ -35,6 +44,12 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
+	//Initialize Devil NOTE: may have to be ported
+	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
+
 	//Create OpenGL context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
@@ -145,7 +160,10 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	//LoadMesh("BakerHouse.FBX");
+	LoadImageTexture("Baker_house.png");
+	LoadMesh("BakerHouse.FBX");
+
+	//NOTE: For now, use this texture only
 
 	return true;
 }
@@ -232,6 +250,52 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 
 	return ret;
 }
+
+bool ModuleRenderer3D::LoadImageTexture(char* file)
+{
+	bool ret = true;
+	ILuint id_image;
+	ilGenImages(1, &id_image);
+	ilBindImage(id_image);
+
+	ret = ilLoadImage(file);
+
+	if (ret)
+	{
+		//NOTE: maybe check if the image is a power of two?
+
+		//texture_channel = ilutGLBindTexImage();
+
+
+		texture_channel = 0;
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glGenTextures(1, &texture_channel);
+		glBindTexture(GL_TEXTURE_2D, texture_channel);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 
+			0, 
+			ilGetInteger(IL_IMAGE_FORMAT), 
+			ilGetInteger(IL_IMAGE_WIDTH),   // Image width
+			ilGetInteger(IL_IMAGE_HEIGHT), 
+			0, 
+			ilGetInteger(IL_IMAGE_FORMAT), //NOTE: may have to change this
+			GL_UNSIGNED_BYTE, 
+			ilGetData());
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	else
+	{
+		LOG("Error: failure trying to load texture %s", file);
+	}
+
+	ilDeleteImages(1, &id_image);
+
+	return ret;
+}
 //NOTE: pass as references
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
@@ -247,14 +311,29 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_texture_UVs);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
+
 	//Draw 	
+
+	glBindTexture(GL_TEXTURE_2D, texture_channel);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glDrawElements(GL_TRIANGLES, mesh->id_indices, GL_UNSIGNED_INT, NULL);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const

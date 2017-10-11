@@ -133,6 +133,17 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		m->texture_UVs = new float[m->num_texture_UVs * 2];
 
 		//NOTE: There may be an error here
+		for (int uvs_item = 0; uvs_item < m->num_texture_UVs; uvs_item++)
+		{
+
+			//NOTE: using direct asignation
+			//memcpy(&m->texture_UVs[uvs_item * 2], &new_mesh->mTextureCoords[0][uvs_item].x, sizeof(float));
+			//memcpy(&m->texture_UVs[(uvs_item * 2) + 1], &new_mesh->mTextureCoords[0][uvs_item].y, sizeof(float));
+
+			m->texture_UVs[uvs_item * 2] = new_mesh->mTextureCoords[0][uvs_item].x;
+			m->texture_UVs[(uvs_item * 2) + 1] = new_mesh->mTextureCoords[0][uvs_item].y;
+		}
+
 		memcpy(m->texture_UVs, new_mesh->mTextureCoords, sizeof(float) * m->num_vertices * 2);
 		LOG("New mesh with %d UVs", m->num_texture_UVs);
 	}
