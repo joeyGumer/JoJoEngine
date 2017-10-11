@@ -264,10 +264,10 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 	{
 		//NOTE: maybe check if the image is a power of two?
 
-		//texture_channel = ilutGLBindTexImage();
+		texture_channel = ilutGLBindTexImage();
 
 
-		texture_channel = 0;
+		/*texture_channel = 0;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glGenTextures(1, &texture_channel);
 		glBindTexture(GL_TEXTURE_2D, texture_channel);
@@ -285,7 +285,7 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 			GL_UNSIGNED_BYTE, 
 			ilGetData());
 
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);*/
 	}
 	else
 	{
@@ -317,9 +317,10 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 
 	//Draw 	
 
-	glBindTexture(GL_TEXTURE_2D, texture_channel);
+	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -327,11 +328,14 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
+	glBindTexture(GL_TEXTURE_2D, texture_channel);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glDrawElements(GL_TRIANGLES, mesh->id_indices, GL_UNSIGNED_INT, NULL);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
