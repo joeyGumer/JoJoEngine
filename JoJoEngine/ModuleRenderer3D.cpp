@@ -8,11 +8,8 @@
 #include "ModuleEditor.h"
 #include "ModuleFBXLoader.h"
 
-
 #include "JSON\parson.h"
 #include "OpenGl.h"
-
-
 
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"

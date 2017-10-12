@@ -18,9 +18,30 @@ WinConfiguration::~WinConfiguration()
 
 void WinConfiguration::Start()
 {
+	//FPS Graphs
 	slider_fps = 60;
 	fps.StartBar(1000);
 	ms.StartBar(1);
+
+	//Hardware specs
+	if (SDL_Has3DNow()) caps += "3DNow, ";
+	if (SDL_HasAltiVec()) caps += "AltiVec, ";
+	if (SDL_HasAVX()) caps += "AVX, ";
+	if (SDL_HasMMX()) caps += "MMX, ";
+	if (SDL_HasRDTSC()) caps += "RDTSC, ";
+	if (SDL_HasSSE()) caps += "SSE, ";
+	if (SDL_HasSSE2()) caps += "SSE2, ";
+	if (SDL_HasSSE3()) caps += "SSE3, ";
+	if (SDL_HasSSE41()) caps += "SSE41, ";
+	if (SDL_HasSSE42()) caps += "SSE42, ";
+
+	//VRAM
+	glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_vram);
+	glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &available_vram);
+	glGetIntegerv(GL_GPU_MEM_INFO_USAGE_MEM_NVX, &usage_vram);
+	total_vram /= 1000;
+	available_vram /= 1000;
+	usage_vram /= 1000;
 }
 
 void WinConfiguration::Update()
@@ -33,11 +54,11 @@ void WinConfiguration::Update()
 		ImGui::Begin("Configuration", &is_open);
 
 		ImGui::PushItemWidth(-140);
-		ImGui::Text("Options");
 
 		TabApplication();
 		TabWindow();	
-		TabRenderer();
+		TabRender();
+		TabHardware();
 
 		ImGui::End();
 	}
@@ -47,8 +68,11 @@ void WinConfiguration::TabApplication()
 {
 	if (ImGui::CollapsingHeader("Application"))
 	{
-		char tmp_str[100];
+		ImGui::Spacing();
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Personalization:");
+		ImGui::Spacing();
 
+		char tmp_str[100];
 		//App name
 		strcpy_s(tmp_str, sizeof(tmp_str), App->GetName().c_str());
 		if (ImGui::InputText("Name", tmp_str, sizeof(tmp_str)))
@@ -63,6 +87,12 @@ void WinConfiguration::TabApplication()
 			App->SetOrganization(tmp_str);
 		}
 
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Performance:");
+		ImGui::Spacing();
 		//Performance
 		if (ImGui::SliderInt("Max FPS", &slider_fps, 0, 60, NULL))
 			App->SetMaxFPS(slider_fps);
@@ -128,10 +158,9 @@ void WinConfiguration::TabWindow()
 	}
 }
 
-void WinConfiguration::TabRenderer()
+void WinConfiguration::TabRender()
 {
-
-	if (ImGui::CollapsingHeader("Renderer"))
+	if (ImGui::CollapsingHeader("Render"))
 	{
 		bool bool_tmp;
 
@@ -140,5 +169,37 @@ void WinConfiguration::TabRenderer()
 		{
 			App->renderer3D->draw_normals = bool_tmp;
 		}
+	}
+}
+
+void WinConfiguration::TabHardware()
+{
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+		//CPU
+		ImGui::Spacing();
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "CPU:");
+		ImGui::Spacing();
+		ImGui::TextWrapped("CPUs: %i Cores", SDL_GetCPUCount());
+		ImGui::TextWrapped("Memory Ram: %i GB", (SDL_GetSystemRAM() / 1000));
+		ImGui::TextWrapped("CPU Cache: %i bits", SDL_GetCPUCacheLineSize());
+		ImGui::TextWrapped("Caps: %s", caps.c_str());		
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		//GPU
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "GPU:");
+		ImGui::Spacing();
+		ImGui::TextWrapped("Brand: %s", glGetString(GL_VENDOR));
+		ImGui::TextWrapped("GPU: %s", glGetString(GL_RENDERER));
+		ImGui::TextWrapped("GL Version: %s", glGetString(GL_VERSION));
+		ImGui::TextWrapped("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		
+		//VRAM		
+		ImGui::TextWrapped("VRAM Budget: %i MB", total_vram);
+		ImGui::TextWrapped("VRAM Avaliable: %i MB", available_vram);
+		ImGui::TextWrapped("VRAM Usage: %i MB", usage_vram);
 	}
 }
