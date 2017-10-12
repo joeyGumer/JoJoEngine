@@ -14,11 +14,10 @@ HOW TO USE IT
 Geometry Loading
 ----------------------------
 Process to load any geometry:
-
-1- Drop the fbx file into the engine window.
-2- Automatically the model will be loaded with its texture.
-3- You can modify its texture dragging another png file into the window.
-4- In the Window->Console, you can check all the loading process
+- Drop the fbx file into the engine window.
+- Automatically the model will be loaded with its texture.
+- You can modify its texture dragging another png file into the window.
+- In the Window->Console, you can check all the loading process
 
 At this moment the 3D drawing process works without shaders, through vertices and indices.
 
@@ -32,17 +31,17 @@ Editor movement
 Menu Options
 ------------------------------
 File:
-	- Exit: Close the engine.
+- Exit: Close the engine.
 
 Window:
-	- Configuration: configuration of the editor windows.
-	- Console: Displays the console.
-	- Properties: Displays a window with information about the FBX model loaded.
+- Configuration: configuration of the editor windows.
+- Console: Displays the console.
+- Properties: Displays a window with information about the FBX model loaded.
 	
 Help:
-	- Demo: Displays ImGui demo window.
-	- Download latest version: Link to the github release site of the project.
-	- Report a bug: Link to the github issues site of the project.
+- Demo: Displays ImGui demo window.
+- Download latest version: Link to the github release site of the project.
+- Report a bug: Link to the github issues site of the project.
 	
 About Us:
-	- Information about the project, authors and libraries used.
+- Information about the project, authors and libraries used.
