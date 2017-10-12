@@ -132,7 +132,6 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		m->num_texture_UVs = new_mesh->mNumVertices;
 		m->texture_UVs = new float[m->num_texture_UVs * 2];
 
-		//NOTE: There may be an error here
 		for (int i = 0; i < m->num_texture_UVs; i++)
 		{
 			//NOTE: using direct asignation
@@ -147,4 +146,5 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 
 	//Copy colors
 	return m;
+
 }

@@ -161,7 +161,7 @@ bool ModuleRenderer3D::Start()
 	bool ret = true;
 
 	LoadImageTexture("Baker_house.png");
-	LoadMesh("BakerHouse.FBX");
+	//LoadMesh("BakerHouse.FBX");
 
 	//NOTE: For now, use this texture only
 
@@ -240,6 +240,19 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 		for (uint i = 0; i < num_meshes; i++)
 		{
 			meshes_array.push_back(meshes[i]);
+
+			/*//NOTE: Still not sure if this is the best spot to generate the buffers
+			glGenBuffers(1, (GLuint*) &(meshes[i]->id_vertices));
+			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_vertices);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_vertices * 3, meshes[i]->vertices, GL_STATIC_DRAW);
+
+			glGenBuffers(1, (GLuint*) &(meshes[i]->id_indices));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_indices);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_indices, meshes[i]->indices, GL_STATIC_DRAW);
+
+			glGenBuffers(1, (GLuint*) &(meshes[i]->id_texture_UVs));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_texture_UVs);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_texture_UVs * 2, meshes[i]->texture_UVs, GL_STATIC_DRAW);*/
 		}
 	}
 	else
@@ -296,13 +309,10 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 
 	return ret;
 }
-//NOTE: pass as references
+//NOTE: pass as references? or pointer? or copy?
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
-	//NOTE: temporal while i use the direct mode to draw normals
-	glColor3f(1.0f, 1.0f, 1.0f);
-
-	//NOTE: separate buffer creation from rendering?
+	//NOTE: Still not sure if this is the best spot to generate the buffers
 	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_vertices * 3, mesh->vertices, GL_STATIC_DRAW);
@@ -314,6 +324,9 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_texture_UVs);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
+
+	//NOTE: temporal while i use the direct mode to draw normals
+	glColor3f(1.0f, 1.0f, 1.0f);
 
 	//Draw 	
 
@@ -345,7 +358,7 @@ void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 {
 	if (draw_normals)
 	{
-		//NOTE: trying to draw them with direct mode, temporalt
+		//NOTE: trying to draw them with direct mode, temporaly
 		glBegin(GL_LINES);
 
 		glLineWidth(1.0f);
