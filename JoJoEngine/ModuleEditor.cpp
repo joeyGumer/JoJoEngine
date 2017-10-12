@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Console.h"
 #include "Globals.h"
 #include "ModuleEditor.h"
 #include "PhysBody3D.h"
@@ -6,7 +7,6 @@
 #include "WinConfiguration.h"
 
 #include "Brofiler/Brofiler.h"
-#include "Imgui\imgui.h"
 #include <vector>
 
 using namespace std;
@@ -31,10 +31,9 @@ ModuleEditor::~ModuleEditor()
 bool ModuleEditor::Start()
 {
 	LOG("Loading Intro assets");
-	bool ret = true;
+	bool ret = true;	
 
-	//NOTE: create at Start or at Constructor
-	
+	configuration->Start();
 
 	return ret;
 }
@@ -59,7 +58,6 @@ bool ModuleEditor::CleanUp()
 // Update
 update_status ModuleEditor::Update(float dt)
 {
-	BROFILER_CATEGORY("ModuleEditor::Update", Profiler::Color::AliceBlue);
 	//Create the menu bar
 	if(ImGui::BeginMainMenuBar())
 	{
@@ -77,6 +75,11 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Configuration", NULL))
 			{
 				configuration->is_open = !configuration->is_open;
+			}
+
+			if (ImGui::MenuItem("Console", NULL))
+			{
+				console->is_open = !configuration->is_open;
 			}
 			ImGui::EndMenu();
 		}
@@ -104,6 +107,8 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
+
+	console->Update();
 	
 	if(show_demo)
 		ImGui::ShowTestWindow();

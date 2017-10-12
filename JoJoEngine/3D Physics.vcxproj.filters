@@ -40,11 +40,11 @@
     <Filter Include="Sources\Tools\JSON">
       <UniqueIdentifier>{7041d670-191a-471f-9f17-47e7655d0ef7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Windows">
-      <UniqueIdentifier>{da3792d0-25f0-4230-9db6-53a2648766f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\OpenGl">
       <UniqueIdentifier>{0f9cb66f-d7db-4de7-af58-e97b6a9749ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor">
+      <UniqueIdentifier>{da3792d0-25f0-4230-9db6-53a2648766f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,10 +319,10 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="EditorWindow.h">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Editor</Filter>
     </ClInclude>
     <ClInclude Include="WinConfiguration.h">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Editor</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneEdit.h">
       <Filter>Sources\Modules</Filter>
@@ -335,6 +335,12 @@
     </ClInclude>
     <ClInclude Include="ModuleFBXLoader.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Bar.h">
+      <Filter>Sources\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Sources\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -513,10 +519,10 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="EditorWindow.cpp">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Editor</Filter>
     </ClCompile>
     <ClCompile Include="WinConfiguration.cpp">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Editor</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneEdit.cpp">
       <Filter>Sources\Modules</Filter>
@@ -526,6 +532,12 @@
     </ClCompile>
     <ClCompile Include="ModuleFBXLoader.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Bar.cpp">
+      <Filter>Sources\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Sources\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
