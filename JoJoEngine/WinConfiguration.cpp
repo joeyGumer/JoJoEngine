@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
+#include "OpenGl.h"
 #include "Imgui/imgui.h"
 
 WinConfiguration::WinConfiguration() : EditorWindow()
@@ -33,11 +34,11 @@ void WinConfiguration::Update()
 		ImGui::Begin("Configuration", &is_open);
 
 		ImGui::PushItemWidth(-140);
-		ImGui::Text("Options");
 
 		TabApplication();
 		TabWindow();	
 		TabRenderer();
+		TabHardware();
 
 		ImGui::End();
 	}
@@ -47,8 +48,11 @@ void WinConfiguration::TabApplication()
 {
 	if (ImGui::CollapsingHeader("Application"))
 	{
-		char tmp_str[100];
+		ImGui::Spacing();
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Personalization:");
+		ImGui::Spacing();
 
+		char tmp_str[100];
 		//App name
 		strcpy_s(tmp_str, sizeof(tmp_str), App->GetName().c_str());
 		if (ImGui::InputText("Name", tmp_str, sizeof(tmp_str)))
@@ -63,6 +67,12 @@ void WinConfiguration::TabApplication()
 			App->SetOrganization(tmp_str);
 		}
 
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "Performance:");
+		ImGui::Spacing();
 		//Performance
 		if (ImGui::SliderInt("Max FPS", &slider_fps, 0, 60, NULL))
 			App->SetMaxFPS(slider_fps);
@@ -130,7 +140,6 @@ void WinConfiguration::TabWindow()
 
 void WinConfiguration::TabRenderer()
 {
-
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
 		bool bool_tmp;
@@ -140,5 +149,42 @@ void WinConfiguration::TabRenderer()
 		{
 			App->renderer3D->draw_normals = bool_tmp;
 		}
+	}
+}
+
+void WinConfiguration::TabHardware()
+{
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+		ImGui::Spacing();
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "CPU:");
+		ImGui::Spacing();
+		ImGui::TextWrapped("CPUs: %i Cores", SDL_GetCPUCount());
+		ImGui::TextWrapped("Memory Ram: %i GB", (SDL_GetSystemRAM() / 1000));
+		ImGui::TextWrapped("CPU Cache: %i bits", SDL_GetCPUCacheLineSize());
+
+		string tmp;
+		if(SDL_Has3DNow()) tmp += "3DNow, ";
+		if(SDL_HasAltiVec()) tmp += "AltiVec, ";
+		if(SDL_HasAVX()) tmp += "AVX, ";		
+		if(SDL_HasMMX()) tmp += "MMX, ";
+		if(SDL_HasRDTSC()) tmp += "RDTSC, ";
+		if(SDL_HasSSE()) tmp += "SSE, ";
+		if(SDL_HasSSE2()) tmp += "SSE2, ";
+		if(SDL_HasSSE3()) tmp += "SSE3, ";
+		if(SDL_HasSSE41()) tmp += "SSE41, ";
+		if(SDL_HasSSE42()) tmp += "SSE42, ";
+		ImGui::TextWrapped("Caps: %s", tmp.c_str());		
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "GPU:");
+		ImGui::Spacing();
+		ImGui::TextWrapped("Brand: %s", glGetString(GL_VENDOR));
+		ImGui::TextWrapped("GPU: %s", glGetString(GL_RENDERER));
+		ImGui::TextWrapped("GL Version: %s", glGetString(GL_VERSION));
+		ImGui::TextWrapped("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 }

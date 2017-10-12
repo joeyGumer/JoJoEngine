@@ -17,6 +17,7 @@ private:
 	void TabApplication();
 	void TabWindow();
 	void TabRenderer();
+	void TabHardware();
 
 private:
 	int slider_fps;
