@@ -20,6 +20,7 @@ private:
 	void TabRenderer();
 
 private:
+	int slider_fps;
 	Bar fps;
 	Bar ms;
 };

@@ -64,13 +64,14 @@ public:
 	//Getters
 	const std::string GetName() const;
 	const std::string GetOrganization() const;
-	const int GetFPS();
-	const int GetMs();
-	const bool SecCounter();
+	const int GetFPS() const;
+	const int GetMs() const ;
+	const bool SecCounter() const;
 
 	//Setters
 	void SetName(const char* str);
 	void SetOrganization(const char* str);
+	void SetMaxFPS(const uint fps);
 
 private:
 

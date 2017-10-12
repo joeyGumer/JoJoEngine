@@ -273,17 +273,17 @@ const std::string Application::GetOrganization() const
 	return organization;
 }
 
-const int Application::GetFPS()
+const int Application::GetFPS() const
 {
 	return prev_last_frame_count;
 }
 
-const int Application::GetMs()
+const int Application::GetMs() const
 {
 	return last_frame_ms;
 }
 
-const bool Application::SecCounter()
+const bool Application::SecCounter() const
 {
 	return (last_frame_timer.Read() > 1000);
 }
@@ -297,4 +297,12 @@ void Application::SetName(const char* str)
 void Application::SetOrganization(const char* str)
 {
 	organization = str;
+}
+
+void Application::SetMaxFPS(const uint fps)
+{
+	if (fps != 0)
+		capped_ms = 1000 / fps;
+	else
+		capped_ms = 1000 / -1;
 }

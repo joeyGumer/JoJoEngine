@@ -18,6 +18,7 @@ WinConfiguration::~WinConfiguration()
 
 void WinConfiguration::Start()
 {
+	slider_fps = 60;
 	fps.StartBar(1000);
 	ms.StartBar(1);
 }
@@ -63,9 +64,13 @@ void WinConfiguration::TabApplication()
 		}
 
 		//Performance
+		if (ImGui::SliderInt("Max FPS", &slider_fps, 0, 60, NULL))
+			App->SetMaxFPS(slider_fps);
+
 		char title[25];
 		sprintf_s(title, 25, "Framerate %.1f", fps.GetData()[fps.GetData().size() - 1]);
 		ImGui::PlotHistogram("##framerate", &fps.GetData()[0], fps.GetData().size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+
 		sprintf_s(title, 25, "Milliseconds %.1f", ms.GetData()[ms.GetData().size() - 1]);
 		ImGui::PlotHistogram("##framerate", &ms.GetData()[0], ms.GetData().size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
