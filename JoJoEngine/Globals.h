@@ -42,6 +42,10 @@ enum update_status
 	UPDATE_ERROR
 };
 
+#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
+#define GL_GPU_MEM_INFO_USAGE_MEM_NVX 0x904A
+
 //Utiles
 //NOTE: tried to create as a safer version of delete
 //#define void RELEASE(void* x){(x==nullptr)? LOG("trying to delete null variable"): delete x};
