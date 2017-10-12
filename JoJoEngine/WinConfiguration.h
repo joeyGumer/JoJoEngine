@@ -17,11 +17,11 @@ public:
 private:
 	void TabApplication();
 	void TabWindow();
+	void TabRenderer();
 
 private:
 	Bar fps;
 	Bar ms;
-	
 };
 
 #endif __WINDOWCONFIGURATION_H__

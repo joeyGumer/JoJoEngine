@@ -6,9 +6,9 @@
 
 struct aiMesh;
 
-struct Model3D
+struct Mesh
 {
-	~Model3D();
+	~Mesh();
 
 	//Vertices
 	uint id_vertices = 0; // id in VRAM
@@ -33,6 +33,7 @@ struct Model3D
 	//Colors
 	uint id_colors = 0;
 	uint num_colors = 0;
+	uint* colors = nullptr;
 	
 
 };
@@ -47,9 +48,9 @@ public:
 	bool CleanUp();
 
 	//NOTE: use vector or array?
-	Model3D** LoadFBX(char* file_path, uint& n_mesh);
+	Mesh** LoadFBX(char* file_path, uint* n_mesh);
 private:
-	Model3D* LoadMesh(aiMesh* new_mesh);
+	Mesh* LoadMesh(aiMesh* new_mesh);
 
 };
 #endif // !_MODULEFBXLOADER_H_

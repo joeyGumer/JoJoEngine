@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 
 #include "Imgui/imgui.h"
 
@@ -35,6 +36,7 @@ void WinConfiguration::Update()
 
 		TabApplication();
 		TabWindow();	
+		TabRenderer();
 
 		ImGui::End();
 	}
@@ -117,6 +119,21 @@ void WinConfiguration::TabWindow()
 		if (ImGui::Checkbox("Fullscreen desktop", &bool_tmp))
 		{
 			App->window->SetFullScreenDesktop(bool_tmp);
+		}
+	}
+}
+
+void WinConfiguration::TabRenderer()
+{
+
+	if (ImGui::CollapsingHeader("Renderer"))
+	{
+		bool bool_tmp;
+
+		bool_tmp = App->renderer3D->draw_normals;
+		if (ImGui::Checkbox("Draw Normals", &bool_tmp))
+		{
+			App->renderer3D->draw_normals = bool_tmp;
 		}
 	}
 }

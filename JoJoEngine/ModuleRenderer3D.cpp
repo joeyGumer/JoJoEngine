@@ -9,7 +9,6 @@
 #include "ModuleFBXLoader.h"
 
 
-
 #include "JSON\parson.h"
 #include "OpenGl.h"
 
@@ -17,6 +16,15 @@
 
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"
+
+//Devil NOTE: may not be better to put it here
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+
+#pragma comment(lib, "Devil/libx86/DevIL.lib")
+#pragma comment(lib, "Devil/libx86/ILU.lib")
+#pragma comment(lib, "Devil/libx86/ILUT.lib")
 
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module( start_enabled)
@@ -36,6 +44,12 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
+	//Initialize Devil NOTE: may have to be ported
+	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
+
 	//Create OpenGL context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
@@ -146,21 +160,10 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	//NOTE: temporal, have to configure library and assets directory
-	//Model3D** meshes = App->fbx->LoadFBX("BakerHouse.FBX", num_meshes);
-	Model3D** meshes = App->fbx->LoadFBX("", num_meshes);
+	LoadImageTexture("Baker_house.png");
+	LoadMesh("BakerHouse.FBX");
 
-	if (meshes != nullptr)
-	{
-		for (uint i = 0; meshes[i] != nullptr; i++)
-		{
-			meshes_array.push_back(meshes[i]);
-		}
-	}
-	else
-	{
-		LOG("Error: no meshes found to load");
-	}
+	//NOTE: For now, use this texture only
 
 	return true;
 }
@@ -170,7 +173,14 @@ bool ModuleRenderer3D::CleanUp()
 	LOG("Destroying 3D Renderer");
 	ImGui_ImplSdlGL3_Shutdown();
 
-
+	//Delete all meshes
+	uint size = meshes_array.capacity();
+	for (uint i = 0; i < size; i++)
+	{
+		RELEASE(meshes_array[i]);
+	}
+	
+	meshes_array.clear();
 
 	//Delete OpenGl context
 	SDL_GL_DeleteContext(context);
@@ -218,9 +228,80 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-//NOTE: pass as references
-void ModuleRenderer3D::Draw(Model3D* mesh)
+bool ModuleRenderer3D::LoadMesh(char* file)
 {
+	bool ret = true;
+
+	//NOTE: temporal, have to configure library and assets directory
+	Mesh** meshes = App->fbx->LoadFBX(file, &num_meshes);
+
+	if (meshes != nullptr)
+	{
+		for (uint i = 0; i < num_meshes; i++)
+		{
+			meshes_array.push_back(meshes[i]);
+		}
+	}
+	else
+	{
+		ret = false;
+		LOG("Error: no meshes found to load");
+	}
+
+	return ret;
+}
+
+bool ModuleRenderer3D::LoadImageTexture(char* file)
+{
+	bool ret = true;
+	ILuint id_image;
+	ilGenImages(1, &id_image);
+	ilBindImage(id_image);
+
+	ret = ilLoadImage(file);
+
+	if (ret)
+	{
+		//NOTE: maybe check if the image is a power of two?
+
+		texture_channel = ilutGLBindTexImage();
+
+
+		/*texture_channel = 0;
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glGenTextures(1, &texture_channel);
+		glBindTexture(GL_TEXTURE_2D, texture_channel);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 
+			0, 
+			ilGetInteger(IL_IMAGE_FORMAT), 
+			ilGetInteger(IL_IMAGE_WIDTH),   // Image width
+			ilGetInteger(IL_IMAGE_HEIGHT), 
+			0, 
+			ilGetInteger(IL_IMAGE_FORMAT), //NOTE: may have to change this
+			GL_UNSIGNED_BYTE, 
+			ilGetData());
+
+		glBindTexture(GL_TEXTURE_2D, 0);*/
+	}
+	else
+	{
+		LOG("Error: failure trying to load texture %s", file);
+	}
+
+	ilDeleteImages(1, &id_image);
+
+	return ret;
+}
+//NOTE: pass as references
+void ModuleRenderer3D::Draw(const Mesh* mesh) const
+{
+	//NOTE: temporal while i use the direct mode to draw normals
+	glColor3f(1.0f, 1.0f, 1.0f);
+
 	//NOTE: separate buffer creation from rendering?
 	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
@@ -230,22 +311,65 @@ void ModuleRenderer3D::Draw(Model3D* mesh)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_texture_UVs);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
+
 	//Draw 	
+
+	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	glBindTexture(GL_TEXTURE_2D, texture_channel);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glDrawElements(GL_TRIANGLES, mesh->id_indices, GL_UNSIGNED_INT, NULL);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
-void ModuleRenderer3D::DrawMeshes()
+void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 {
-		for (uint i = 0; i < num_meshes; i++)
+	if (draw_normals)
+	{
+		//NOTE: trying to draw them with direct mode, temporalt
+		glBegin(GL_LINES);
+
+		glLineWidth(1.0f);
+		glColor3f(0.0f, 1.0, 1.0);
+
+		for (int i = 0; i < mesh->num_normals * 3; i += 3)
 		{
-			Draw(meshes_array[i]);
+			float3 vertex = { mesh->vertices[i], mesh->vertices[i + 1], mesh->vertices[i + 2] };
+			float3 n_vertex = vertex + float3(mesh->normals[i], mesh->normals[i + 1], mesh->normals[i + 2]);
+
+			glVertex3f(vertex.x, vertex.y, vertex.z);
+			glVertex3f(n_vertex.x, n_vertex.y, n_vertex.z);
 		}
+
+		glEnd();
+	}
+}
+void ModuleRenderer3D::DrawMeshes() const
+{
+
+	for (uint i = 0; i < num_meshes; i++)
+	{
+		Draw(meshes_array[i]);
+		DrawNormals(meshes_array[i]);
+	}
 }
 
 void ModuleRenderer3D::OnResize(int width, int height, float fovy)

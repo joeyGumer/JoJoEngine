@@ -6,13 +6,14 @@
 
 #define MAX_LIGHTS 8
 
-struct Model3D;
+struct Mesh;
 class ModuleRenderer3D : public Module
 {
 public:
 	ModuleRenderer3D(bool start_enabled = true);
 	~ModuleRenderer3D();
 
+private:
 	bool Init();
 	bool Start();
 	update_status PreUpdate(float dt);
@@ -22,18 +23,29 @@ public:
 	bool LoadConfig(JSON_Object* data);
 	bool SaveConfig(JSON_Object* data);
 
-	void OnResize(int width, int height, float fovy);
+	void Draw(const Mesh* mesh) const;
+	void DrawMeshes() const;
 
-	void Draw(Model3D* mesh);
-	void DrawMeshes();
+	void DrawNormals(const Mesh* mesh) const;
 
 public:
+
+	void OnResize(int width, int height, float fovy);
+
+	bool LoadMesh(char* file);
+	bool LoadImageTexture(char* file);
+
+public:
+	bool draw_normals = false;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<Model3D*> meshes_array;
+	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;
+
+
+	uint texture_channel = 0;
 };

@@ -159,6 +159,8 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	bool quit = false;
 	SDL_Event e;
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+
 	while(SDL_PollEvent(&e))
 	{
 		ImGui_ImplSdlGL3_ProcessEvent(&e);
@@ -185,6 +187,17 @@ update_status ModuleInput::PreUpdate(float dt)
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2, 20.0f);
 			}
+			break;
+
+			case SDL_DROPFILE:
+			{
+				//Mesh
+				if (!App->renderer3D->LoadMesh(e.drop.file))
+				{
+					LOG("Error: droped file couldn't be loaded (Maybe wrong format)")
+				}
+			}
+			break;
 		}
 	}
 
