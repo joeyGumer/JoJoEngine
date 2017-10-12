@@ -2,7 +2,6 @@
 #define __WINCONFIGURATION_H__
 
 #include "EditorWindow.h"
-#include "Module.h"
 #include "Bar.h"
 
 class WinConfiguration: public EditorWindow

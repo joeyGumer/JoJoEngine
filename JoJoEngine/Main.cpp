@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "Console.h"
 #include "Application.h"
 #include "Globals.h"
 #include "Brofiler/Brofiler.h"
@@ -19,6 +20,7 @@ enum main_states
 };
 
 Application* App = nullptr;
+Console* console = nullptr;
 
 int main(int argc, char ** argv)
 {
@@ -36,6 +38,7 @@ int main(int argc, char ** argv)
 
 			LOG("-------------- Application Creation --------------");
 			App = new Application();
+			console = new Console();
 			state = MAIN_START;
 			break;
 
