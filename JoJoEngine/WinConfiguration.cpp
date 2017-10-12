@@ -57,7 +57,7 @@ void WinConfiguration::Update()
 
 		TabApplication();
 		TabWindow();	
-		TabRenderer();
+		TabRender();
 		TabHardware();
 
 		ImGui::End();
@@ -158,9 +158,9 @@ void WinConfiguration::TabWindow()
 	}
 }
 
-void WinConfiguration::TabRenderer()
+void WinConfiguration::TabRender()
 {
-	if (ImGui::CollapsingHeader("Renderer"))
+	if (ImGui::CollapsingHeader("Render"))
 	{
 		bool bool_tmp;
 
