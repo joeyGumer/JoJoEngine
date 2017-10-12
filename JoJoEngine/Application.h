@@ -36,9 +36,20 @@ public:
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
 	list<Module*> list_modules;
+
+	//Timers
+	Timer	startup_timer;
+	Timer	frame_timer;
+	Timer	last_frame_timer;
+	int		frame_count;
+	int		last_frame_count;
+	int		prev_last_frame_count;
+	float	last_frame_ms;
+	float	capped_ms;
+
+	float	dt;
+	
 
 public:
 
@@ -51,8 +62,11 @@ public:
 	const std::string GetSDLVersion();
 
 	//Getters
-	std::string GetName() const;
-	std::string GetOrganization() const;
+	const std::string GetName() const;
+	const std::string GetOrganization() const;
+	const int GetFPS();
+	const int GetMs();
+	const bool SecCounter();
 
 	//Setters
 	void SetName(const char* str);

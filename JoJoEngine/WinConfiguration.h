@@ -3,6 +3,7 @@
 
 #include "EditorWindow.h"
 #include "Module.h"
+#include "Bar.h"
 
 class WinConfiguration: public EditorWindow
 {
@@ -10,11 +11,16 @@ public:
 	WinConfiguration();
 	~WinConfiguration();
 
+	void Start();
 	void Update();
 
 private:
 	void TabApplication();
 	void TabWindow();
+
+private:
+	Bar fps;
+	Bar ms;
 	
 };
 

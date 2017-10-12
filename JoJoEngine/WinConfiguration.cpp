@@ -15,8 +15,17 @@ WinConfiguration::~WinConfiguration()
 
 }
 
+void WinConfiguration::Start()
+{
+	fps.StartBar(1000);
+	ms.StartBar(1);
+}
+
 void WinConfiguration::Update()
 {
+	fps.FillBar(App->GetFPS());
+	ms.FillBar(App->GetMs());
+
 	if (is_open)
 	{
 		ImGui::Begin("Configuration", &is_open);
@@ -50,6 +59,13 @@ void WinConfiguration::TabApplication()
 		{
 			App->SetOrganization(tmp_str);
 		}
+
+		//Performance
+		char title[25];
+		sprintf_s(title, 25, "Framerate %.1f", fps.GetData()[fps.GetData().size() - 1]);
+		ImGui::PlotHistogram("##framerate", &fps.GetData()[0], fps.GetData().size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		sprintf_s(title, 25, "Milliseconds %.1f", ms.GetData()[ms.GetData().size() - 1]);
+		ImGui::PlotHistogram("##framerate", &ms.GetData()[0], ms.GetData().size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
 		//sprintf_s(tmp_str, sizeof(tmp_str), "Framerate %.1f")
 	}

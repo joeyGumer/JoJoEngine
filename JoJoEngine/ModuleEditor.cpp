@@ -31,10 +31,9 @@ ModuleEditor::~ModuleEditor()
 bool ModuleEditor::Start()
 {
 	LOG("Loading Intro assets");
-	bool ret = true;
+	bool ret = true;	
 
-	//NOTE: create at Start or at Constructor
-	
+	configuration->Start();
 
 	return ret;
 }

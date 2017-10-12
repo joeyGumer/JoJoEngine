@@ -37,14 +37,19 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	//AddModule(audio);
-	//AddModule(physics);
-	
+	//AddModule(physics);	
 	// Scenes
 	AddModule(level);
 	AddModule(editor);
-
 	// Renderer last!
 	AddModule(renderer3D);
+
+	frame_count = 0;
+	last_frame_count = 0;
+	prev_last_frame_count = 0;
+	last_frame_ms = 0.0f;
+	capped_ms = -1.0f;
+	dt = 0.0f;
 }
 
 Application::~Application()
@@ -72,20 +77,37 @@ bool Application::Init()
 		++i;
 	}
 	
-	ms_timer.Start();
+	startup_timer.Start();
 	return ret;
 }
 
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	frame_count++;
+	last_frame_count++;
+
+	dt = (float)startup_timer.Read() / 1000.0f;
+	frame_timer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (SecCounter())
+	{
+		last_frame_timer.Start();
+		prev_last_frame_count = last_frame_count;
+		last_frame_count = 0;
+	}
+
+	last_frame_ms = frame_timer.Read();
+
+
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		SDL_Delay(capped_ms - last_frame_ms);
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -241,14 +263,29 @@ const std::string Application::GetSDLVersion()
 
 //Getters
 //NOTE: maybe to harsh to return a direct string
-std::string Application::GetName() const
+const std::string Application::GetName() const
 {
 	return name;
 }
 
-std::string Application::GetOrganization() const
+const std::string Application::GetOrganization() const
 {
 	return organization;
+}
+
+const int Application::GetFPS()
+{
+	return prev_last_frame_count;
+}
+
+const int Application::GetMs()
+{
+	return last_frame_ms;
+}
+
+const bool Application::SecCounter()
+{
+	return (last_frame_timer.Read() > 1000);
 }
 
 //Setters
