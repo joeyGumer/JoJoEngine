@@ -310,25 +310,9 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 //NOTE: pass as references? or pointer? or copy?
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
-	//NOTE: Still not sure if this is the best spot to generate the buffers
-	/*glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_vertices * 3, mesh->vertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) &(mesh->id_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);*/
-
-	//NOTE: temporal while i use the direct mode to draw normals
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 	//Draw 	
-
-	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -344,14 +328,12 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 
-	//If wireframe
-	glColor3f(1.0f, 1.0f, 0.0f);
-
-	glDrawElements(GL_LINE_STRIP, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+	//Wireframe
+	DrawWireframe(mesh);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisable(GL_TEXTURE_2D);
+
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -364,7 +346,7 @@ void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 		//NOTE: trying to draw them with direct mode, temporaly
 		glBegin(GL_LINES);
 
-		glLineWidth(1.0f);
+		glLineWidth(2.0f);
 		glColor3f(0.0f, 1.0, 1.0);
 
 		for (int i = 0; i < mesh->num_normals * 3; i += 3)
@@ -377,6 +359,31 @@ void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 		}
 
 		glEnd();
+	}
+}
+
+void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
+{
+	if (draw_wireframe)
+	{
+		
+
+		glColor3f(1.0f, 1.0f, 0.0f);
+		glLineWidth(0.5f);
+
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_LIGHTING);
+
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+
+		glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_FILL);
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
 	}
 }
 
