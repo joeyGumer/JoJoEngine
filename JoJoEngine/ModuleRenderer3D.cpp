@@ -250,8 +250,9 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 			glGenBuffers(1, (GLuint*) &(meshes[i]->id_indices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_indices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_indices, meshes[i]->indices, GL_STATIC_DRAW);
-
 		}
+
+		App->camera->CenterCameraOnGeometry(GetAABB());
 	}
 	else
 	{

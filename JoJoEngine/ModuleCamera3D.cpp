@@ -143,7 +143,7 @@ void ModuleCamera3D::LookAt( const vec3 &Spot)
 // -----------------------------------------------------------------
 void ModuleCamera3D::CenterCameraOnGeometry(const AABB box)
 {
-	if (box.MaxX() == box.MaxY() == box.MaxZ() == 0)
+	if (box.MaxX() != 0 && box.MaxY() != 0 && box.MaxZ() != 0)
 	{
 		Position.x = box.maxPoint.x + offset;
 		Position.y = box.maxPoint.y + offset;
