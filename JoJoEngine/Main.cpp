@@ -75,7 +75,7 @@ int main(int argc, char ** argv)
 
 		case MAIN_FINISH:
 
-			LOG("-------------- Application CleanUp --------------");
+			LOG("-------------- Application CleanUp --------------");			
 			if (App->CleanUp() == false)
 			{
 				LOG("Application CleanUp exits with ERROR");
@@ -92,5 +92,8 @@ int main(int argc, char ** argv)
 
 	delete App;
 	LOG("Exiting game '%s'...\n", TITLE);
+	console->CleanUp();
+	delete console;
+
 	return main_return;
 }

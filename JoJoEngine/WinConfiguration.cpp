@@ -8,12 +8,10 @@
 
 WinConfiguration::WinConfiguration() : EditorWindow()
 {
-
 }
 
 WinConfiguration::~WinConfiguration()
 {
-
 }
 
 void WinConfiguration::Start()
@@ -42,6 +40,10 @@ void WinConfiguration::Start()
 	total_vram /= 1000;
 	available_vram /= 1000;
 	usage_vram /= 1000;
+}
+
+void WinConfiguration::CleanUp()
+{
 }
 
 void WinConfiguration::Update()

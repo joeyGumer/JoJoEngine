@@ -5,6 +5,7 @@
 #include "PhysBody3D.h"
 #include "EditorWindow.h"
 #include "WinConfiguration.h"
+#include "ImGuiDemo.h"
 
 #include "Brofiler/Brofiler.h"
 #include <vector>
@@ -15,12 +16,6 @@ using namespace std;
 ModuleEditor::ModuleEditor( bool start_enabled) : Module(start_enabled)
 {
 	name = "editor";
-
-	//Creating all editor windows
-	configuration = new WinConfiguration();
-
-	//Adding all editor windows to the vector (order is important)
-	AddWindow(configuration);
 }
 
 
@@ -31,9 +26,21 @@ ModuleEditor::~ModuleEditor()
 bool ModuleEditor::Start()
 {
 	LOG("Loading Intro assets");
-	bool ret = true;	
+	bool ret = true;
 
-	configuration->Start();
+	//Creating all editor windows
+	configuration = new WinConfiguration();
+	demo = new ImGuiDemo();
+
+	//Adding all editor windows to the vector (order is important)
+	AddWindow(configuration);
+	AddWindow(demo);
+	AddWindow(console);
+
+	for (uint i = 0; i < editor_windows.size(); i++)
+	{
+		editor_windows[i]->Start();
+	}
 
 	return ret;
 }
@@ -47,9 +54,14 @@ bool ModuleEditor::CleanUp()
 	for (int i = editor_windows.size()-1; i >= 0; i--)
 	{
 		if (editor_windows[i] != nullptr)
-			delete editor_windows[i];
+		{
+			if (editor_windows[i] != console)
+			{
+				editor_windows[i]->CleanUp();
+				delete editor_windows[i];
+			}
+		}
 	}
-
 	editor_windows.clear();
 
 	return true;
@@ -79,15 +91,28 @@ update_status ModuleEditor::Update(float dt)
 
 			if (ImGui::MenuItem("Console", NULL))
 			{
-				console->is_open = !configuration->is_open;
+				console->is_open = !console->is_open;
 			}
+
+			if (windows_on)
+			{
+				if (ImGui::MenuItem("Turn Off windows", NULL))
+					TurnOnOff();
+			}
+			else
+			{
+				if (ImGui::MenuItem("Turn On windows", NULL))
+					TurnOnOff();
+			}
+
+
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Demo", NULL))
-				show_demo = !show_demo;
+				demo->is_open = !demo->is_open;
 
 			if (ImGui::MenuItem("Download latest version"))
 				ShellExecuteA(NULL, "open", "https://github.com/joeyGumer/JoJoEngine/releases", NULL, NULL, NULL);
@@ -108,27 +133,19 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::EndMainMenuBar();
 	}
 
-	console->Update();
-	
-	if(show_demo)
-		ImGui::ShowTestWindow();
-
-	//Iterate all editor windows
-	/*for (uint i = 0; i < editor_windows.size(); i++)
-	{
-		editor_windows[i]->Update();
-	}*/
-
 	return UPDATE_CONTINUE;
 }
 
 
 void ModuleEditor::Draw() const
 {
-	//Iterate all editor windows
-	for (uint i = 0; i < editor_windows.size(); i++)
+	if (windows_on)
 	{
-		editor_windows[i]->Update();
+		//Iterate all editor windows
+		for (uint i = 0; i < editor_windows.size(); i++)
+		{
+			editor_windows[i]->Update();
+		}
 	}
 
 	//Render all ImGui elements defined
@@ -162,11 +179,36 @@ void ModuleEditor::AboutUs()
 	ImGui::Text("ImGui 1.50");
 	ImGui::Text("MathGeoLib 1.5");
 	ImGui::Text("Parson");
+
+	ImGui::Spacing();
+	ImGui::Separator();
+	ImGui::Spacing();
+	if (ImGui::MenuItem("Take a look to the repository"))
+		ShellExecuteA(NULL, "open", "https://github.com/joeyGumer/JoJoEngine", NULL, NULL, NULL);
 }
 
 void ModuleEditor::AddWindow(EditorWindow* win)
 {
 	editor_windows.push_back(win);
+}
+
+void ModuleEditor::TurnOnOff()
+{
+	for (uint i = 0; i < editor_windows.size(); i++)
+	{
+		if (editor_windows[i]->is_open)
+		{
+			windows_on = false;
+			editor_windows[i]->want_to_be_open = true;
+			editor_windows[i]->is_open = false;
+		}
+		else if (editor_windows[i]->want_to_be_open)
+		{
+			windows_on = true;
+			editor_windows[i]->want_to_be_open = false;
+			editor_windows[i]->is_open = true;
+		}
+	}
 }
 
 bool ModuleEditor::LoadConfig(JSON_Object* data)
