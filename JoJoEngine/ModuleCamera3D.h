@@ -56,7 +56,6 @@ public:
 	float speed;
 	float wheel_speed;
 	float sensitivity;
-	float offset;
 
 private:
 

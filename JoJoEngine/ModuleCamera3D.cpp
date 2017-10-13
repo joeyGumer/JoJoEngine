@@ -24,7 +24,6 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 	speed = 0.01f;
 	wheel_speed = 0.03f;
 	sensitivity = 0.006f;
-	offset = 10.0f;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -145,9 +144,11 @@ void ModuleCamera3D::CenterCameraOnGeometry(const AABB box)
 {
 	if (box.MaxX() != 0 && box.MaxY() != 0 && box.MaxZ() != 0)
 	{
-		Position.x = box.maxPoint.x + offset;
-		Position.y = box.maxPoint.y + offset;
-		Position.z = box.maxPoint.z + offset;
+		vec offset(box.maxPoint - box.minPoint);
+
+		Position.x = box.maxPoint.x + offset.Length();
+		Position.y = box.maxPoint.y + offset.Length();
+		Position.z = box.maxPoint.z + offset.Length();
 
 		Reference.x = box.CenterPoint().x;
 		Reference.y = box.CenterPoint().y;
