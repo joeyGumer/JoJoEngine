@@ -10,6 +10,7 @@ class PCylinder;
 class PWiredPlane;
 class PPlane;
 class PSphere;
+class PAxis;
 
 class ModuleSceneEdit : public Module
 {
@@ -38,6 +39,7 @@ private:
 	PCylinder* ex_cylinder;
 	PPlane* ex_plane;
 	PSphere* ex_sphere;
+	PAxis* world_axis;
 };
 
 #endif  __MODULESCENEEDIT_H__

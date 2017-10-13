@@ -553,3 +553,35 @@ void PWiredPlane::InnerRender() const
 
 	glEnd();
 }
+
+PAxis::PAxis() : Primitive()
+{
+
+}
+
+void PAxis::InnerRender() const
+{
+	glLineWidth(5.0f);
+
+	glBegin(GL_LINES);
+
+	float size = 3.0f;
+
+	glColor3f(0.0, 1.0, 0.0);
+
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(size, 0.0, 0.0);
+
+	glColor3f(1.0, 0.0, 0.0);
+
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, size, 0.0);
+
+	glColor3f(0.0, 0.0, 1.0);
+
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, size);
+
+	glEnd();
+
+}

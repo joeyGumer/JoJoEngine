@@ -122,3 +122,11 @@ public:
 	float3 normal;
 	float constant;
 };
+
+//=============================================
+class PAxis : public Primitive
+{
+public: 
+	PAxis();
+	void InnerRender() const;
+};

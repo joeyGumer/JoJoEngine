@@ -25,6 +25,8 @@ bool ModuleSceneEdit::Start()
 	ex_cylinder = new PCylinder(1.0f, 3.0f);
 	ex_sphere = new PSphere(1.0f);
 	ex_plane = new PPlane(2.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+	world_axis = new PAxis();
+
 	return true;
 }
 
@@ -35,6 +37,7 @@ bool ModuleSceneEdit::CleanUp()
 	delete ex_cylinder;
 	delete ex_sphere;
 	delete ex_plane;
+	delete world_axis;
 	return true;
 }
 
@@ -52,6 +55,7 @@ update_status ModuleSceneEdit::Update(float dt)
 
 update_status ModuleSceneEdit::PostUpdate(float dt)
 {
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -178,6 +182,11 @@ void ModuleSceneEdit::Draw()
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
+
+
+
+	//Axis last to be drawn
+	world_axis->InnerRender();
 
 }
 
