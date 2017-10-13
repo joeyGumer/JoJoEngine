@@ -425,3 +425,31 @@ bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
 
 	return ret;
 }
+
+const AABB ModuleRenderer3D::GetAABB() const
+{
+	AABB ret(float3(0, 0, 0), float3(0, 0, 0));
+
+	if (!meshes_array.empty())
+	{
+		std::vector<float3> vertices;
+		//Calculate a AABB for each individual mesh
+		for (int i = 0; i < meshes_array.size(); i++)
+		{
+			AABB individual_aabb(float3(0, 0, 0), float3(0, 0, 0));
+			std::vector <float3> vertex_array;
+
+			for (int j = 0; j < meshes_array[i]->num_vertices * 3; j += 3)
+				vertex_array.push_back(float3(meshes_array[i]->vertices[j], meshes_array[i]->vertices[j + 1], meshes_array[i]->vertices[j + 2]));
+
+			individual_aabb.Enclose(&vertex_array[0], meshes_array[i]->num_vertices);
+
+			//Stores each vertex of each individual AABB on an array to generate the global AABB later
+			for (int k = 0; k < 8; k++)
+				vertices.push_back(individual_aabb.CornerPoint(k));
+		}
+		//Global AABB
+		ret.Enclose(&vertices[0], vertices.size());
+	}
+	return ret;
+}

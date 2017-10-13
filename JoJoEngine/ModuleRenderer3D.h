@@ -36,6 +36,8 @@ public:
 	bool LoadMesh(char* file);
 	bool LoadImageTexture(char* file);
 
+	const AABB GetAABB() const;
+
 public:
 	bool draw_normals = false;
 	bool draw_wireframe = false;

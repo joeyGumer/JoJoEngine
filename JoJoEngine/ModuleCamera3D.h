@@ -4,6 +4,7 @@
 #include "glmath.h"
 #include <list>
 #include "p2Point.h"
+#include "Math.h"
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
@@ -34,6 +35,7 @@ public:
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void LookAt(const vec3 &Spot);
+	void CenterCameraOnGeometry(const AABB box);
 	void Move(const vec3 &Movement);
 	void Move(Direction d, float speed);
 	float* GetViewMatrix();
@@ -51,7 +53,10 @@ private:
 public:
 	
 	vec3 X, Y, Z, Position, Reference;
+	float speed;
+	float wheel_speed;
 	float sensitivity;
+	float offset;
 
 private:
 
