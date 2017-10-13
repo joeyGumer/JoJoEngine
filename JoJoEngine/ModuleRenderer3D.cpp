@@ -346,7 +346,7 @@ void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 		//NOTE: trying to draw them with direct mode, temporaly
 		glBegin(GL_LINES);
 
-		glLineWidth(2.0f);
+		glLineWidth(1.0f);
 		glColor3f(0.0f, 1.0, 1.0);
 
 		for (int i = 0; i < mesh->num_normals * 3; i += 3)
@@ -369,7 +369,7 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 		
 
 		glColor3f(1.0f, 1.0f, 0.0f);
-		glLineWidth(0.5f);
+		glLineWidth(2.0f);
 
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);

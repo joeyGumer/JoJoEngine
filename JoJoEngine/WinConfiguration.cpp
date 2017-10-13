@@ -59,7 +59,7 @@ void WinConfiguration::Update()
 
 		TabApplication();
 		TabWindow();	
-		TabRender();
+		TabRenderer();
 		TabHardware();
 
 		ImGui::End();
@@ -160,9 +160,9 @@ void WinConfiguration::TabWindow()
 	}
 }
 
-void WinConfiguration::TabRender()
+void WinConfiguration::TabRenderer()
 {
-	if (ImGui::CollapsingHeader("Render"))
+	if (ImGui::CollapsingHeader("Renderer"))
 	{
 		bool bool_tmp;
 
@@ -170,6 +170,12 @@ void WinConfiguration::TabRender()
 		if (ImGui::Checkbox("Draw Normals", &bool_tmp))
 		{
 			App->renderer3D->draw_normals = bool_tmp;
+		}
+
+		bool_tmp = App->renderer3D->draw_wireframe;
+		if (ImGui::Checkbox("Draw wireframe", &bool_tmp))
+		{
+			App->renderer3D->draw_wireframe = bool_tmp;
 		}
 	}
 }

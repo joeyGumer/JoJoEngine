@@ -163,7 +163,6 @@ void ModuleSceneEdit::Draw()
 	//Texture
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
-	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -181,8 +180,6 @@ void ModuleSceneEdit::Draw()
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
-
 
 
 	//Axis last to be drawn

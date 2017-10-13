@@ -18,7 +18,7 @@ public:
 private:
 	void TabApplication();
 	void TabWindow();
-	void TabRender();
+	void TabRenderer();
 	void TabHardware();
 
 private:

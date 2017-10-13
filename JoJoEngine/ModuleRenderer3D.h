@@ -38,7 +38,7 @@ public:
 
 public:
 	bool draw_normals = false;
-	bool draw_wireframe = true;
+	bool draw_wireframe = false;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
