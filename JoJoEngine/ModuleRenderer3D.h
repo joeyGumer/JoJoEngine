@@ -36,9 +36,12 @@ public:
 	bool LoadMesh(char* file);
 	bool LoadImageTexture(char* file);
 
+	void EnableTextures(bool enable);
+
 public:
 	bool draw_normals = false;
 	bool draw_wireframe = false;
+	bool texture_enabled = true;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -48,6 +51,6 @@ public:
 	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;
 
-
+private:
 	uint texture_channel = 0;
 };
