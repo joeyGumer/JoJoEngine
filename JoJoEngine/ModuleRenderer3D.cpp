@@ -238,18 +238,19 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 		{
 			meshes_array.push_back(meshes[i]);
 
-			/*//NOTE: Still not sure if this is the best spot to generate the buffers
+			//NOTE: Still not sure if this is the best spot to generate the buffers
 			glGenBuffers(1, (GLuint*) &(meshes[i]->id_vertices));
 			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_vertices);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_vertices * 3, meshes[i]->vertices, GL_STATIC_DRAW);
+
+			glGenBuffers(1, (GLuint*) &(meshes[i]->id_texture_UVs));
+			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_texture_UVs);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_texture_UVs * 2, meshes[i]->texture_UVs, GL_STATIC_DRAW);
 
 			glGenBuffers(1, (GLuint*) &(meshes[i]->id_indices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_indices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_indices, meshes[i]->indices, GL_STATIC_DRAW);
 
-			glGenBuffers(1, (GLuint*) &(meshes[i]->id_texture_UVs));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_texture_UVs);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_texture_UVs * 2, meshes[i]->texture_UVs, GL_STATIC_DRAW);*/
 		}
 	}
 	else
@@ -310,17 +311,17 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {
 	//NOTE: Still not sure if this is the best spot to generate the buffers
-	glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
+	/*glGenBuffers(1, (GLuint*) &(mesh->id_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_vertices * 3, mesh->vertices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
+
 	glGenBuffers(1, (GLuint*) &(mesh->id_indices));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) &(mesh->id_texture_UVs));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_texture_UVs);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_texture_UVs * 2, mesh->texture_UVs, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);*/
 
 	//NOTE: temporal while i use the direct mode to draw normals
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -341,7 +342,7 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glBindTexture(GL_TEXTURE_2D, texture_channel);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-	glDrawElements(GL_TRIANGLES, mesh->id_indices, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);

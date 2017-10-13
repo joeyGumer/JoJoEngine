@@ -3,14 +3,17 @@
 #include "Globals.h"
 #include "Math.h"
 
+#include "OpenGl.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-//Devil NOTE: not sure if had to use it here
-
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
+
+//NOTE: temporal use of OpenGL
+
 
 Mesh::~Mesh()
 {
@@ -117,6 +120,7 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		}
 	}
 
+	//normals
 	if (new_mesh->HasNormals())
 	{
 		m->num_normals = new_mesh->mNumVertices;
@@ -132,19 +136,33 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		m->num_texture_UVs = new_mesh->mNumVertices;
 		m->texture_UVs = new float[m->num_texture_UVs * 2];
 
-		for (int i = 0; i < m->num_texture_UVs; i++)
+		for (int i = 0; i < m->num_texture_UVs; i ++)
 		{
 			//NOTE: using direct asignation
-			//memcpy(&m->texture_UVs[i * 2], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
-			//memcpy(&m->texture_UVs[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
+			memcpy(&m->texture_UVs[i * 2], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
+			memcpy(&m->texture_UVs[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
 
-			m->texture_UVs[i * 2] = new_mesh->mTextureCoords[0][i].x;
-			m->texture_UVs[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
+			//m->texture_UVs[i * 2] = new_mesh->mTextureCoords[0][i].x;
+			//m->texture_UVs[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
 		}
 		LOG("New mesh with %d UVs", m->num_texture_UVs);
 	}
 
 	//Copy colors
+
+	//Buffers generation
+	glGenBuffers(1, (GLuint*) &(m->id_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* m->num_vertices * 3, m->vertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*) &(m->id_texture_UVs));
+	glBindBuffer(GL_ARRAY_BUFFER, m->id_texture_UVs);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* m->num_texture_UVs * 2, m->texture_UVs, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*) &(m->id_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->id_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* m->num_indices, m->indices, GL_STATIC_DRAW);
+
 	return m;
 
 }
