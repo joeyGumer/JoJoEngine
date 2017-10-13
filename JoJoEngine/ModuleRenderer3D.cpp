@@ -230,11 +230,14 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 	bool ret = true;
 
 	//NOTE: temporal, have to configure library and assets directory
-	Mesh** meshes = App->fbx->LoadFBX(file, &num_meshes);
+	uint n_meshes = 0;
+	Mesh** meshes = App->fbx->LoadFBX(file, &n_meshes);
+
+	num_meshes += n_meshes;
 
 	if (meshes != nullptr)
 	{
-		for (uint i = 0; i < num_meshes; i++)
+		for (uint i = 0; i < n_meshes; i++)
 		{
 			meshes_array.push_back(meshes[i]);
 

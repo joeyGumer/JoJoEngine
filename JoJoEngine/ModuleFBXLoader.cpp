@@ -71,7 +71,7 @@ Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 			ret = new  Mesh*[num_meshes];
 
 			if (n_mesh)
-				*n_mesh += num_meshes;
+				*n_mesh = num_meshes;
 
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			for (uint i = 0; i < scene->mNumMeshes; i++)

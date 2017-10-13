@@ -1,6 +1,8 @@
 #include "ModuleFileSystem.h"
 #include "Application.h"
 
+#include <algorithm>
+
 #include "SDL/include/SDL.h"
 #include "PhysFS\include\physfs.h"
 
@@ -189,6 +191,8 @@ std::string ModuleFileSystem::GetFileExtension(char* file) const
 	{
 		ext.push_back(tmp_str[i]);
 	}
+
+	std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
 
 	char* ret = (char*)ext.c_str();
 
