@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
+#include "ModuleFileSystem.h"
 
 #include "JSON\parson.h"
 
@@ -192,10 +193,26 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 			{
 				//Mesh
-				if (!App->renderer3D->LoadMesh(e.drop.file))
+				char* file = e.drop.file;
+				//NOTE: Make all this in a file system function
+				
+				std::string extension = App->fs->GetFileExtension(file);
+
+				if (extension == ".fbx")
+				{
+					App->renderer3D->LoadMesh(e.drop.file);
+				}
+				else if (extension == ".png")
+				{
+					App->renderer3D->LoadImageTexture(e.drop.file);
+				}
+				/*if (!App->renderer3D->LoadMesh(e.drop.file))
 				{
 					LOG("Error: droped file couldn't be loaded (Maybe wrong format)")
-				}
+				}*/
+
+				SDL_free(file);
+
 			}
 			break;
 		}

@@ -172,3 +172,26 @@ unsigned int ModuleFileSystem::Save(const char* file, const char* buffer, unsign
 
 	return ret;
 }
+
+//NOTE: issues returning char*
+std::string ModuleFileSystem::GetFileExtension(char* file) const
+{
+	std::string tmp_str = file;
+	std::string ext;
+
+	tmp_str.back();
+	uint i = tmp_str.length() - 1;
+
+	for (; tmp_str[i] != '.'; i--)
+	{}
+
+	for (; i < tmp_str.length(); i++)
+	{
+		ext.push_back(tmp_str[i]);
+	}
+
+	char* ret = (char*)ext.c_str();
+
+	return ret;
+	
+}

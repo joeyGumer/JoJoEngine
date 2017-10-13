@@ -3,8 +3,6 @@
 #include "Globals.h"
 #include "Math.h"
 
-#include "OpenGl.h"
-
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -149,19 +147,6 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 	}
 
 	//Copy colors
-
-	//Buffers generation
-	glGenBuffers(1, (GLuint*) &(m->id_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* m->num_vertices * 3, m->vertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) &(m->id_texture_UVs));
-	glBindBuffer(GL_ARRAY_BUFFER, m->id_texture_UVs);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* m->num_texture_UVs * 2, m->texture_UVs, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) &(m->id_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->id_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* m->num_indices, m->indices, GL_STATIC_DRAW);
 
 	return m;
 

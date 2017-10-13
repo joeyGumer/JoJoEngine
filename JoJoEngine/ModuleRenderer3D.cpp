@@ -157,7 +157,7 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	LoadImageTexture("Baker_house.png");
+	//LoadImageTexture("Baker_house.png");
 	//LoadMesh("BakerHouse.FBX");
 
 	//NOTE: For now, use this texture only
