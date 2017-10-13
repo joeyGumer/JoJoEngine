@@ -27,6 +27,7 @@ private:
 	void DrawMeshes() const;
 
 	void DrawNormals(const Mesh* mesh) const;
+	void DrawWireframe(const Mesh* mesh) const;
 
 public:
 

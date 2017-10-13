@@ -344,6 +344,11 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 
+	//If wireframe
+	glColor3f(1.0f, 1.0f, 0.0f);
+
+	glDrawElements(GL_LINE_STRIP, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_TEXTURE_2D);
@@ -374,6 +379,8 @@ void ModuleRenderer3D::DrawNormals(const Mesh* mesh) const
 		glEnd();
 	}
 }
+
+
 void ModuleRenderer3D::DrawMeshes() const
 {
 
