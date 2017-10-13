@@ -41,7 +41,8 @@ public:
 public:
 	bool draw_normals = false;
 	bool draw_wireframe = false;
-	bool texture_enabled = true;
+	bool draw_textures = true;
+	bool draw_meshes = true;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

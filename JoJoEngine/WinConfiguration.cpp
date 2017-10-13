@@ -178,10 +178,16 @@ void WinConfiguration::TabRenderer()
 			App->renderer3D->draw_wireframe = bool_tmp;
 		}
 
-		bool_tmp = App->renderer3D->texture_enabled;
+		bool_tmp = App->renderer3D->draw_textures;
 		if (ImGui::Checkbox("Draw textures", &bool_tmp))
 		{
 			App->renderer3D->EnableTextures(bool_tmp);
+		}
+
+		bool_tmp = App->renderer3D->draw_meshes;
+		if (ImGui::Checkbox("Draw mesh", &bool_tmp))
+		{
+			App->renderer3D->draw_meshes = bool_tmp;
 		}
 	}
 }
