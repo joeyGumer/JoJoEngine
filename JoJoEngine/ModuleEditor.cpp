@@ -5,6 +5,7 @@
 #include "PhysBody3D.h"
 #include "EditorWindow.h"
 #include "WinConfiguration.h"
+#include "WinProperties.h"
 #include "ImGuiDemo.h"
 
 #include "Brofiler/Brofiler.h"
@@ -31,9 +32,11 @@ bool ModuleEditor::Start()
 	//Creating all editor windows
 	configuration = new WinConfiguration();
 	demo = new ImGuiDemo();
+	properties = new WinProperties();
 
 	//Adding all editor windows to the vector (order is important)
 	AddWindow(configuration);
+	AddWindow(properties);
 	AddWindow(demo);
 	AddWindow(console);
 
@@ -87,6 +90,11 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Configuration", NULL))
 			{
 				configuration->is_open = !configuration->is_open;
+			}
+
+			if (ImGui::MenuItem("Properties", NULL))
+			{
+				properties->is_open = !properties->is_open;
 			}
 
 			if (ImGui::MenuItem("Console", NULL))

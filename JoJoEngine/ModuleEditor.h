@@ -7,6 +7,7 @@
 
 class EditorWindow;
 class WinConfiguration;
+class WinProperties;
 class ImGuiDemo;
 
 class ModuleEditor : public Module
@@ -34,5 +35,6 @@ private:
 
 	std::vector<EditorWindow*> editor_windows;
 	WinConfiguration* configuration = nullptr;
+	WinProperties* properties = nullptr;
 	ImGuiDemo* demo = nullptr;	
 };

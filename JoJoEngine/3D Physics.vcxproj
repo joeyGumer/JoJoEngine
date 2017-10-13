@@ -176,6 +176,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="WinConfiguration.h" />
+    <ClInclude Include="WinProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
     <ClCompile Include="WinConfiguration.cpp" />
+    <ClCompile Include="WinProperties.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ListIterator.snippet" />

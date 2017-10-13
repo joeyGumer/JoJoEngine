@@ -346,6 +346,7 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 	DrawWireframe(mesh);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
