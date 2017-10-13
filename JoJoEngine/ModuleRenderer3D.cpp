@@ -250,6 +250,10 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_texture_UVs);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_texture_UVs * 2, meshes[i]->texture_UVs, GL_STATIC_DRAW);
 
+			glGenBuffers(1, (GLuint*) &(meshes[i]->id_normals));
+			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_normals);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_normals * 3, meshes[i]->normals, GL_STATIC_DRAW);
+
 			glGenBuffers(1, (GLuint*) &(meshes[i]->id_indices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_indices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_indices, meshes[i]->indices, GL_STATIC_DRAW);
@@ -318,11 +322,14 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 
 	//Draw 	
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normals);
+	glNormalPointer(GL_FLOAT, 0, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
