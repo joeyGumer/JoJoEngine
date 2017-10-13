@@ -342,6 +342,9 @@
     <ClInclude Include="Console.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuiDemo.h">
+      <Filter>Sources\Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -537,6 +540,9 @@
       <Filter>Sources\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Console.cpp">
+      <Filter>Sources\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiDemo.cpp">
       <Filter>Sources\Editor</Filter>
     </ClCompile>
   </ItemGroup>

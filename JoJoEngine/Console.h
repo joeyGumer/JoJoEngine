@@ -10,7 +10,9 @@ public:
 	Console();
 	~Console();
 
+	void Start();
 	void Update();
+	void CleanUp();
 
 	void Write(const char* text);
 

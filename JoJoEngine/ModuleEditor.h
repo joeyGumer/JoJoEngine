@@ -7,6 +7,7 @@
 
 class EditorWindow;
 class WinConfiguration;
+class ImGuiDemo;
 
 class ModuleEditor : public Module
 {
@@ -26,12 +27,12 @@ public:
 private:
 	void AboutUs();
 	void AddWindow(EditorWindow* win);
+	void TurnOnOff();
 
 private:
-	bool show_demo = false;
+	bool windows_on = true;
 
 	std::vector<EditorWindow*> editor_windows;
 	WinConfiguration* configuration = nullptr;
-
-	
+	ImGuiDemo* demo = nullptr;	
 };
