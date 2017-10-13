@@ -325,8 +325,11 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 
 	glBindTexture(GL_TEXTURE_2D, texture_channel);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+	if (draw_meshes)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
+		glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+	}
 
 	//Wireframe
 	DrawWireframe(mesh);
@@ -371,7 +374,9 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 		glColor3f(1.0f, 1.0f, 0.0f);
 		glLineWidth(2.0f);
 
-		glDisable(GL_TEXTURE_2D);
+		if(draw_textures)
+			glDisable(GL_TEXTURE_2D);
+
 		glDisable(GL_LIGHTING);
 
 		glPolygonMode(GL_FRONT, GL_LINE);
@@ -382,7 +387,9 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_FILL);
 
-		glEnable(GL_TEXTURE_2D);
+		if (draw_textures)
+			glEnable(GL_TEXTURE_2D);
+
 		glEnable(GL_LIGHTING);
 	}
 }
@@ -411,6 +418,18 @@ void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 	glLoadIdentity();
 }
 
+//Utiles
+
+void ModuleRenderer3D::EnableTextures(bool enable)
+{
+	draw_textures = enable;
+
+	if (draw_textures)
+		glEnable(GL_TEXTURE_2D);
+	else
+		glDisable(GL_TEXTURE_2D);
+
+}
 
 bool ModuleRenderer3D::LoadConfig(JSON_Object* data)
 {
