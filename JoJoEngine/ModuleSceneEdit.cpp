@@ -86,7 +86,7 @@ void ModuleSceneEdit::Draw()
 		}
 	}
 
-	GLuint textureId = 0;
+	/*GLuint textureId = 0;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -179,7 +179,7 @@ void ModuleSceneEdit::Draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 
 	//Axis last to be drawn

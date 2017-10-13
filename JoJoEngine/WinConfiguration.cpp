@@ -34,9 +34,9 @@ void WinConfiguration::Start()
 	if (SDL_HasSSE42()) caps += "SSE42, ";
 
 	//VRAM
-	glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_vram);
-	glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &available_vram);
-	glGetIntegerv(GL_GPU_MEM_INFO_USAGE_MEM_NVX, &usage_vram);
+	glGetIntegerv(GPU_TOTAL_AVAILABLE_MEM, &total_vram);
+	glGetIntegerv(GPU_CURRENT_AVAILABLE_MEM, &available_vram);
+	glGetIntegerv(GPU_USAGE_MEM, &usage_vram);
 	total_vram /= 1000;
 	available_vram /= 1000;
 	usage_vram /= 1000;

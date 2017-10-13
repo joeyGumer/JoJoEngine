@@ -42,9 +42,9 @@ enum update_status
 	UPDATE_ERROR
 };
 
-#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
-#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
-#define GL_GPU_MEM_INFO_USAGE_MEM_NVX 0x904A
+#define GPU_TOTAL_AVAILABLE_MEM 0x9048
+#define GPU_CURRENT_AVAILABLE_MEM 0x9049
+#define GPU_USAGE_MEM 0x904A
 
 //Utiles
 //NOTE: tried to create as a safer version of delete
