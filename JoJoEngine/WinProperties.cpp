@@ -66,7 +66,7 @@ void WinProperties::Update()
 		}
 		if (ImGui::CollapsingHeader("Texture"))
 		{
-			ImGui::Image((ImTextureID)App->renderer3D->current_texture_id, ImVec2(200, 200));
+			ImGui::Image((ImTextureID)App->renderer3D->GetTextureChannel(), ImVec2(200, 200));
 			ImGui::Text("%i x %i", (int)App->renderer3D->GetTextureSize().x, (int)App->renderer3D->GetTextureSize().y);
 		}
 

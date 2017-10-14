@@ -38,6 +38,7 @@ public:
 	void EnableTextures(bool enable);
 
 	const AABB GetAABB() const;
+	const uint GetTextureChannel() const;
 	const vec GetTextureSize() const;
 
 public:
@@ -52,10 +53,9 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	std::vector<Mesh*> meshes_array;
-	uint num_meshes = 0;
-	int current_texture_id = 0;
-	vec texture_size;
+	uint num_meshes = 0;	
 
 private:
 	uint texture_channel = 0;
+	vec texture_size;
 };

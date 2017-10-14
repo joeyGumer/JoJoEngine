@@ -276,7 +276,6 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 	ILuint id_image;
 	ilGenImages(1, &id_image);
 	ilBindImage(id_image);
-	current_texture_id = id_image;
 
 	ret = ilLoadImage(file);
 
@@ -457,6 +456,11 @@ bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
 	bool ret = true;
 
 	return ret;
+}
+
+const uint ModuleRenderer3D::GetTextureChannel() const
+{
+	return texture_channel;
 }
 
 const vec ModuleRenderer3D::GetTextureSize() const
