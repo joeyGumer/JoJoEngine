@@ -162,32 +162,49 @@ void WinConfiguration::TabWindow()
 
 void WinConfiguration::TabRenderer()
 {
-	if (ImGui::CollapsingHeader("Renderer"))
+	if (ImGui::CollapsingHeader("Render"))
 	{
 		bool bool_tmp;
 
-		bool_tmp = App->renderer3D->draw_normals;
-		if (ImGui::Checkbox("Draw Normals", &bool_tmp))
+		if (ImGui::TreeNodeEx("Geometry"))
 		{
-			App->renderer3D->draw_normals = bool_tmp;
+			bool_tmp = App->renderer3D->draw_normals;
+			if (ImGui::Checkbox("Draw Normals", &bool_tmp))
+			{
+				App->renderer3D->draw_normals = bool_tmp;
+			}
+
+			bool_tmp = App->renderer3D->draw_wireframe;
+			if (ImGui::Checkbox("Draw wireframe", &bool_tmp))
+			{
+				App->renderer3D->draw_wireframe = bool_tmp;
+			}
+
+			bool_tmp = App->renderer3D->draw_meshes;
+			if (ImGui::Checkbox("Draw mesh", &bool_tmp))
+			{
+				App->renderer3D->draw_meshes = bool_tmp;
+			}
+
+			ImGui::TreePop();
 		}
 
-		bool_tmp = App->renderer3D->draw_wireframe;
-		if (ImGui::Checkbox("Draw wireframe", &bool_tmp))
+		if (ImGui::TreeNodeEx("Textures"))
 		{
-			App->renderer3D->draw_wireframe = bool_tmp;
+			bool_tmp = App->renderer3D->draw_textures;
+			if (ImGui::Checkbox("Draw textures", &bool_tmp))
+			{
+				App->renderer3D->EnableTextures(bool_tmp);
+			}
+
+			ImGui::TreePop();
 		}
 
-		bool_tmp = App->renderer3D->draw_textures;
-		if (ImGui::Checkbox("Draw textures", &bool_tmp))
+		if (ImGui::TreeNodeEx("Lights"))
 		{
-			App->renderer3D->EnableTextures(bool_tmp);
-		}
 
-		bool_tmp = App->renderer3D->draw_meshes;
-		if (ImGui::Checkbox("Draw mesh", &bool_tmp))
-		{
-			App->renderer3D->draw_meshes = bool_tmp;
+
+			ImGui::TreePop();
 		}
 	}
 }
