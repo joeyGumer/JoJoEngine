@@ -37,7 +37,8 @@ public:
 	bool LoadImageTexture(char* file);
 	void EnableTextures(bool enable);
 
-	const AABB GetAABB() const;	
+	const AABB GetAABB() const;
+	const vec GetTextureSize() const;
 
 public:
 	bool draw_normals = false;
@@ -52,6 +53,8 @@ public:
 
 	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;
+	int current_texture_id = 0;
+	vec texture_size;
 
 private:
 	uint texture_channel = 0;

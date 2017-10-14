@@ -43,24 +43,31 @@ void WinProperties::Update()
 				uint n_vertices = tmp_mesh->num_vertices;
 				uint n_indices = tmp_mesh->num_indices / 3;
 
-				if (ImGui::CollapsingHeader("Mesh "))
+				string mesh_name = string("Mesh ") + to_string(i + 1);
+
+				if (ImGui::TreeNodeEx(mesh_name.c_str()))
 				{
 					ImGui::Text("Num Vertices:  %d", n_vertices);
 					ImGui::Text("Num Triangles: %d", n_indices);
 
-
+					ImGui::TreePop();
 				}
 
 				total_vertices += n_vertices;
 				total_faces += n_indices;
 			}
 
+			ImGui::Spacing();
+			ImGui::Separator();
+			ImGui::Spacing();
+
 			ImGui::Text("Total vertices: %d", total_vertices);
 			ImGui::Text("Total triangles: %d", total_faces);
 		}
 		if (ImGui::CollapsingHeader("Texture"))
 		{
-
+			ImGui::Image((ImTextureID)App->renderer3D->current_texture_id, ImVec2(200, 200));
+			ImGui::Text("%i x %i", (int)App->renderer3D->GetTextureSize().x, (int)App->renderer3D->GetTextureSize().y);
 		}
 
 		ImGui::End();

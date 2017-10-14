@@ -276,6 +276,7 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 	ILuint id_image;
 	ilGenImages(1, &id_image);
 	ilBindImage(id_image);
+	current_texture_id = id_image;
 
 	ret = ilLoadImage(file);
 
@@ -285,7 +286,8 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 
 		texture_channel = ilutGLBindTexImage();
 
-
+		texture_size.x = ilGetInteger(IL_IMAGE_WIDTH);
+		texture_size.y = ilGetInteger(IL_IMAGE_HEIGHT);
 		/*texture_channel = 0;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glGenTextures(1, &texture_channel);
@@ -455,6 +457,11 @@ bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
 	bool ret = true;
 
 	return ret;
+}
+
+const vec ModuleRenderer3D::GetTextureSize() const
+{
+	return texture_size;
 }
 
 const AABB ModuleRenderer3D::GetAABB() const
