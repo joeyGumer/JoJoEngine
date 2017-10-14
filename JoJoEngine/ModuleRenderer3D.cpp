@@ -171,13 +171,7 @@ bool ModuleRenderer3D::CleanUp()
 	ImGui_ImplSdlGL3_Shutdown();
 
 	//Delete all meshes
-	uint size = meshes_array.capacity();
-	for (uint i = 0; i < size; i++)
-	{
-		RELEASE(meshes_array[i]);
-	}
-	
-	meshes_array.clear();
+	UnloadScene();
 
 	//Delete OpenGl context
 	SDL_GL_DeleteContext(context);
@@ -228,6 +222,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::LoadMesh(char* file)
 {
 	bool ret = true;
+
+	//NOTE: For this build, we unload the scene before loading everything
+
+	UnloadScene();
 
 	//NOTE: temporal, have to configure library and assets directory
 	uint n_meshes = 0;
@@ -317,6 +315,31 @@ bool ModuleRenderer3D::LoadImageTexture(const char* file)
 
 	return ret;
 }
+
+void ModuleRenderer3D::UnloadScene()
+{
+	uint size = meshes_array.size();
+	for (uint i = 0; i < size; i++)
+	{
+		Mesh* tmp_mesh = meshes_array[i];
+
+		//NOTE: have to delete the buffers from the vram
+		/*glDeleteBuffers(sizeof(float) * tmp_mesh->num_vertices * 3, (GLuint*) &(tmp_mesh->id_vertices));
+		glDeleteBuffers(sizeof(float) * tmp_mesh->num_normals * 3, (GLuint*) &(tmp_mesh->id_normals));
+		glDeleteBuffers(sizeof(float) * tmp_mesh->num_texture_UVs * 2, (GLuint*) &(tmp_mesh->id_texture_UVs));
+		glDeleteBuffers(sizeof(uint) * tmp_mesh->num_indices, (GLuint*) &(tmp_mesh->id_indices));*/
+
+		RELEASE(meshes_array[i]);
+	}
+
+	meshes_array.clear();
+	num_meshes = 0;
+}
+
+//-----------------------------------------------
+// DRAW FUNCTIONS
+//-----------------------------------------------
+
 //NOTE: pass as references? or pointer? or copy?
 void ModuleRenderer3D::Draw(const Mesh* mesh) const
 {

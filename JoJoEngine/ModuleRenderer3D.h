@@ -35,6 +35,8 @@ public:
 
 	bool LoadMesh(char* file);
 	bool LoadImageTexture(const char* file);
+	void UnloadScene();
+
 	void EnableTextures(bool enable);
 
 	const AABB GetAABB() const;

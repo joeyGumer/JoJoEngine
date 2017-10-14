@@ -47,10 +47,11 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	//NOTE: use vector or array?
 	Mesh** LoadFBX(char* file_path, uint* n_mesh);
+
 private:
 	Mesh* LoadMesh(aiMesh* new_mesh);
+	
 
 };
 #endif // !_MODULEFBXLOADER_H_

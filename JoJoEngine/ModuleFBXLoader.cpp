@@ -103,6 +103,8 @@ Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 	return ret;
 }
 
+
+
 //NOTE: using pointers?
 Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 {
