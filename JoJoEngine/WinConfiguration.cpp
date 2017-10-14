@@ -130,33 +130,20 @@ void WinConfiguration::TabWindow()
 		}
 
 
-		bool_tmp = App->window->IsFullscreen();
-		if (ImGui::Checkbox("Fullscreen", &bool_tmp))
+		bool_tmp = App->window->GetVsync();
+		if (ImGui::Checkbox("Vsync", &bool_tmp))
 		{
-			App->window->SetFullscreen(bool_tmp);
+			App->window->SetVsync(bool_tmp);
 		}
 
+		if(ImGui::RadioButton("Resizable", &int_tmp, RESIZABLE))
+			App->window->SetWindowMode(int_tmp);
 		ImGui::SameLine();
-
-		bool_tmp = App->window->IsResizable();
-		if (ImGui::Checkbox("Resizable", &bool_tmp))
-		{
-			App->window->SetResizable(bool_tmp);
-		}
-
-		bool_tmp = App->window->IsBorderless();
-		if (ImGui::Checkbox("Borderless", &bool_tmp))
-		{
-			App->window->SetBorderless(bool_tmp);
-		}
-
+		if(ImGui::RadioButton("Fullscreen Desktop", &int_tmp, FULL_DESKTOP))
+			App->window->SetWindowMode(int_tmp);
 		ImGui::SameLine();
-
-		bool_tmp = App->window->IsFullScreenDesktop();
-		if (ImGui::Checkbox("Fullscreen desktop", &bool_tmp))
-		{
-			App->window->SetFullScreenDesktop(bool_tmp);
-		}
+		if(ImGui::RadioButton("Fullscreen", &int_tmp, FULLSCREEN))
+			App->window->SetWindowMode(int_tmp);
 	}
 }
 

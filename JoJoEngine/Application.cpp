@@ -185,10 +185,6 @@ bool Application::LoadConfig()
 	name = json_object_get_string(app_data, "name");
 	organization = json_object_get_string(app_data, "organization");
 
-	//NOTE provisional data before having acces to JSON
-	//name = "JoJo Engine";
-	//organization = "CITM UPC";
-
 	// Call LoadConfig() in all modules
 	list<Module*>::iterator i = list_modules.begin();
 
@@ -207,22 +203,19 @@ bool Application::SaveConfig()
 {
 	bool ret = true;
 
-	JSON_Value* file = json_value_init_object();
-	JSON_Object* config = json_value_get_object(file);
-
-	json_object_dotset_string(config, "App.name", name.c_str());
-
+	JSON_Value* file = json_parse_file("config.json");
+ 	JSON_Object* config = json_value_get_object(file);
 	JSON_Object* app_config = json_object_get_object(config, "App");
 
-	json_object_set_string(config, "organization", organization.c_str());
+	json_object_set_string(config, "name", name.c_str());
+	json_object_set_string(config, "organization", organization.c_str());	
 	
-	//NOTE: creating each module object here or at the own SaveConfig module?
-	//RE NOTE: create a dummy value or an id to index the module
 	// Call SaceConfig() in all modules
 	list<Module*>::iterator i = list_modules.begin();
 	while (i != list_modules.end() && ret == true)
 	{
-		ret = (*i)->SaveConfig(app_config);
+		JSON_Object* module_config = json_object_get_object(app_config, (*i)->name.c_str());
+		ret = (*i)->SaveConfig(module_config);
 		++i;
 	}
 

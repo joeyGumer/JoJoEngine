@@ -6,6 +6,13 @@
 
 class Application;
 
+enum WINDOW_MODE
+{
+	RESIZABLE,
+	FULL_DESKTOP,
+	FULLSCREEN
+};
+
 class ModuleWindow : public Module
 {
 //Methods
@@ -20,25 +27,22 @@ public:
 	bool SaveConfig(JSON_Object* data);
 
 	bool Init();
-	bool CleanUp();
-
-	void SetTitle(const char* title);
+	bool CleanUp();	
 
 	//Getters
-	bool IsFullscreen() const;
-	bool IsResizable() const;
-	bool IsBorderless() const;
-	bool IsFullScreenDesktop() const;
-	int GetWidth() const;
-	int GetHeight() const;
+	const WINDOW_MODE GetWindowMode() const;
+	const int GetWidth() const;
+	const int GetHeight() const;
+	const int GetScreenSize() const;
+	const bool GetVsync() const;
 
 	//Setters
-	void SetFullscreen(bool full);
-	void SetResizable(bool res);
-	void SetBorderless(bool border);
-	void SetFullScreenDesktop(bool full_desk);
-	void SetWidth(int w);
-	void SetHeight(int h);
+	void SetTitle(const char* title);
+	void SetWindowMode(const int& m);
+	void SetWidth(const int& w);
+	void SetHeight(const int& h);
+	void SetScreenSize(const int& size);
+	void SetVsync(const bool& vs);
 
 private:
 	void SetWindowAttributes();
@@ -51,14 +55,12 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 private:
-
-	bool win_fullscreen = false;
-	bool win_resizable = true;
-	bool win_borderless = false;
-	bool win_fullscreen_desktop = false;
-
-	int width = 1200;
-	int height = 800;
+	std::string title;
+	int width;
+	int height;	
+	int screen_size;
+	bool vsync;
+	WINDOW_MODE win_mode;
 };
 
 #endif // __ModuleWindow_H__

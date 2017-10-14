@@ -1,19 +1,68 @@
 {
-"App":
+	"App":
 	{
-	"name":"JoJoEngine",
-	"organization":"UPC_CITM",
-    "window":
-			{
+		"name":"JoJoEngine",
+		"organization":"UPC_CITM",
+		"window":
+		{
 			"width":1280,
 			"height":1024,
 			"screen_size":1,
-			"fullscreen":false,
-			"resizable":true,
-			"borderless":false,
-			"fullscreen_desktop":false,
-			"vsync":true,
+			"window_mode":0,
+			"vsync":false,
 			"title":"JOJOENGINE"
-			}
+		},
+		"renderer":
+		{
+			"GL_depth":true,
+			"GL_cull_face":false,
+			"normals":false,
+			"wireframe":false,
+			"GL_light":true,
+			"light_color":
+			{
+				"R":255,
+				"G":255,
+				"B":255
+			},
+			"light_pos":
+			{
+				"x":0.0,
+				"y":0.0,
+				"z":0.0
+			},
+			"GL_2D_texture":true,
+			"GL_color_material":true
+		},
+		"camera":
+		{
+			"pos":
+			{
+				"x":0.0,
+				"y":0.0,
+				"z":0.0
+			},
+			"reference":
+			{
+				"x":0.0,
+				"y":0.0,
+				"z":0.0
+			},
+			"speed":0.02,
+			"wheel_speed":0.02,
+			"sensitivity":0.02
+		},
+		"audio":
+		{
+			"volume":100
+		},
+		"editor":
+		{
+			"configuration_open":true,
+			"console_open":false,
+			"properties_open":false,
+			"demo_open":false,
+			"windows_active":true
+		}
 	}
 }

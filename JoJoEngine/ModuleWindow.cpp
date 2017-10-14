@@ -38,27 +38,14 @@ bool ModuleWindow::Init()
 		//Use OpenGL 2.1
 		SetWindowAttributes();
 
-		if(win_fullscreen == true)
+		switch (win_mode)
 		{
-			flags |= SDL_WINDOW_FULLSCREEN;
+			case WINDOW_MODE::RESIZABLE: flags |= SDL_WINDOW_RESIZABLE; break;
+			case WINDOW_MODE::FULL_DESKTOP: flags |= SDL_WINDOW_FULLSCREEN_DESKTOP; break;
+			case WINDOW_MODE::FULLSCREEN: flags |= SDL_WINDOW_FULLSCREEN; break;
 		}
 
-		if(win_resizable == true)
-		{
-			flags |= SDL_WINDOW_RESIZABLE;
-		}
-
-		if(win_borderless == true)
-		{
-			flags |= SDL_WINDOW_BORDERLESS;
-		}
-
-		if(win_fullscreen_desktop == true)
-		{
-			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-		}
-
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		if(window == NULL)
 		{
@@ -94,65 +81,81 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
-void ModuleWindow::SetTitle(const char* title)
-{
-	SDL_SetWindowTitle(window, title);
-}
-
 //Getters
-bool  ModuleWindow::IsFullscreen() const
+const WINDOW_MODE  ModuleWindow::GetWindowMode() const
 {
-	return win_fullscreen;
-}
-bool  ModuleWindow::IsResizable() const
-{
-	return win_resizable;
-}
-bool  ModuleWindow::IsBorderless() const
-{
-	return win_borderless;
-}
-bool  ModuleWindow::IsFullScreenDesktop() const
-{
-	return win_fullscreen_desktop;
+	return win_mode;
 }
 
-int ModuleWindow::GetWidth() const
+const int ModuleWindow::GetWidth() const
 {
 	return width;
 }
-int ModuleWindow::GetHeight() const
+const int ModuleWindow::GetHeight() const
 {
 	return height;
 }
 
-//Setters
-//NOTE: look how to make the screen attributes automatic change
-void ModuleWindow::SetFullscreen(bool full)
+const int ModuleWindow::GetScreenSize() const
 {
-	win_fullscreen = full;
-}
-void ModuleWindow::SetResizable(bool res)
-{
-	win_resizable = res;
-}
-void ModuleWindow::SetBorderless(bool border)
-{
-	win_borderless = border;
-}
-void ModuleWindow::SetFullScreenDesktop(bool full_desk)
-{
-	win_fullscreen_desktop = full_desk;
+	return screen_size;
 }
 
-void ModuleWindow::SetWidth(int w)
+const bool ModuleWindow::GetVsync() const
+{
+	return vsync;
+}
+
+//Setters
+void ModuleWindow::SetTitle(const char* t)
+{
+	title = t;
+	SDL_SetWindowTitle(window, title.c_str());
+}
+
+void ModuleWindow::SetWindowMode(const int& m)
+{
+	switch (m)
+	{
+		case WINDOW_MODE::RESIZABLE: 
+		{
+			win_mode = RESIZABLE;
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
+			break;
+		};
+		case WINDOW_MODE::FULL_DESKTOP:
+		{
+			win_mode = FULL_DESKTOP;
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			break;
+		};
+		case WINDOW_MODE::FULLSCREEN:
+		{
+			win_mode = FULLSCREEN;
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+			break;
+		};
+	}	
+}
+
+void ModuleWindow::SetWidth(const int& w)
 {
 	width = w;
 }
-void ModuleWindow::SetHeight(int h)
+void ModuleWindow::SetHeight(const int& h)
 {
 	height = h;
 }
+
+void ModuleWindow::SetScreenSize(const int& size)
+{
+	screen_size = size;
+}
+void ModuleWindow::SetVsync(const bool& vs)
+{
+	vsync = vs;
+}
+
 //---------------
 void ModuleWindow::SetWindowAttributes()
 {
@@ -171,35 +174,31 @@ bool ModuleWindow::LoadConfig(JSON_Object* data)
 {
 	bool ret = true;
 
+	title = json_object_get_string(data, "title");
 	width = json_object_get_number(data, "width");
 	height = json_object_get_number(data, "height");
+	screen_size = json_object_get_number(data, "screen_size");
+	vsync = json_object_get_boolean(data, "vsync");
 
-	win_fullscreen = json_object_get_boolean(data, "fullscreen");
-	win_resizable = json_object_get_boolean(data, "resizable");
-	win_borderless = json_object_get_boolean(data, "borderless");
-	win_fullscreen_desktop = json_object_get_boolean(data, "fullscreen_desktop");
-
+	switch ((int)json_object_get_number(data, "window_mode"))
+	{
+		case WINDOW_MODE::RESIZABLE: win_mode = RESIZABLE; break;
+		case WINDOW_MODE::FULL_DESKTOP: win_mode = FULL_DESKTOP; break;
+		case WINDOW_MODE::FULLSCREEN: win_mode = FULLSCREEN; break;
+	}
 	return ret;
 }
 
 bool ModuleWindow::SaveConfig(JSON_Object* data)
 {
 	bool ret = true;
-
-	json_object_dotset_number(data, "window.width", width);
 	
-	JSON_Object* window_config = json_object_get_object(data, "window");
-	
-	json_object_set_number(window_config, "height", height);
-
-	json_object_set_boolean(window_config, "fullscreen", win_fullscreen);
-	json_object_set_boolean(window_config, "resizable", win_resizable);
-	json_object_set_boolean(window_config, "borderless", win_borderless);
-	json_object_set_boolean(window_config, "fullscreen_desktop", win_fullscreen_desktop);
-
-	//NOTE: add values : screen_size, vsync and title
-
-
+	json_object_dotset_number(data, "width", width);
+	json_object_dotset_number(data, "height", height);
+	json_object_dotset_number(data, "screen_size", screen_size);
+	json_object_dotset_number(data, "window_mode", (int)win_mode);
+	json_object_dotset_boolean(data, "vsync", vsync);
+	json_object_dotset_string(data, "title", title.c_str());
 
 	return ret;
 }
