@@ -1,5 +1,6 @@
 #include "ModuleFBXLoader.h"
 #include "Application.h"
+#include "ModuleRenderer3D.h"
 #include "Globals.h"
 #include "Math.h"
 
@@ -78,6 +79,19 @@ Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 			{
 				ret[i] = LoadMesh(scene->mMeshes[i]);
 			}
+
+			//Get texture
+			//NOTE: for now only the renderer needs it
+			if (scene->HasMaterials())
+			{
+				//NOTE: for now, we just want one texture
+				aiString texture_path;
+
+				scene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+
+				//Note: call this here or make the function return the path?
+				App->renderer3D->LoadImageTexture(texture_path.C_Str());
+			}
 			aiReleaseImport(scene);
 		}
 		else
@@ -147,6 +161,11 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 	}
 
 	//Copy colors
+
+
+
+
+
 
 	return m;
 

@@ -34,7 +34,7 @@ public:
 	void OnResize(int width, int height, float fovy);
 
 	bool LoadMesh(char* file);
-	bool LoadImageTexture(char* file);
+	bool LoadImageTexture(const char* file);
 	void EnableTextures(bool enable);
 
 	const AABB GetAABB() const;

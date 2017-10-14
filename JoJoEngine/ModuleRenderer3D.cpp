@@ -270,7 +270,7 @@ bool ModuleRenderer3D::LoadMesh(char* file)
 	return ret;
 }
 
-bool ModuleRenderer3D::LoadImageTexture(char* file)
+bool ModuleRenderer3D::LoadImageTexture(const char* file)
 {
 	bool ret = true;
 	ILuint id_image;
@@ -287,6 +287,7 @@ bool ModuleRenderer3D::LoadImageTexture(char* file)
 
 		texture_size.x = ilGetInteger(IL_IMAGE_WIDTH);
 		texture_size.y = ilGetInteger(IL_IMAGE_HEIGHT);
+
 		/*texture_channel = 0;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glGenTextures(1, &texture_channel);
