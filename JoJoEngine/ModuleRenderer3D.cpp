@@ -324,10 +324,10 @@ void ModuleRenderer3D::UnloadScene()
 		Mesh* tmp_mesh = meshes_array[i];
 
 		//NOTE: have to delete the buffers from the vram
-		/*glDeleteBuffers(sizeof(float) * tmp_mesh->num_vertices * 3, (GLuint*) &(tmp_mesh->id_vertices));
-		glDeleteBuffers(sizeof(float) * tmp_mesh->num_normals * 3, (GLuint*) &(tmp_mesh->id_normals));
-		glDeleteBuffers(sizeof(float) * tmp_mesh->num_texture_UVs * 2, (GLuint*) &(tmp_mesh->id_texture_UVs));
-		glDeleteBuffers(sizeof(uint) * tmp_mesh->num_indices, (GLuint*) &(tmp_mesh->id_indices));*/
+		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_vertices));
+		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_normals));
+		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_texture_UVs));
+		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_indices));
 
 		RELEASE(meshes_array[i]);
 	}
