@@ -31,8 +31,8 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		width *= screen_size;
+		height *= screen_size;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -141,10 +141,12 @@ void ModuleWindow::SetWindowMode(const int& m)
 void ModuleWindow::SetWidth(const int& w)
 {
 	width = w;
+	SDL_SetWindowSize(window, width, height);
 }
 void ModuleWindow::SetHeight(const int& h)
 {
 	height = h;
+	SDL_SetWindowSize(window, width, height);
 }
 
 void ModuleWindow::SetScreenSize(const int& size)

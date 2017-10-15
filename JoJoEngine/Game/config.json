@@ -3,10 +3,10 @@
         "name": "JoJoEngine",
         "organization": "UPC_CITM",
         "window": {
-            "width": 1280,
-            "height": 1024,
+            "width": 1534,
+            "height": 828,
             "screen_size": 1,
-            "window_mode": 1,
+            "window_mode": 0,
             "vsync": true,
             "title": "JOJOENGINE"
         },

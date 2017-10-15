@@ -136,6 +136,7 @@ void WinConfiguration::TabWindow()
 			App->window->SetVsync(bool_tmp);
 		}
 
+		int_tmp = App->window->GetWindowMode();
 		if(ImGui::RadioButton("Resizable", &int_tmp, RESIZABLE))
 			App->window->SetWindowMode(int_tmp);
 		ImGui::SameLine();
