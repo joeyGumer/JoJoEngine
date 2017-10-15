@@ -83,7 +83,8 @@ bool ModuleWindow::CleanUp()
 
 update_status ModuleWindow::Update(float dt)
 {
-	SDL_GetWindowSize(window, &width, &height);
+	if(win_mode == RESIZABLE)
+		SDL_GetWindowSize(window, &width, &height);
 
 	return UPDATE_CONTINUE;
 }

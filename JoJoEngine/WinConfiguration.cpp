@@ -115,20 +115,7 @@ void WinConfiguration::TabWindow()
 	if (ImGui::CollapsingHeader("Window"))
 	{
 		bool bool_tmp;
-		int  int_tmp;
-
-		int_tmp = App->window->GetWidth();
-		if (ImGui::SliderInt("Width", &int_tmp, 0, 2000))
-		{
-			App->window->SetWidth(int_tmp);
-		}
-
-		int_tmp = App->window->GetHeight();
-		if (ImGui::SliderInt("Height", &int_tmp, 0, 2000))
-		{
-			App->window->SetHeight(int_tmp);
-		}
-
+		int  int_tmp;		
 
 		bool_tmp = App->window->GetVsync();
 		if (ImGui::Checkbox("Vsync", &bool_tmp))
@@ -145,6 +132,21 @@ void WinConfiguration::TabWindow()
 		ImGui::SameLine();
 		if(ImGui::RadioButton("Fullscreen", &int_tmp, FULLSCREEN))
 			App->window->SetWindowMode(int_tmp);
+
+		if (App->window->GetWindowMode() == RESIZABLE)
+		{
+			int_tmp = App->window->GetWidth();
+			if (ImGui::SliderInt("Width", &int_tmp, 0, 1920))
+			{
+				App->window->SetWidth(int_tmp);
+			}
+
+			int_tmp = App->window->GetHeight();
+			if (ImGui::SliderInt("Height", &int_tmp, 0, 1080))
+			{
+				App->window->SetHeight(int_tmp);
+			}
+		}
 	}
 }
 
