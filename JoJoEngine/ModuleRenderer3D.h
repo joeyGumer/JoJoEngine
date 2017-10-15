@@ -37,18 +37,32 @@ public:
 	bool LoadImageTexture(const char* file);
 	void UnloadScene();
 
-	void EnableTextures(bool enable);
+	void EnableTextures(const bool& enable);
+	void EnableColorMaterial(const bool& enable);
+	void EnableDepth(const bool& enable);
+	void EnableCullFace(const bool& enable);
+	void EnableLight(const bool& enable);
 
 	const AABB GetAABB() const;
 	const uint GetTextureChannel() const;
 	const vec GetTextureSize() const;
 
 public:
-	bool draw_normals = false;
-	bool draw_wireframe = false;
-	bool draw_textures = true;
-	bool draw_meshes = true;
+	//Geometry
+	bool draw_normals;
+	bool draw_wireframe;
+	bool draw_meshes;
+	bool depth;
+	bool face_culling;
 
+	//Lights
+	bool lighting;
+
+	//Textures
+	bool color_material;
+	bool draw_textures;
+
+	//-------------------
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;

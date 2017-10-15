@@ -26,7 +26,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module( start_enabled)
 {
-	name = "renderer3D";
+	name = "renderer";
 
 	num_meshes = 0;
 }
@@ -157,10 +157,11 @@ bool ModuleRenderer3D::Start()
 {
 	bool ret = true;
 
-	//LoadImageTexture("Baker_house.png");
-	//LoadMesh("BakerHouse.FBX");
-
-	//NOTE: For now, use this texture only
+	EnableColorMaterial(color_material);
+	EnableCullFace(face_culling);
+	EnableDepth(depth);
+	EnableLight(lighting);
+	EnableTextures(draw_textures);
 
 	return true;
 }
@@ -406,8 +407,6 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 {
 	if (draw_wireframe)
 	{
-		
-
 		glColor3f(1.0f, 1.0f, 0.0f);
 		glLineWidth(2.0f);
 
@@ -457,7 +456,7 @@ void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 
 //Utiles
 
-void ModuleRenderer3D::EnableTextures(bool enable)
+void ModuleRenderer3D::EnableTextures(const bool& enable)
 {
 	draw_textures = enable;
 
@@ -465,12 +464,60 @@ void ModuleRenderer3D::EnableTextures(bool enable)
 		glEnable(GL_TEXTURE_2D);
 	else
 		glDisable(GL_TEXTURE_2D);
+}
 
+void ModuleRenderer3D::EnableColorMaterial(const bool& enable)
+{
+	color_material = enable;
+
+	if (color_material)
+		glEnable(GL_COLOR_MATERIAL);
+	else
+		glDisable(GL_COLOR_MATERIAL);
+}
+
+void ModuleRenderer3D::EnableDepth(const bool& enable)
+{
+	depth = enable;
+
+	if (depth)
+		glEnable(GL_DEPTH);
+	else
+		glDisable(GL_DEPTH);
+}
+
+void ModuleRenderer3D::EnableCullFace(const bool& enable)
+{
+	face_culling = enable;
+
+	if (face_culling)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+}
+
+void ModuleRenderer3D::EnableLight(const bool& enable)
+{
+	lighting = enable;
+
+	if (lighting)
+		glEnable(GL_LIGHTING);
+	else
+		glDisable(GL_LIGHTING);
 }
 
 bool ModuleRenderer3D::LoadConfig(JSON_Object* data)
 {
 	bool ret = true;
+
+	draw_normals = json_object_get_boolean(data, "draw_normals");
+	draw_wireframe = json_object_get_boolean(data, "draw_wireframe");
+	draw_meshes = json_object_get_boolean(data, "draw_meshes");
+	depth = json_object_get_boolean(data, "depth");
+	face_culling = json_object_get_boolean(data, "face_culling");
+	lighting = json_object_get_boolean(data, "lighting");
+	color_material = json_object_get_boolean(data, "color_material");
+	draw_textures = json_object_get_boolean(data, "draw_textures");
 
 	return ret;
 }
@@ -478,6 +525,15 @@ bool ModuleRenderer3D::LoadConfig(JSON_Object* data)
 bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
 {
 	bool ret = true;
+
+	json_object_set_boolean(data, "draw_normals", draw_normals);
+	json_object_set_boolean(data, "draw_wireframe", draw_wireframe);
+	json_object_set_boolean(data, "draw_meshes", draw_meshes);
+	json_object_set_boolean(data, "depth", depth);
+	json_object_set_boolean(data, "face_culling", face_culling);
+	json_object_set_boolean(data, "lighting", lighting);
+	json_object_set_boolean(data, "color_material", color_material);
+	json_object_set_boolean(data, "draw_textures", draw_textures);
 
 	return ret;
 }

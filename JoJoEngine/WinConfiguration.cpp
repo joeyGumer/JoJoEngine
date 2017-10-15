@@ -180,6 +180,18 @@ void WinConfiguration::TabRenderer()
 				App->renderer3D->draw_meshes = bool_tmp;
 			}
 
+			bool_tmp = App->renderer3D->depth;
+			if (ImGui::Checkbox("Enable Depth", &bool_tmp))
+			{
+				App->renderer3D->EnableDepth(bool_tmp);
+			}
+
+			bool_tmp = App->renderer3D->face_culling;
+			if (ImGui::Checkbox("Enable Face Culling", &bool_tmp))
+			{
+				App->renderer3D->EnableCullFace(bool_tmp);
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -191,13 +203,21 @@ void WinConfiguration::TabRenderer()
 				App->renderer3D->EnableTextures(bool_tmp);
 			}
 
+			bool_tmp = App->renderer3D->color_material;
+			if (ImGui::Checkbox("Enable Color Material", &bool_tmp))
+			{
+				App->renderer3D->EnableColorMaterial(bool_tmp);
+			}
 			ImGui::TreePop();
 		}
 
 		if (ImGui::TreeNodeEx("Lights"))
 		{
-
-
+			bool_tmp = App->renderer3D->lighting;
+			if (ImGui::Checkbox("Enable Lightning", &bool_tmp))
+			{
+				App->renderer3D->EnableLight(bool_tmp);
+			}
 			ImGui::TreePop();
 		}
 	}
