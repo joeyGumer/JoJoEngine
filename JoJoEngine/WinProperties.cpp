@@ -28,24 +28,29 @@ void WinProperties::Update()
 
 		uint size = App->renderer3D->meshes_array.size();
 		if(ImGui::CollapsingHeader("Transform"))
-		{ 
-			float4x4 tmp_mat = App->renderer3D->transform;
+		{
+			if (size > 0)
+			{
+				float4x4 tmp_mat = App->renderer3D->transform;
 
-			float3 tmp_pos;
-			float4x4 tmp_rot_mat;
-			float3 tmp_scale;
+				float3 tmp_pos;
+				float4x4 tmp_rot_mat;
+				float3 tmp_scale;
 
-			tmp_mat.Decompose(tmp_pos, tmp_rot_mat, tmp_scale);
+				tmp_mat.Decompose(tmp_pos, tmp_rot_mat, tmp_scale);
 
-			float3 tmp_rot = tmp_rot_mat.ToEulerXYZ();
+				float3 tmp_rot = tmp_rot_mat.ToEulerXYZ();
 
-			ImGui::Text("Position :");
-			ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_pos.x, tmp_pos.y, tmp_pos.z);
-			ImGui::Text("Rotation :");
-			ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_rot.x, tmp_pos.y, tmp_pos.z);
-			ImGui::Text("Scale :");
-			ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_scale.x, tmp_scale.y, tmp_scale.z);
+				ImGui::Text("Position :");
+				ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_pos.x, tmp_pos.y, tmp_pos.z);
+				ImGui::Text("Rotation :");
+				ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_rot.x, tmp_pos.y, tmp_pos.z);
+				ImGui::Text("Scale :");
+				ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", tmp_scale.x, tmp_scale.y, tmp_scale.z);
+			}
 
+			else
+				ImGui::Text("No FBX loaded");
 		}
 		if (ImGui::CollapsingHeader("Geometry"))
 		{
@@ -87,6 +92,8 @@ void WinProperties::Update()
 				ImGui::Image((ImTextureID)App->renderer3D->GetTextureChannel(), ImVec2(200, 200));
 				ImGui::Text("%i x %i", (int)App->renderer3D->GetTextureSize().x, (int)App->renderer3D->GetTextureSize().y);
 			}
+			else
+				ImGui::Text("No texture loaded");
 		}
 
 		ImGui::End();
