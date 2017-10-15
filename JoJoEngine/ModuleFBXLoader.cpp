@@ -60,7 +60,8 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh)
 {
 	//bool ret = true;
 
-	
+	LOG("Loading new FBX into scene--------------------");
+
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	Mesh** ret = nullptr;
@@ -129,6 +130,8 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 {
 	//NOTE: look for where to delete all the new Model3D created
 
+	LOG("Loading new Mesh into scene from the FBX---------------");
+
 	Mesh* m = new Mesh();
 
 	//Copy vertices
@@ -151,6 +154,8 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 			else//NOTE: is memcopy really necesary instead of a for?
 				memcpy(&m->indices[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 		}
+
+		LOG("New mesh with %d faces", new_mesh->mNumFaces);
 	}
 
 	//normals

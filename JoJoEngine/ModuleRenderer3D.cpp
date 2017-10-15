@@ -273,6 +273,9 @@ bool ModuleRenderer3D::LoadMesh(const char* file)
 
 bool ModuleRenderer3D::LoadImageTexture(const char* file)
 {
+
+	LOG("Loading new Texture into scene---------------");
+
 	bool ret = true;
 	ILuint id_image;
 	ilGenImages(1, &id_image);
@@ -321,12 +324,12 @@ bool ModuleRenderer3D::LoadImageTexture(const char* file)
 
 void ModuleRenderer3D::UnloadScene()
 {
+	LOG("Unloading all meshes from the scene");
 	uint size = meshes_array.size();
 	for (uint i = 0; i < size; i++)
 	{
 		Mesh* tmp_mesh = meshes_array[i];
 
-		//NOTE: have to delete the buffers from the vram
 		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_vertices));
 		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_normals));
 		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_texture_UVs));
