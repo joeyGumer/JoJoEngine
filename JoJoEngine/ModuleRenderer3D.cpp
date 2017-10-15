@@ -174,6 +174,8 @@ bool ModuleRenderer3D::CleanUp()
 	//Delete all meshes
 	UnloadScene();
 
+	ilShutDown();
+
 	//Delete OpenGl context
 	SDL_GL_DeleteContext(context);
 

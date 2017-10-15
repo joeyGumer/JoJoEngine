@@ -1,10 +1,11 @@
 #include "Application.h"
-#include "Console.h"
+
 #include "Globals.h"
 #include "ModuleEditor.h"
 #include "EditorWindow.h"
 #include "WinConfiguration.h"
 #include "WinProperties.h"
+#include "WinConsole.h"
 #include "ImGuiDemo.h"
 
 #include "JSON\parson.h"
@@ -132,6 +133,11 @@ update_status ModuleEditor::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
+const bool ModuleEditor::IsActive() const
+{
+	return editor_active;
+}
+
 
 void ModuleEditor::Draw() const
 {
@@ -148,10 +154,6 @@ void ModuleEditor::Draw() const
 	ImGui::Render();
 }
 
-const bool ModuleEditor::IsActive() const
-{
-	return editor_active;
-}
 
 void ModuleEditor::AboutUs()
 {

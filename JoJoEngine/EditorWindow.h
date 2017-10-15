@@ -1,6 +1,5 @@
-#ifndef __EDITORWINDOW_H__
-#define __EDITORWINDOW_H__
-
+#ifndef _EDITORWINDOW_H_
+#define _EDITORWINDOW_H_
 
 class EditorWindow
 {
@@ -17,7 +16,6 @@ public:
 public:
 	bool is_open = false;
 	bool want_to_be_open = false;
-
 };
-#endif __EDITORWINDOW_H__
 
+#endif // !_EDITORWINDOW_H_

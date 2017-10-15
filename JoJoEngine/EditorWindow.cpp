@@ -8,4 +8,5 @@ void EditorWindow::OpenCloseWindow()
 	{
 		is_open = !is_open;
 	}
+
 }
