@@ -176,6 +176,11 @@ void ModuleEditor::AboutUs()
 	ImGui::Text("ImGui 1.50");
 	ImGui::Text("MathGeoLib 1.5");
 	ImGui::Text("Parson");
+	ImGui::Text("PhysicsFS 2.0");
+	ImGui::Text("Glut 3.7");
+	ImGui::Text("Glew 7.0");
+	ImGui::Text("Assimp 3.1.1");
+	ImGui::Text("Devil 1.7.8");
 
 	ImGui::Spacing();
 	ImGui::Separator();
