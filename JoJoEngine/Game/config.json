@@ -11,11 +11,12 @@
             "title": "JOJOENGINE"
         },
         "renderer": {
-            "GL_depth": true,
-            "GL_cull_face": false,
-            "normals": false,
-            "wireframe": false,
-            "GL_light": true,
+            "depth": true,
+            "face_culling": false,
+            "draw_normals": false,
+            "draw_wireframe": false,
+            "draw_meshes": true,
+            "lighting": true,
             "light_color": {
                 "R": 255,
                 "G": 255,
@@ -26,23 +27,23 @@
                 "y": 0,
                 "z": 0
             },
-            "GL_2D_texture": true,
-            "GL_color_material": true
+            "draw_textures": true,
+            "color_material": true
         },
         "camera": {
             "pos": {
-                "x": 16.606540679931641,
-                "y": 14.563126564025879,
-                "z": 15.786449432373047
+                "x": 13.387950897216797,
+                "y": 15.314312934875488,
+                "z": 14.501374244689941
             },
             "reference": {
-                "x": 0.37529945373535156,
-                "y": 1.78497314453125,
-                "z": -0.067879676818847656
+                "x": -0.34881019592285156,
+                "y": 1.776850700378418,
+                "z": 0.62932491302490234
             },
             "speed": 5,
-            "wheel_speed": 50,
-            "sensitivity": 1.25
+            "wheel_speed": 50.000003814697266,
+            "sensitivity": 5
         },
         "audio": {
             "volume": 100
