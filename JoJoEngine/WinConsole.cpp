@@ -1,23 +1,23 @@
-#include "Console.h"
+#include "WinConsole.h"
 
-Console::Console()
+WinConsole::WinConsole()
 {
 }
 
-Console::~Console()
+WinConsole::~WinConsole()
 {	
 }
 
-void Console::Start()
+void WinConsole::Start()
 {
 }
 
-void Console::CleanUp()
+void WinConsole::CleanUp()
 {
 	buffer.clear();
 }
 
-void Console::Update()
+void WinConsole::Update()
 {
 	if (is_open)
 	{
@@ -32,7 +32,7 @@ void Console::Update()
 	}
 }
 
-void Console::Write(const char* text)
+void WinConsole::Write(const char* text)
 {
 	buffer.append(text);
 	ScrollToBottom = true;

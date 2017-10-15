@@ -1,14 +1,14 @@
-#ifndef __CONSOLE_H__
-#define __CONSOLE_H__
+#ifndef __WINCONSOLE_H__
+#define __WINCONSOLE_H__
 
 #include "Imgui\imgui.h"
 #include "EditorWindow.h"
 
-class Console :  public EditorWindow
+class WinConsole :  public EditorWindow
 {
 public:
-	Console();
-	~Console();
+	WinConsole();
+	~WinConsole();
 
 	void Start();
 	void Update();
@@ -21,6 +21,6 @@ private:
 	bool                ScrollToBottom;
 };
 
-extern Console* console;
+extern WinConsole* console;
 
 #endif

@@ -309,9 +309,6 @@
     <ClInclude Include="ModuleEditor.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="EditorWindow.h">
-      <Filter>Sources\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="WinConfiguration.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
@@ -330,13 +327,16 @@
     <ClInclude Include="Bar.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Sources\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiDemo.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
     <ClInclude Include="WinProperties.h">
+      <Filter>Sources\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="WinConsole.h">
+      <Filter>Sources\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorWindow.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -506,9 +506,6 @@
     <ClCompile Include="ModuleEditor.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="EditorWindow.cpp">
-      <Filter>Sources\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="WinConfiguration.cpp">
       <Filter>Sources\Editor</Filter>
     </ClCompile>
@@ -524,13 +521,16 @@
     <ClCompile Include="Bar.cpp">
       <Filter>Sources\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Sources\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="ImGuiDemo.cpp">
       <Filter>Sources\Editor</Filter>
     </ClCompile>
     <ClCompile Include="WinProperties.cpp">
+      <Filter>Sources\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="WinConsole.cpp">
+      <Filter>Sources\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorWindow.cpp">
       <Filter>Sources\Editor</Filter>
     </ClCompile>
   </ItemGroup>

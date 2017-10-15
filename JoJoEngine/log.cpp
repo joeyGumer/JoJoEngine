@@ -1,6 +1,6 @@
 #pragma once
 #include "Globals.h"
-#include "Console.h"
+#include "WinConsole.h"
 
 void log(const char file[], int line, const char* format, ...)
 {

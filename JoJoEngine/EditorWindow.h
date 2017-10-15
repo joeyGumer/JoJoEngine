@@ -1,6 +1,5 @@
-#ifndef __EDITORWINDOW_H__
-#define __EDITORWINDOW_H__
-
+#ifndef _EDITORWINDOW_H_
+#define _EDITORWINDOW_H_
 
 class EditorWindow
 {
@@ -12,10 +11,10 @@ public:
 	virtual void Update() = 0;
 	virtual void CleanUp() = 0;
 
+	void OpenCloseWindow();
 public:
 	bool is_open = false;
 	bool want_to_be_open = false;
-
 };
-#endif __EDITORWINDOW_H__
 
+#endif // !_EDITORWINDOW_H_
