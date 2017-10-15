@@ -3,6 +3,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include "JSON\parson.h"
 #include "SDL\include\SDL_opengl.h"
@@ -248,7 +249,7 @@ void ModuleCamera3D::Rotate(float x, float y)
 void ModuleCamera3D::From3Dto2D(vec3 point, int& x, int& y)
 {
 	mat4x4 projection;
-	projection = perspective(60.0f, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.125f, 512.0f);
+	projection = perspective(60.0f, (float)App->window->GetWidth() / (float)App->window->GetHeight(), 0.125f, 512.0f);
 
 	vec3 screen = multiply(point, ViewMatrix);
 	screen = multiply(screen, projection);
@@ -256,8 +257,8 @@ void ModuleCamera3D::From3Dto2D(vec3 point, int& x, int& y)
 	screen.x /= screen.z;
 	screen.y /= screen.z;
 
-	x = (screen.x +1) * (SCREEN_WIDTH /2);
-	y = (screen.y + 1) * (SCREEN_HEIGHT /2);
+	x = (screen.x +1) * (App->window->GetWidth() /2);
+	y = (screen.y + 1) * (App->window->GetHeight() /2);
 }
 
 // -----------------------------------------------------------------

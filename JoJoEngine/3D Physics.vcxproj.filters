@@ -46,21 +46,54 @@
     <Filter Include="Sources\Editor">
       <UniqueIdentifier>{da3792d0-25f0-4230-9db6-53a2648766f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Editor\Bar">
+      <UniqueIdentifier>{218506d9-9f42-4acd-8c35-a8226bd37dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\WinConsole">
+      <UniqueIdentifier>{870343f2-96eb-405d-88b5-dfe6dccda506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\WinConfiguration">
+      <UniqueIdentifier>{8f3acd83-e9d6-454c-bd0f-f44a986a5dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\WinProperties">
+      <UniqueIdentifier>{05bddb7d-83ec-4e91-acee-76b47db9ab40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\ImGuiDemo">
+      <UniqueIdentifier>{9a8e33e9-bdef-4dba-a853-937551104a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Helpers\Light">
+      <UniqueIdentifier>{310110be-4616-49f7-a240-e3edfca3f327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Helpers\Primitive">
+      <UniqueIdentifier>{bef622ae-1d1a-497f-a04e-7d00290c436e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleCamera3D">
+      <UniqueIdentifier>{de4e22dd-09c7-46ec-b34d-92a483049d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleEditor">
+      <UniqueIdentifier>{58bc7f7d-29a2-4926-ad09-0ff8ddaa365d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleFBXLoader">
+      <UniqueIdentifier>{39b098ec-dd33-47eb-9c85-85d9f905744a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleFileSystem">
+      <UniqueIdentifier>{5bf13e10-1caf-4bf0-a6a9-2c0045da7613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleInput">
+      <UniqueIdentifier>{3af7ddbc-fec8-4338-a776-867b0c540a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleRenderer3D">
+      <UniqueIdentifier>{6a20f0f5-5534-493c-b1d7-69665dcab51f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleSceneEdit">
+      <UniqueIdentifier>{ab6cc103-cd8d-4367-8900-0ba31a8e77bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ModuleWindow">
+      <UniqueIdentifier>{025ba0a2-be48-4034-9a3d-6d41a9ae3919}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCamera3D.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInput.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleRenderer3D.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Point.h">
@@ -75,14 +108,8 @@
     <ClInclude Include="Globals.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>Sources\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Sources\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
@@ -306,53 +333,59 @@
     <ClInclude Include="JSON\parson.h">
       <Filter>Sources\Tools\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleEditor.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="WinConfiguration.h">
-      <Filter>Sources\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneEdit.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGl.h">
       <Filter>Resources\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFileSystem.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleFBXLoader.h">
-      <Filter>Sources\Modules</Filter>
+    <ClInclude Include="WinProperties.h">
+      <Filter>Sources\Editor\WinProperties</Filter>
     </ClInclude>
     <ClInclude Include="Bar.h">
-      <Filter>Sources\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiDemo.h">
-      <Filter>Sources\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="WinProperties.h">
-      <Filter>Sources\Editor</Filter>
+      <Filter>Sources\Editor\Bar</Filter>
     </ClInclude>
     <ClInclude Include="WinConsole.h">
-      <Filter>Sources\Editor</Filter>
+      <Filter>Sources\Editor\WinConsole</Filter>
+    </ClInclude>
+    <ClInclude Include="WinConfiguration.h">
+      <Filter>Sources\Editor\WinConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiDemo.h">
+      <Filter>Sources\Editor\ImGuiDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Sources\Helpers\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>Sources\Helpers\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCamera3D.h">
+      <Filter>Sources\Modules\ModuleCamera3D</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEditor.h">
+      <Filter>Sources\Modules\ModuleEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFBXLoader.h">
+      <Filter>Sources\Modules\ModuleFBXLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules\ModuleFileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Sources\Modules\ModuleInput</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRenderer3D.h">
+      <Filter>Sources\Modules\ModuleRenderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneEdit.h">
+      <Filter>Sources\Modules\ModuleSceneEdit</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Sources\Modules\ModuleWindow</Filter>
     </ClInclude>
     <ClInclude Include="EditorWindow.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ModuleCamera3D.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleInput.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleRenderer3D.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="log.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -368,14 +401,8 @@
     <ClCompile Include="glmath.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Sources\Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Imgui\imgui.cpp">
       <Filter>Resources\Imgui</Filter>
@@ -503,32 +530,50 @@
     <ClCompile Include="JSON\parson.c">
       <Filter>Sources\Tools\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleEditor.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="WinConfiguration.cpp">
-      <Filter>Sources\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneEdit.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleFileSystem.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleFBXLoader.cpp">
-      <Filter>Sources\Modules</Filter>
+    <ClCompile Include="WinProperties.cpp">
+      <Filter>Sources\Editor\WinProperties</Filter>
     </ClCompile>
     <ClCompile Include="Bar.cpp">
-      <Filter>Sources\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiDemo.cpp">
-      <Filter>Sources\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="WinProperties.cpp">
-      <Filter>Sources\Editor</Filter>
+      <Filter>Sources\Editor\Bar</Filter>
     </ClCompile>
     <ClCompile Include="WinConsole.cpp">
-      <Filter>Sources\Editor</Filter>
+      <Filter>Sources\Editor\WinConsole</Filter>
+    </ClCompile>
+    <ClCompile Include="WinConfiguration.cpp">
+      <Filter>Sources\Editor\WinConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiDemo.cpp">
+      <Filter>Sources\Editor\ImGuiDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Sources\Helpers\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>Sources\Helpers\Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCamera3D.cpp">
+      <Filter>Sources\Modules\ModuleCamera3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEditor.cpp">
+      <Filter>Sources\Modules\ModuleEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFBXLoader.cpp">
+      <Filter>Sources\Modules\ModuleFBXLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules\ModuleFileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Sources\Modules\ModuleInput</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRenderer3D.cpp">
+      <Filter>Sources\Modules\ModuleRenderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneEdit.cpp">
+      <Filter>Sources\Modules\ModuleSceneEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Sources\Modules\ModuleWindow</Filter>
     </ClCompile>
     <ClCompile Include="EditorWindow.cpp">
       <Filter>Sources\Editor</Filter>

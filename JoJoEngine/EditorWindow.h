@@ -12,6 +12,7 @@ public:
 	virtual void CleanUp() = 0;
 
 	void OpenCloseWindow();
+
 public:
 	bool is_open = false;
 	bool want_to_be_open = false;

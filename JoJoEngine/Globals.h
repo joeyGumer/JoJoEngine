@@ -46,19 +46,5 @@ enum update_status
 #define GPU_CURRENT_AVAILABLE_MEM 0x9049
 #define GPU_USAGE_MEM 0x904A
 
-//Utiles
 //NOTE: tried to create as a safer version of delete
 //#define void RELEASE(void* x){(x==nullptr)? LOG("trying to delete null variable"): delete x};
-
-// Configuration -----------
-#define SCREEN_WIDTH 1200
-#define SCREEN_HEIGHT 800
-#define CENTER_SCREEN_X 400
-#define CENTER_SCREEN_Y 320
-#define SCREEN_SIZE 1
-#define WIN_FULLSCREEN false
-#define WIN_RESIZABLE true
-#define WIN_BORDERLESS false
-#define WIN_FULLSCREEN_DESKTOP false
-#define VSYNC true
-#define TITLE "JoJo Engine"

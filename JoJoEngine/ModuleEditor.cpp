@@ -78,17 +78,17 @@ update_status ModuleEditor::Update(float dt)
 		{
 			if (ImGui::MenuItem("Configuration", NULL))
 			{
-				configuration->is_open = !configuration->is_open;
+				configuration->OpenCloseWindow();
 			}
 
 			if (ImGui::MenuItem("Properties", NULL))
 			{
-				properties->is_open = !properties->is_open;
+				properties->OpenCloseWindow();
 			}
 
 			if (ImGui::MenuItem("Console", NULL))
 			{
-				console->is_open = !console->is_open;
+				console->OpenCloseWindow();
 			}
 
 			if (editor_active)
@@ -109,7 +109,7 @@ update_status ModuleEditor::Update(float dt)
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Demo", NULL))
-				demo->is_open = !demo->is_open;
+				demo->OpenCloseWindow();
 
 			if (ImGui::MenuItem("Download latest version"))
 				ShellExecuteA(NULL, "open", "https://github.com/joeyGumer/JoJoEngine/releases", NULL, NULL, NULL);
@@ -153,6 +153,7 @@ void ModuleEditor::Draw() const
 	//Render all ImGui elements defined
 	ImGui::Render();
 }
+
 
 void ModuleEditor::AboutUs()
 {
@@ -201,17 +202,17 @@ void ModuleEditor::AddWindow(EditorWindow* win)
 
 void ModuleEditor::TurnOnOff()
 {
+	editor_active = !editor_active;
+
 	for (uint i = 0; i < editor_windows.size(); i++)
 	{
-		if (editor_windows[i]->is_open)
+		if (!editor_active && editor_windows[i]->is_open)
 		{
-			editor_active = false;
 			editor_windows[i]->want_to_be_open = true;
 			editor_windows[i]->is_open = false;
 		}
-		else if (editor_windows[i]->want_to_be_open)
+		else if (editor_active && editor_windows[i]->want_to_be_open)
 		{
-			editor_active = true;
 			editor_windows[i]->want_to_be_open = false;
 			editor_windows[i]->is_open = true;
 		}
