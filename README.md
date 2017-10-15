@@ -15,7 +15,7 @@ Geometry Loading
 ----------------------------
 Process to load any geometry:
 - Drop the fbx file into the engine window.
-- Automatically the model will be loaded with its texture.
+- Automatically the model will be loaded with its texture (camera will focus on the geometry loaded).
 - You can modify its texture dragging another png file into the window.
 - In the Window->Console, you can check all the loading process
 
@@ -25,7 +25,7 @@ Editor movement
 ------------------------------
 - Move the camera with AWSD.
 - Zoom in/out with the mouse wheel.
-- Left Alt + Right mouse orbit the camera.
+- Left Alt + Left mouse orbit the camera.
 - Press F to focus camera around geometry.
 
 Menu Options
@@ -34,9 +34,15 @@ File:
 - Exit: Close the engine.
 
 Window:
-- Configuration: configuration of the editor windows.
+- Configuration: Editor window that allows you to modify a lot of parameters about the engine:
+	- Application: app and organization names.
+	- Window: size of window, vsync, fullscreen or not, etc.
+	- Render: modify parameters about OpenGL render process.
+	- Camera: shows camera position and you can modify speed 				parameters.
+	- Input: shows mouse position and how many joysticks are 				connected.
+	- Hardware: shows info about CPU, RAM, caps, GPU and VRAM
 - Console: Displays the console.
-- Properties: Displays a window with information about the FBX model loaded.
+- Properties: Displays a window with information about the FBX model loaded (transformations, triangles and texture size).
 	
 Help:
 - Demo: Displays ImGui demo window.
