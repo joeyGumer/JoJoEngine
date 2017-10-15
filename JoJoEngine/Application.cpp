@@ -193,6 +193,7 @@ bool Application::LoadConfig()
 		++i;
 	}
 
+	json_value_free(config);
 
 	return ret;
 }
@@ -218,6 +219,8 @@ bool Application::SaveConfig()
 	}
 
 	json_serialize_to_file_pretty(file, "config.json");
+
+	json_value_free(file);
 
 	return ret;
 }
