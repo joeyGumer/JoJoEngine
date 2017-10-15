@@ -52,13 +52,15 @@ Application::Application()
 
 Application::~Application()
 {
-	list<Module*>::reverse_iterator i = list_modules.rbegin();
-
-	while (i != list_modules.rend())
+	
+	int i = list_modules.size() - 1;
+	while (i >= 0)
 	{
-		delete (*i);
-		++i;
+		delete list_modules[i];
+		--i;
 	}
+
+	list_modules.clear();
 }
 
 bool Application::Init()
@@ -67,11 +69,13 @@ bool Application::Init()
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
-	list<Module*>::iterator i = list_modules.begin();
 
-	while(i != list_modules.end() && ret == true)
+
+	uint size = list_modules.size();
+	uint i = 0;
+	while(i < size)
 	{
-		ret = (*i)->Start();
+		ret = list_modules[i]->Start();
 		++i;
 	}
 	
@@ -114,27 +118,27 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 	
-	list<Module*>::iterator i = list_modules.begin();
-
-	while (i != list_modules.end() && ret == UPDATE_CONTINUE)
+	uint size = list_modules.size();
+	uint i = 0;
+	while( i < size && ret == UPDATE_CONTINUE)
 	{
-		ret = (*i)->PreUpdate(dt);
+		ret = list_modules[i]->PreUpdate(dt);
 		++i;
 	}
 
-	i = list_modules.begin();
+	i = 0;
 
-	while(i != list_modules.end() && ret == UPDATE_CONTINUE)
+	while(i < size && ret == UPDATE_CONTINUE)
 	{
-		ret = (*i)->Update(dt);
+		ret = list_modules[i]->Update(dt);
 		++i;
 	}
 
-	i = list_modules.begin();
+	i = 0;
 
-	while (i != list_modules.end() && ret == UPDATE_CONTINUE)
+	while (i < size && ret == UPDATE_CONTINUE)
 	{
-		ret = (*i)->PostUpdate(dt);
+		ret = list_modules[i]->PostUpdate(dt);
 		i++;
 	}
 
@@ -150,12 +154,13 @@ bool Application::CleanUp()
 	//NOTE: do all json load/save assertions
 	SaveConfig();
 
-	list<Module*>::reverse_iterator i = list_modules.rbegin();
+	
+	int i = list_modules.size() - 1;
 
-	while (i != list_modules.rend() && ret == true)
+	while (i >= 0 && ret == true)
 	{
-		ret = (*i)->CleanUp();
-		++i;
+		ret = list_modules[i]->CleanUp();
+		--i;
 	}
 
 
@@ -184,12 +189,12 @@ bool Application::LoadConfig()
 	organization = json_object_get_string(app_data, "organization");
 
 	// Call LoadConfig() in all modules
-	list<Module*>::iterator i = list_modules.begin();
-
-	while (i != list_modules.end() && ret == true)
+	uint size = list_modules.size();
+	uint i = 0;
+	while (i < size && ret == true)
 	{
-		JSON_Object* module_config = json_object_get_object(app_data, (*i)->name.c_str());
-		ret = (*i)->LoadConfig(module_config);
+		JSON_Object* module_config = json_object_get_object(app_data, list_modules[i]->name.c_str());
+		ret = list_modules[i]->LoadConfig(module_config);
 		++i;
 	}
 
@@ -198,7 +203,7 @@ bool Application::LoadConfig()
 	return ret;
 }
 
-bool Application::SaveConfig()
+bool Application::SaveConfig() 
 {
 	bool ret = true;
 
@@ -210,11 +215,12 @@ bool Application::SaveConfig()
 	json_object_set_string(config, "organization", organization.c_str());	
 	
 	// Call SaceConfig() in all modules
-	list<Module*>::iterator i = list_modules.begin();
-	while (i != list_modules.end() && ret == true)
+	uint size = list_modules.size();
+	uint i = 0;
+	while (i < size && ret == true)
 	{
-		JSON_Object* module_config = json_object_get_object(app_config, (*i)->name.c_str());
-		ret = (*i)->SaveConfig(module_config);
+		JSON_Object* module_config = json_object_get_object(app_config, list_modules[i]->name.c_str());
+		ret = list_modules[i]->SaveConfig(module_config);
 		++i;
 	}
 
@@ -231,11 +237,11 @@ bool Application::InitModules()
 	LoadConfig();
 
 	// Call Init() in all modules
-	list<Module*>::iterator i = list_modules.begin();
-
-	while (i != list_modules.end() && ret == true)
+	uint size = list_modules.size();
+	uint i = 0;
+	while (i < size && ret == true)
 	{
-		ret = (*i)->Init();
+		ret = list_modules[i]->Init();
 		++i;
 	}
 

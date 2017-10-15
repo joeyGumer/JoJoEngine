@@ -26,7 +26,7 @@ public:
 	update_status PostUpdate(float dt);
 
 	bool LoadConfig(JSON_Object* data);
-	bool SaveConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data)const;
 
 	void Draw();
 

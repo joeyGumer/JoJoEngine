@@ -64,7 +64,7 @@ void WinProperties::Update()
 				uint n_vertices = tmp_mesh->num_vertices;
 				uint n_indices = tmp_mesh->num_indices / 3;
 
-				string mesh_name = string("Mesh ") + to_string(i + 1);
+				std::string mesh_name = std::string("Mesh ") + std::to_string(i + 1);
 
 				if (ImGui::TreeNodeEx(mesh_name.c_str()))
 				{

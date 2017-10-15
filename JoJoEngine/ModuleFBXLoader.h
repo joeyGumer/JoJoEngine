@@ -45,10 +45,10 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	Mesh** LoadFBX(const char* file_path, uint* n_mesh);
+	Mesh** LoadFBX(const char* file_path, uint* n_mesh) const;
 
 private:
-	Mesh* LoadMesh(aiMesh* new_mesh);
+	Mesh* LoadMesh(const aiMesh* new_mesh)const;
 	
 
 };

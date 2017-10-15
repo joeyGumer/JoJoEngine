@@ -549,7 +549,7 @@ bool ModuleRenderer3D::LoadConfig(JSON_Object* data)
 	return ret;
 }
 
-bool ModuleRenderer3D::SaveConfig(JSON_Object* data)
+bool ModuleRenderer3D::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 

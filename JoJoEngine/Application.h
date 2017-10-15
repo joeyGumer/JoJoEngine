@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
@@ -15,9 +15,7 @@ class ModulePhysiscs3D;
 class ModuleSceneEdit;
 class ModuleFileSystem;
 class ModuleFBXLoader;
-
-//NOTE: change the includes to the cpp
-using namespace std; 
+ 
 
 class Application
 {
@@ -27,16 +25,15 @@ public:
 	ModuleFBXLoader* fbx;
 	ModuleWindow* window;
 	ModuleInput* input;
-	//ModuleAudio* audio;
 	ModuleEditor* editor;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleSceneEdit* level;
-	//ModulePhysics3D* physics;
+
 
 private:
 
-	list<Module*> list_modules;
+	std::vector<Module*> list_modules;
 
 	//Timers
 	Timer	startup_timer;

@@ -24,7 +24,7 @@ public:
 	virtual ~ModuleWindow();
 
 	bool LoadConfig(JSON_Object* data);
-	bool SaveConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data)const;
 
 	bool Init();
 	update_status Update(float dt);

@@ -21,14 +21,14 @@ public:
 	bool CleanUp();
 
 	bool LoadConfig(JSON_Object* data);
-	bool SaveConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data) const;
 
 	void Draw() const;
 
 	const bool IsActive() const;
 
 private:
-	void AboutUs();
+	void AboutUs() const;
 	void AddWindow(EditorWindow* win);
 	void TurnOnOff();
 

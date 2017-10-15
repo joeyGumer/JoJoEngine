@@ -155,7 +155,7 @@ void ModuleEditor::Draw() const
 }
 
 
-void ModuleEditor::AboutUs()
+void ModuleEditor::AboutUs() const
 {
 	ImGui::Spacing();
 	ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "JoJo Engine");
@@ -249,7 +249,7 @@ bool ModuleEditor::LoadConfig(JSON_Object* data)
 	return ret;
 }
 
-bool ModuleEditor::SaveConfig(JSON_Object* data)
+bool ModuleEditor::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 	

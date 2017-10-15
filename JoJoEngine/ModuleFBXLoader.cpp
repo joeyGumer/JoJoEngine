@@ -56,7 +56,7 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh)
+Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh) const
 {
 	//bool ret = true;
 
@@ -126,10 +126,8 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh)
 
 
 //NOTE: using pointers?
-Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
+Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const 
 {
-	//NOTE: look for where to delete all the new Model3D created
-
 	LOG("Loading new Mesh into scene from the FBX---------------");
 
 	Mesh* m = new Mesh();
@@ -176,7 +174,6 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 
 		for (int i = 0; i < m->num_texture_UVs; i ++)
 		{
-			//NOTE: using direct asignation
 			memcpy(&m->texture_UVs[i * 2], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
 			memcpy(&m->texture_UVs[(i * 2) + 1], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
 
@@ -185,12 +182,6 @@ Mesh* ModuleFBXLoader::LoadMesh(aiMesh* new_mesh)
 		}
 		LOG("New mesh with %d UVs", m->num_texture_UVs);
 	}
-
-	//Copy colors
-
-
-
-
 
 
 	return m;

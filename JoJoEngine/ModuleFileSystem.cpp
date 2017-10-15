@@ -176,7 +176,7 @@ unsigned int ModuleFileSystem::Save(const char* file, const char* buffer, unsign
 }
 
 //NOTE: issues returning char*
-std::string ModuleFileSystem::GetFileExtension(char* file) const
+std::string ModuleFileSystem::GetFileExtension(const char* file) const
 {
 	std::string tmp_str = file;
 	std::string ext;

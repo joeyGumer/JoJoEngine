@@ -32,7 +32,7 @@ public:
 		return "save/";
 	}
 
-	std::string GetFileExtension(char* file) const;
+	std::string GetFileExtension(const char* file) const;
 
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;

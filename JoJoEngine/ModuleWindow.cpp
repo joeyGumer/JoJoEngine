@@ -199,7 +199,7 @@ bool ModuleWindow::LoadConfig(JSON_Object* data)
 	return ret;
 }
 
-bool ModuleWindow::SaveConfig(JSON_Object* data)
+bool ModuleWindow::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 	

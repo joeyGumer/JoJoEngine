@@ -64,7 +64,7 @@ public:
 	bool CleanUp();
 
 	bool LoadConfig(JSON_Object* data);
-	bool SaveConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data) const;
 
 	KEY_STATE GetKey(int id) const
 	{

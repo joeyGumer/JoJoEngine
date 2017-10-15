@@ -21,7 +21,7 @@ private:
 	bool CleanUp();
 
 	bool LoadConfig(JSON_Object* data);
-	bool SaveConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data)const;
 
 	void Draw(const Mesh* mesh) const;
 	void DrawMeshes() const;

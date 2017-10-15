@@ -243,7 +243,7 @@ bool ModuleInput::LoadConfig(JSON_Object* data)
 	return ret;
 }
 
-bool ModuleInput::SaveConfig(JSON_Object* data)
+bool ModuleInput::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 

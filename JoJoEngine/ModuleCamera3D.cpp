@@ -282,7 +282,7 @@ bool ModuleCamera3D::LoadConfig(JSON_Object* data)
 	return ret;
 }
 
-bool ModuleCamera3D::SaveConfig(JSON_Object* data)
+bool ModuleCamera3D::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 
