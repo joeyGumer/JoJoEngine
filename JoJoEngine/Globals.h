@@ -44,7 +44,6 @@ enum update_status
 
 #define GPU_TOTAL_AVAILABLE_MEM 0x9048
 #define GPU_CURRENT_AVAILABLE_MEM 0x9049
-#define GPU_USAGE_MEM 0x904A
 
 //NOTE: tried to create as a safer version of delete
 //#define void RELEASE(void* x){(x==nullptr)? LOG("trying to delete null variable"): delete x};

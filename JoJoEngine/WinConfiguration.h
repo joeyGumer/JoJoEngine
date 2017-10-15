@@ -33,6 +33,7 @@ private:
 	//Hardware specs
 	std::string caps;
 	GLint total_vram;
+	GLint initial_available_vram;
 	GLint available_vram;
 	GLint usage_vram;
 };
