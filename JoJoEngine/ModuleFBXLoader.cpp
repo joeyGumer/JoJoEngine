@@ -56,7 +56,7 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
+Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh)
 {
 	//bool ret = true;
 

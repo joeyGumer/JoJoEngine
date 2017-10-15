@@ -11,11 +11,12 @@ public:
 	WinConfiguration();
 	~WinConfiguration();
 
+private:
 	void Start();
 	void Update();
 	void CleanUp();
 
-private:
+
 	void TabApplication();
 	void TabWindow();
 	void TabRenderer();

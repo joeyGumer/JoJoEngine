@@ -180,16 +180,16 @@ void WinConfiguration::TabRenderer()
 				App->renderer3D->draw_meshes = bool_tmp;
 			}
 
-			bool_tmp = App->renderer3D->depth;
+			bool_tmp = App->renderer3D->GetEnableDepth();
 			if (ImGui::Checkbox("Enable Depth", &bool_tmp))
 			{
-				App->renderer3D->EnableDepth(bool_tmp);
+				App->renderer3D->SetEnableDepth(bool_tmp);
 			}
 
-			bool_tmp = App->renderer3D->face_culling;
+			bool_tmp = App->renderer3D->GetEnableCullFace();
 			if (ImGui::Checkbox("Enable Face Culling", &bool_tmp))
 			{
-				App->renderer3D->EnableCullFace(bool_tmp);
+				App->renderer3D->SetEnableCullFace(bool_tmp);
 			}
 
 			ImGui::TreePop();
@@ -197,26 +197,26 @@ void WinConfiguration::TabRenderer()
 
 		if (ImGui::TreeNodeEx("Textures"))
 		{
-			bool_tmp = App->renderer3D->draw_textures;
+			bool_tmp = App->renderer3D->GetEnableTextures();
 			if (ImGui::Checkbox("Draw textures", &bool_tmp))
 			{
-				App->renderer3D->EnableTextures(bool_tmp);
+				App->renderer3D->SetEnableTextures(bool_tmp);
 			}
 
-			bool_tmp = App->renderer3D->color_material;
+			bool_tmp = App->renderer3D->GetEnableColorMaterial();
 			if (ImGui::Checkbox("Enable Color Material", &bool_tmp))
 			{
-				App->renderer3D->EnableColorMaterial(bool_tmp);
+				App->renderer3D->SetEnableColorMaterial(bool_tmp);
 			}
 			ImGui::TreePop();
 		}
 
 		if (ImGui::TreeNodeEx("Lights"))
 		{
-			bool_tmp = App->renderer3D->lighting;
+			bool_tmp = App->renderer3D->GetEnableLight();
 			if (ImGui::Checkbox("Enable Lightning", &bool_tmp))
 			{
-				App->renderer3D->EnableLight(bool_tmp);
+				App->renderer3D->SetEnableLight(bool_tmp);
 			}
 			ImGui::TreePop();
 		}
