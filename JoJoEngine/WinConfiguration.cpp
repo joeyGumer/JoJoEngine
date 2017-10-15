@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
+#include "ModuleInput.h"
 
 #include "Imgui/imgui.h"
 
@@ -62,6 +63,7 @@ void WinConfiguration::Update()
 		TabWindow();	
 		TabRenderer();
 		TabCamera();
+		TabInput();
 		TabHardware();		
 
 		ImGui::End();
@@ -257,5 +259,18 @@ void WinConfiguration::TabCamera()
 		tmp_float = App->camera->sensitivity * (100 / App->camera->max_sensitivity);
 		ImGui::DragFloat("Camera Rotation Sensitivity", &tmp_float, 1.0f, 0.0f, 100.0f);
 		App->camera->sensitivity = tmp_float / (100 / App->camera->max_sensitivity);
+	}
+}
+
+void WinConfiguration::TabInput()
+{
+	if (ImGui::CollapsingHeader("Input"))
+	{
+		ImGui::Text("X: %i   ", App->input->GetMouseX());
+		ImGui::SameLine();
+		ImGui::Text("Y: %i   ", App->input->GetMouseY());
+
+		ImGui::Spacing();
+		ImGui::Text("Number of joysticks: %i", App->input->GetNumberJoysticks());
 	}
 }

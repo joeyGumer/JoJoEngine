@@ -21,6 +21,7 @@ private:
 	void TabRenderer();
 	void TabHardware();
 	void TabCamera();
+	void TabInput();
 
 private:
 	//FPS graphs
