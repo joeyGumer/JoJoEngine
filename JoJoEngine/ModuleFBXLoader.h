@@ -45,7 +45,7 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	Mesh** LoadFBX(char* file_path, uint* n_mesh);
+	Mesh** LoadFBX(const char* file_path, uint* n_mesh);
 
 private:
 	Mesh* LoadMesh(aiMesh* new_mesh);

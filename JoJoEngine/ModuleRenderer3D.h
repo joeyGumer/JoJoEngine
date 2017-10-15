@@ -33,15 +33,23 @@ public:
 
 	void OnResize(int width, int height, float fovy);
 
-	bool LoadMesh(char* file);
+	bool LoadMesh(const char* file);
 	bool LoadImageTexture(const char* file);
 	void UnloadScene();
 
-	void EnableTextures(const bool& enable);
-	void EnableColorMaterial(const bool& enable);
-	void EnableDepth(const bool& enable);
-	void EnableCullFace(const bool& enable);
-	void EnableLight(const bool& enable);
+	//Getters
+	bool GetEnableTextures() const;
+	bool GetEnableColorMaterial() const;
+	bool GetEnableDepth() const;
+	bool GetEnableCullFace() const;
+	bool GetEnableLight() const;
+
+	//Setters
+	void SetEnableTextures(const bool& enable);
+	void SetEnableColorMaterial(const bool& enable);
+	void SetEnableDepth(const bool& enable);
+	void SetEnableCullFace(const bool& enable);
+	void SetEnableLight(const bool& enable);
 
 	const AABB GetAABB() const;
 	const uint GetTextureChannel() const;
@@ -52,15 +60,7 @@ public:
 	bool draw_normals;
 	bool draw_wireframe;
 	bool draw_meshes;
-	bool depth;
-	bool face_culling;
 
-	//Lights
-	bool lighting;
-
-	//Textures
-	bool color_material;
-	bool draw_textures;
 
 	//-------------------
 	Light lights[MAX_LIGHTS];
@@ -77,4 +77,15 @@ public:
 private:
 	uint texture_channel = 0;
 	vec texture_size;
+
+	//Geometry
+	bool enable_depth;
+	bool enable_face_culling;
+
+	//Lights
+	bool enable_lighting;
+
+	//Textures
+	bool enable_color_material;
+	bool enable_textures;
 };

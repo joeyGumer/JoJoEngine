@@ -28,14 +28,14 @@
             },
             "GL_2D_texture": true,
             "GL_color_material": true,
-            "draw_normals": true,
+            "draw_normals": false,
             "draw_wireframe": true,
             "draw_meshes": true,
             "depth": true,
             "face_culling": true,
             "lighting": true,
             "color_material": true,
-            "draw_textures": true
+            "draw_textures": false
         },
         "camera": {
             "pos": {

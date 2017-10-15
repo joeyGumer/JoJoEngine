@@ -2,7 +2,6 @@
 #include "Console.h"
 #include "Globals.h"
 #include "ModuleEditor.h"
-#include "PhysBody3D.h"
 #include "EditorWindow.h"
 #include "WinConfiguration.h"
 #include "WinProperties.h"
