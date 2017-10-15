@@ -27,6 +27,7 @@ public:
 	bool SaveConfig(JSON_Object* data);
 
 	bool Init();
+	update_status Update(float dt);
 	bool CleanUp();	
 
 	//Getters

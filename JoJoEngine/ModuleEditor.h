@@ -30,8 +30,10 @@ private:
 	void AddWindow(EditorWindow* win);
 	void TurnOnOff();
 
+	void CreateWindows();
+
 private:
-	bool windows_on = true;
+	bool editor_active;
 
 	std::vector<EditorWindow*> editor_windows;
 	WinConfiguration* configuration = nullptr;

@@ -8,7 +8,7 @@
 #include "WinProperties.h"
 #include "ImGuiDemo.h"
 
-#include "Brofiler/Brofiler.h"
+#include "JSON\parson.h"
 #include <vector>
 
 using namespace std;
@@ -27,18 +27,7 @@ ModuleEditor::~ModuleEditor()
 bool ModuleEditor::Start()
 {
 	LOG("Loading Intro assets");
-	bool ret = true;
-
-	//Creating all editor windows
-	configuration = new WinConfiguration();
-	demo = new ImGuiDemo();
-	properties = new WinProperties();
-
-	//Adding all editor windows to the vector (order is important)
-	AddWindow(configuration);
-	AddWindow(properties);
-	AddWindow(demo);
-	AddWindow(console);
+	bool ret = true;	
 
 	for (uint i = 0; i < editor_windows.size(); i++)
 	{
@@ -102,7 +91,7 @@ update_status ModuleEditor::Update(float dt)
 				console->is_open = !console->is_open;
 			}
 
-			if (windows_on)
+			if (editor_active)
 			{
 				if (ImGui::MenuItem("Turn Off windows", NULL))
 					TurnOnOff();
@@ -147,7 +136,7 @@ update_status ModuleEditor::Update(float dt)
 
 void ModuleEditor::Draw() const
 {
-	if (windows_on)
+	if (editor_active)
 	{
 		//Iterate all editor windows
 		for (uint i = 0; i < editor_windows.size(); i++)
@@ -206,22 +195,45 @@ void ModuleEditor::TurnOnOff()
 	{
 		if (editor_windows[i]->is_open)
 		{
-			windows_on = false;
+			editor_active = false;
 			editor_windows[i]->want_to_be_open = true;
 			editor_windows[i]->is_open = false;
 		}
 		else if (editor_windows[i]->want_to_be_open)
 		{
-			windows_on = true;
+			editor_active = true;
 			editor_windows[i]->want_to_be_open = false;
 			editor_windows[i]->is_open = true;
 		}
 	}
 }
 
+void ModuleEditor::CreateWindows()
+{
+	//Creating all editor windows
+	configuration = new WinConfiguration();
+	demo = new ImGuiDemo();
+	properties = new WinProperties();
+
+	//Adding all editor windows to the vector (order is important)
+	AddWindow(configuration);
+	AddWindow(properties);
+	AddWindow(demo);
+	AddWindow(console);
+}
+
 bool ModuleEditor::LoadConfig(JSON_Object* data)
 {
 	bool ret = true;
+
+	//This shouldn't be here, but it's needed to load "is_open" booleans
+	CreateWindows();
+
+	configuration->is_open = json_object_get_boolean(data, "configuration_open");
+	properties->is_open = json_object_get_boolean(data, "properties_open");
+	demo->is_open = json_object_get_boolean(data, "demo_open");
+	console->is_open = json_object_get_boolean(data, "console_open");
+	editor_active = json_object_get_boolean(data, "windows_active");
 
 	return ret;
 }
@@ -229,6 +241,12 @@ bool ModuleEditor::LoadConfig(JSON_Object* data)
 bool ModuleEditor::SaveConfig(JSON_Object* data)
 {
 	bool ret = true;
+	
+	json_object_set_boolean(data, "configuration_open", configuration->is_open);
+	json_object_set_boolean(data, "console_open", console->is_open);
+	json_object_set_boolean(data, "demo_open", demo->is_open);
+	json_object_set_boolean(data, "properties_open", properties->is_open);
+	json_object_set_boolean(data, "editor_active", editor_active);
 
 	return ret;
 }

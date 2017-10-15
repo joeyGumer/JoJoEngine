@@ -3,8 +3,8 @@
         "name": "JoJoEngine",
         "organization": "UPC_CITM",
         "window": {
-            "width": 1534,
-            "height": 828,
+            "width": 1687,
+            "height": 872,
             "screen_size": 1,
             "window_mode": 0,
             "vsync": true,
@@ -50,9 +50,9 @@
         "editor": {
             "configuration_open": true,
             "console_open": false,
-            "properties_open": false,
+            "properties_open": true,
             "demo_open": false,
-            "windows_active": true
+            "editor_active": true
         }
     },
     "name": "JoJoEngine",

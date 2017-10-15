@@ -81,6 +81,13 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+update_status ModuleWindow::Update(float dt)
+{
+	SDL_GetWindowSize(window, &width, &height);
+
+	return UPDATE_CONTINUE;
+}
+
 //Getters
 const WINDOW_MODE  ModuleWindow::GetWindowMode() const
 {
