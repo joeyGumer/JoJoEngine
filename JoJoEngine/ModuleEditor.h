@@ -25,6 +25,8 @@ public:
 
 	void Draw() const;
 
+	const bool IsActive() const;
+
 private:
 	void AboutUs();
 	void AddWindow(EditorWindow* win);

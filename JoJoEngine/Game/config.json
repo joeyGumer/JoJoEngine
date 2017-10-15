@@ -3,8 +3,8 @@
         "name": "JoJoEngine",
         "organization": "UPC_CITM",
         "window": {
-            "width": 1115,
-            "height": 646,
+            "width": 1698,
+            "height": 879,
             "screen_size": 1,
             "window_mode": 0,
             "vsync": true,
@@ -39,14 +39,14 @@
         },
         "camera": {
             "pos": {
-                "x": 20.975521087646484,
-                "y": 12.654385566711426,
-                "z": 8.275970458984375
+                "x": 23.392980575561523,
+                "y": 14.392642974853516,
+                "z": 9.9495744705200195
             },
             "reference": {
-                "x": 0.37172126770019531,
-                "y": 1.7808237075805664,
-                "z": -0.074453353881835938
+                "x": 0.37171173095703125,
+                "y": 1.780817985534668,
+                "z": -0.074457168579101563
             },
             "speed": 5,
             "wheel_speed": 50,
@@ -56,7 +56,7 @@
             "volume": 100
         },
         "editor": {
-            "configuration_open": false,
+            "configuration_open": true,
             "console_open": false,
             "properties_open": false,
             "demo_open": false,
