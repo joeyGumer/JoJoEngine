@@ -53,9 +53,9 @@ private:
 public:
 	
 	vec3 X, Y, Z, Position, Reference;
-	float speed;
-	float wheel_speed;
-	float sensitivity;
+	float speed, max_speed;
+	float wheel_speed, max_wheel_speed;
+	float sensitivity, max_sensitivity;
 
 private:
 

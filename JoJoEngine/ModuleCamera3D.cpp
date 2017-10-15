@@ -4,13 +4,14 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 
+#include "JSON\parson.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
-	name = "camera3D";
+	name = "camera";
 
 	CalculateViewMatrix();
 
@@ -18,12 +19,9 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 20.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
-
-	speed = 0.01f;
-	wheel_speed = 0.03f;
-	sensitivity = 0.006f;
+	max_speed = 10.0f;
+	max_wheel_speed = 200.0f;
+	max_sensitivity = 5.0f;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -34,6 +32,8 @@ bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 	bool ret = true;
+
+	LookAt(Reference);
 
 	return ret;
 }
@@ -58,11 +58,11 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->input->GetMouseZ() < 0) newPos += Z  * wheel_speed * dt;
 
 	//Movement
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += Y * speed * dt;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= Y * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += Y * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= Y * speed * dt;
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed * dt;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed * dt;
 	
 	Position += newPos;
 	Reference = Position - (Z * length(Reference - Position));
@@ -265,12 +265,38 @@ bool ModuleCamera3D::LoadConfig(JSON_Object* data)
 {
 	bool ret = true;
 
+	JSON_Object* pos = json_object_get_object(data, "pos");
+	JSON_Object* reference = json_object_get_object(data, "reference");
+
+	Position.x = json_object_get_number(pos, "x");
+	Position.y = json_object_get_number(pos, "y");
+	Position.z = json_object_get_number(pos, "z");
+	Reference.x = json_object_get_number(reference, "x");
+	Reference.y = json_object_get_number(reference, "y");
+	Reference.z = json_object_get_number(reference, "z");
+	speed = json_object_get_number(data, "speed");
+	wheel_speed = json_object_get_number(data, "wheel_speed");
+	sensitivity = json_object_get_number(data, "sensitivity");
+
 	return ret;
 }
 
 bool ModuleCamera3D::SaveConfig(JSON_Object* data)
 {
 	bool ret = true;
+
+	JSON_Object* pos = json_object_get_object(data, "pos");
+	JSON_Object* reference = json_object_get_object(data, "reference");
+
+	json_object_set_number(pos, "x", Position.x);
+	json_object_set_number(pos, "y", Position.y);
+	json_object_set_number(pos, "z", Position.z);
+	json_object_set_number(reference, "x", Reference.x);
+	json_object_set_number(reference, "y", Reference.y);
+	json_object_set_number(reference, "z", Reference.z);
+	json_object_set_number(data, "speed",speed);
+	json_object_set_number(data, "wheel_speed", wheel_speed);
+	json_object_set_number(data, "sensitivity", sensitivity);
 
 	return ret;
 }

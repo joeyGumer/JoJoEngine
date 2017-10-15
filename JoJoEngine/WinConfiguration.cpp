@@ -3,6 +3,7 @@
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 
 #include "Imgui/imgui.h"
 
@@ -60,7 +61,8 @@ void WinConfiguration::Update()
 		TabApplication();
 		TabWindow();	
 		TabRenderer();
-		TabHardware();
+		TabCamera();
+		TabHardware();		
 
 		ImGui::End();
 	}
@@ -228,5 +230,32 @@ void WinConfiguration::TabHardware()
 		ImGui::TextWrapped("VRAM Budget: %i MB", total_vram);
 		ImGui::TextWrapped("VRAM Avaliable: %i MB", available_vram);
 		ImGui::TextWrapped("VRAM Usage: %i MB", usage_vram);
+	}
+}
+
+
+void WinConfiguration::TabCamera()
+{
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		ImGui::Text("X: %.3f   ", App->camera->Position.x);
+		ImGui::SameLine();
+		ImGui::Text("Y: %.3f   ", App->camera->Position.y);
+		ImGui::SameLine();
+		ImGui::Text("Z: %.3f", App->camera->Position.z);
+
+		float tmp_float;
+
+		tmp_float = App->camera->speed * (100 / App->camera->max_speed);
+		ImGui::DragFloat("Camera Speed", &tmp_float, 1.0f, 0.0f, 100.0f);
+		App->camera->speed = tmp_float / (100 / App->camera->max_speed);
+
+		tmp_float = App->camera->wheel_speed * (100 / App->camera->max_wheel_speed);
+		ImGui::DragFloat("Camera Zoom Speed", &tmp_float, 1.0f, 0.0f, 100.0f);
+		App->camera->wheel_speed = tmp_float / (100 / App->camera->max_wheel_speed);
+
+		tmp_float = App->camera->sensitivity * (100 / App->camera->max_sensitivity);
+		ImGui::DragFloat("Camera Rotation Sensitivity", &tmp_float, 1.0f, 0.0f, 100.0f);
+		App->camera->sensitivity = tmp_float / (100 / App->camera->max_sensitivity);
 	}
 }
