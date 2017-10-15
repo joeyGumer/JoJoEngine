@@ -25,7 +25,7 @@ public:
 		return true;
 	}
 
-	virtual bool SaveConfig(JSON_Object* data)
+	virtual bool SaveConfig(JSON_Object* data) const
 	{
 		return true;
 	}
