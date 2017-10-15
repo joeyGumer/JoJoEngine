@@ -41,7 +41,6 @@ void WinConfiguration::Start()
 	glGetIntegerv(GPU_USAGE_MEM, &usage_vram);
 	total_vram /= 1000;
 	available_vram /= 1000;
-	usage_vram /= 1000;
 }
 
 void WinConfiguration::CleanUp()
@@ -52,6 +51,8 @@ void WinConfiguration::Update()
 {
 	fps.FillBar(App->GetFPS());
 	ms.FillBar(App->GetMs());
+
+	glGetIntegerv(GPU_USAGE_MEM, &usage_vram);
 
 	if (is_open)
 	{
@@ -251,7 +252,7 @@ void WinConfiguration::TabHardware()
 		//VRAM		
 		ImGui::TextWrapped("VRAM Budget: %i MB", total_vram);
 		ImGui::TextWrapped("VRAM Avaliable: %i MB", available_vram);
-		ImGui::TextWrapped("VRAM Usage: %i MB", usage_vram);
+		ImGui::TextWrapped("VRAM Usage: %i KB", usage_vram);
 	}
 }
 
