@@ -17,12 +17,11 @@ Application::Application()
 	fbx = new ModuleFBXLoader();
 	window = new ModuleWindow();
 	input = new ModuleInput();
-	//audio = new ModuleAudio(this, true);
 	editor = new ModuleEditor();
 	renderer3D = new ModuleRenderer3D();
 	camera = new ModuleCamera3D();
 	level = new ModuleSceneEdit();
-	//physics = new ModulePhysics3D(this);
+
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -34,8 +33,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	//AddModule(audio);
-	//AddModule(physics);	
+
 	// Scenes
 	AddModule(level);
 	AddModule(editor);
