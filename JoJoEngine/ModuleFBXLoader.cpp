@@ -89,9 +89,28 @@ Mesh** ModuleFBXLoader::LoadFBX(char* file_path, uint* n_mesh)
 
 				scene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 
-				//Note: call this here or make the function return the path?
+				//NOTE: call this here or make the function return the path?
 				App->renderer3D->LoadImageTexture(texture_path.C_Str());
 			}
+
+
+			//Get transform
+			//NOTE: temporal, until we use GO, we'll show the scene transform
+
+			aiMatrix4x4 root_transform = scene->mRootNode->mTransformation;
+			float4x4 tr;
+
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					tr.v[i][j] = root_transform[i][j];
+				}
+			}
+			
+			App->renderer3D->transform = tr;
+
+			//Release the scene
 			aiReleaseImport(scene);
 		}
 		else

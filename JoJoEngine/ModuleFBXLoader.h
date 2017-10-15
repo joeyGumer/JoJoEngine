@@ -34,8 +34,6 @@ struct Mesh
 	uint id_colors = 0;
 	uint num_colors = 0;
 	uint* colors = nullptr;
-	
-
 };
 
 class ModuleFBXLoader : public Module

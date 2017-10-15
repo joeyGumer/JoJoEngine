@@ -54,6 +54,9 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+	//NOTE: transform matrix, temporal, until we use GO
+	float4x4 transform;
+
 	std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;	
 
