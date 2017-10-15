@@ -219,7 +219,7 @@ bool Application::SaveConfig()
 		++i;
 	}
 
-	json_value_free(file);
+	json_serialize_to_file(file, "config.json");
 
 	return ret;
 }

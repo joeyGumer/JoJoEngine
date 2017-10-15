@@ -193,12 +193,12 @@ bool ModuleWindow::SaveConfig(JSON_Object* data)
 {
 	bool ret = true;
 	
-	json_object_dotset_number(data, "width", width);
-	json_object_dotset_number(data, "height", height);
-	json_object_dotset_number(data, "screen_size", screen_size);
-	json_object_dotset_number(data, "window_mode", (int)win_mode);
-	json_object_dotset_boolean(data, "vsync", vsync);
-	json_object_dotset_string(data, "title", title.c_str());
+	json_object_set_number(data, "width", width);
+	json_object_set_number(data, "height", height);
+	json_object_set_number(data, "screen_size", screen_size);
+	json_object_set_number(data, "window_mode", (int)win_mode);
+	json_object_set_boolean(data, "vsync", vsync);
+	json_object_set_string(data, "title", title.c_str());
 
 	return ret;
 }
