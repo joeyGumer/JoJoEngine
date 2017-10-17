@@ -7,6 +7,7 @@
 class GameObject;
 struct aiMesh;
 struct aiNode;
+struct aiScene;
 
 struct Mesh
 {
@@ -51,7 +52,7 @@ public:
 
 private:
 	Mesh* LoadMesh(const aiMesh* new_mesh)const;
-	void LoadNode(aiNode* new_node, GameObject* go)const;
+	void LoadNode(const aiScene* scene, aiNode* new_node, GameObject* go)const;
 	
 
 };

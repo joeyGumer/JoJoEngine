@@ -19,7 +19,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Disable(){}
 
-	virtual void OnEditor(){}
+	virtual void OnEditor() = 0;
 
 private:
 	TypeComp type;

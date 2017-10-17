@@ -402,6 +402,9 @@
     <ClInclude Include="ComponentTransform.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -603,6 +606,9 @@
       <Filter>Sources\Editor\WinHierarchy</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>

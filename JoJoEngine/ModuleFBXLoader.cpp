@@ -7,6 +7,7 @@
 #include "Component.h"
 
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 
 #include "Globals.h"
 #include "Math.h"
@@ -85,7 +86,7 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh) const
 			//Loading all nodes
 			aiNode* root = scene->mRootNode;
 
-			LoadNode(root, App->level->root_GO);
+			LoadNode(scene, root, App->level->root_GO);
 
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			//NOTE: for now still use this
@@ -201,7 +202,7 @@ Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const
 
 }
 
-void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
+void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObject* go ) const
 {	
 	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
 
@@ -212,7 +213,7 @@ void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
 	aiVector3D scaling;
 	aiQuaternion rotation;
 
-	new_node->mTransformation.Decompose(translation, rotation, scaling);
+	new_node->mTransformation.Decompose(scaling, rotation, translation);
 
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
@@ -220,11 +221,30 @@ void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
 
 	ComponentTransform* comp_transform = new ComponentTransform(pos, rot, scale);
 
-	go->AddComponent(comp_transform);
+	GO->AddComponent(comp_transform);
 	//----------------------
 
+
+	//Component Mesh	
+	for (uint i = 0, size = new_node->mNumMeshes; i < size; i++)
+	{
+		Mesh* new_mesh = LoadMesh(scene->mMeshes[new_node->mMeshes[i]]);
+		ComponentMesh* comp_mesh = new ComponentMesh(new_mesh);
+
+		GO->AddComponent(comp_mesh);
+	}
+	 
+	//Component Material
+	/*new_node->
+
+	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
+	aiString path;
+	material->GetTexture(aiTextureType_DIFFUSE, 0, &path);*/
+
+	//---------------------
 	for (uint i = 0, num_children = new_node->mNumChildren; i < num_children; i++)
 	{
-		LoadNode(new_node->mChildren[i], GO);
+		LoadNode(scene, new_node->mChildren[i], GO);
 	}	
 }
