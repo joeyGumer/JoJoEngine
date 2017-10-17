@@ -9,6 +9,7 @@ class GameObject
 {
 public:
 	GameObject();
+	GameObject(const char* n, GameObject* p = nullptr);
 	~GameObject();
 
 	void Update();
@@ -16,14 +17,18 @@ public:
 private:
 	void UpdateComponents();
 
+public:
+	std::string name;
+	std::vector<GameObject*> children;
+
 private:
 
-	std::string name;
-	bool active;
+
+	bool active = true;
 	std::vector<Component*> components;
 
-	GameObject* parent;
-	std::vector<GameObject*> children;
+	GameObject* parent = nullptr;
+
 };
 
 #endif // !_GAMEOBJECT_H_

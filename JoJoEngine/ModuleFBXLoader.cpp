@@ -1,6 +1,7 @@
 #include "ModuleFBXLoader.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleSceneEdit.h"
 #include "Globals.h"
 #include "Math.h"
 
@@ -75,7 +76,13 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh) const
 			if (n_mesh)
 				*n_mesh = num_meshes;
 
+			//Loading all nodes
+			aiNode* root = scene->mRootNode;
+
+			LoadNode(root, App->level->root_GO);
+
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
+			//NOTE: for now still use this
 			for (uint i = 0; i < scene->mNumMeshes; i++)
 			{
 				ret[i] = LoadMesh(scene->mMeshes[i]);
@@ -186,4 +193,15 @@ Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const
 
 	return m;
 
+}
+
+void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
+{
+	
+	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
+
+	for (uint i = 0, num_children = new_node->mNumChildren; i < num_children; i++)
+	{
+		LoadNode(new_node->mChildren[i], GO);
+	}	
 }

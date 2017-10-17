@@ -28,6 +28,8 @@ bool ModuleSceneEdit::Start()
 	ex_plane = new PPlane(2.0f, 0.0f, 1.0f, 0.0f, 0.0f);
 	world_axis = new PAxis();
 
+	root_GO = AddGameObject("Root");
+
 	return true;
 }
 
@@ -39,6 +41,13 @@ bool ModuleSceneEdit::CleanUp()
 	delete ex_sphere;
 	delete ex_plane;
 	delete world_axis;
+
+	//Delete all game_objects by deleting the root (recursive destructor)
+	//NOTE: wich is better, recursive destructor (more secure) or vector delete iteration (more fast)?
+	RELEASE(root_GO);
+
+	game_objects.clear();
+
 	return true;
 }
 
@@ -79,9 +88,9 @@ void ModuleSceneEdit::Draw()
 
 }
 
-GameObject* ModuleSceneEdit::AddGameObject()
+GameObject* ModuleSceneEdit::AddGameObject(const char* name, GameObject* parent)
 {
-	GameObject* GO = new GameObject();
+	GameObject* GO = new GameObject(name, parent);
 
 	game_objects.push_back(GO);
 

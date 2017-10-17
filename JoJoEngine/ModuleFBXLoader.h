@@ -4,7 +4,9 @@
 #include "Module.h"
 #include <vector>
 
+class GameObject;
 struct aiMesh;
+struct aiNode;
 
 struct Mesh
 {
@@ -49,6 +51,7 @@ public:
 
 private:
 	Mesh* LoadMesh(const aiMesh* new_mesh)const;
+	void LoadNode(aiNode* new_node, GameObject* go)const;
 	
 
 };
