@@ -42,3 +42,12 @@ void GameObject::UpdateComponents()
 		components[i]->Update();
 	}
 }
+
+bool GameObject::AddComponent(Component* comp)
+{
+	bool ret = true;
+	//NOTE the boolean is beacuse i will check that it has no more than one transform or material
+	components.push_back(comp);
+
+	return ret;
+}

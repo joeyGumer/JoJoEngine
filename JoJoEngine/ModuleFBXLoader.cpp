@@ -2,6 +2,12 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleSceneEdit.h"
+
+#include "GameObject.h"
+#include "Component.h"
+
+#include "ComponentTransform.h"
+
 #include "Globals.h"
 #include "Math.h"
 
@@ -198,6 +204,24 @@ Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const
 void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
 {	
 	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
+
+	//Component Transform
+	aiMatrix4x4 transform = new_node->mTransformation;
+	
+	aiVector3D translation;
+	aiVector3D scaling;
+	aiQuaternion rotation;
+
+	new_node->mTransformation.Decompose(translation, rotation, scaling);
+
+	float3 pos(translation.x, translation.y, translation.z);
+	float3 scale(scaling.x, scaling.y, scaling.z);
+	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+
+	ComponentTransform* comp_transform = new ComponentTransform(pos, rot, scale);
+
+	go->AddComponent(comp_transform);
+	//----------------------
 
 	for (uint i = 0, num_children = new_node->mNumChildren; i < num_children; i++)
 	{

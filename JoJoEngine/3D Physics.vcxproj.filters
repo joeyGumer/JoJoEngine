@@ -399,6 +399,9 @@
     <ClInclude Include="WinHierarchy.h">
       <Filter>Sources\Editor\WinHierarchy</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -598,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="WinHierarchy.cpp">
       <Filter>Sources\Editor\WinHierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ public:
 	~GameObject();
 
 	void Update();
+	bool AddComponent(Component* comp);
 
 private:
 	void UpdateComponents();
