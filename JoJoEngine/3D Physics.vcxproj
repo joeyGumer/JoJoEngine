@@ -81,6 +81,7 @@
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="EditorWindow.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="WinConsole.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Bar.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="WinConsole.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="ImGuiDemo.cpp" />

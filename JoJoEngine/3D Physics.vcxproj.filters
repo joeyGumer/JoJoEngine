@@ -91,6 +91,9 @@
     <Filter Include="Sources\Modules\ModuleWindow">
       <UniqueIdentifier>{025ba0a2-be48-4034-9a3d-6d41a9ae3919}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components">
+      <UniqueIdentifier>{772ce4a9-1478-4590-8b05-5e90bff59fc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -384,6 +387,9 @@
     <ClInclude Include="EditorWindow.h">
       <Filter>Sources\Editor</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -577,6 +583,9 @@
     </ClCompile>
     <ClCompile Include="EditorWindow.cpp">
       <Filter>Sources\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
