@@ -5,6 +5,7 @@
 #include "EditorWindow.h"
 #include "WinConfiguration.h"
 #include "WinProperties.h"
+#include "WinHierarchy.h"
 #include "WinConsole.h"
 #include "ImGuiDemo.h"
 
@@ -225,10 +226,12 @@ void ModuleEditor::CreateWindows()
 	configuration = new WinConfiguration();
 	demo = new ImGuiDemo();
 	properties = new WinProperties();
+	hierarchy = new WinHierarchy();
 
 	//Adding all editor windows to the vector (order is important)
 	AddWindow(configuration);
 	AddWindow(properties);
+	AddWindow(hierarchy);
 	AddWindow(demo);
 	AddWindow(console);
 }
@@ -240,6 +243,7 @@ bool ModuleEditor::LoadConfig(JSON_Object* data)
 	//This shouldn't be here, but it's needed to load "is_open" booleans
 	CreateWindows();
 
+	hierarchy->is_open = json_object_get_boolean(data, "hierarchy_open");
 	configuration->is_open = json_object_get_boolean(data, "configuration_open");
 	properties->is_open = json_object_get_boolean(data, "properties_open");
 	demo->is_open = json_object_get_boolean(data, "demo_open");
@@ -253,6 +257,7 @@ bool ModuleEditor::SaveConfig(JSON_Object* data) const
 {
 	bool ret = true;
 	
+	json_object_set_boolean(data, "hierarchy_open", hierarchy->is_open);
 	json_object_set_boolean(data, "configuration_open", configuration->is_open);
 	json_object_set_boolean(data, "console_open", console->is_open);
 	json_object_set_boolean(data, "demo_open", demo->is_open);

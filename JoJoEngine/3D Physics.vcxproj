@@ -175,6 +175,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="WinConfiguration.h" />
+    <ClInclude Include="WinHierarchy.h" />
     <ClInclude Include="WinProperties.h" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +243,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinConfiguration.cpp" />
+    <ClCompile Include="WinHierarchy.cpp" />
     <ClCompile Include="WinProperties.cpp" />
   </ItemGroup>
   <ItemGroup>

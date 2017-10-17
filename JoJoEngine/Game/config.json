@@ -39,14 +39,14 @@
         },
         "camera": {
             "pos": {
-                "x": 14.543509483337402,
-                "y": 15.128751754760742,
-                "z": -18.498706817626953
+                "x": 8.8113584518432617,
+                "y": 10.10036563873291,
+                "z": 8.4514055252075195
             },
             "reference": {
-                "x": 0.36357307434082031,
-                "y": 1.7749052047729492,
-                "z": -0.072877883911132813
+                "x": 0.36640644073486328,
+                "y": 1.7779369354248047,
+                "z": -0.076717376708984375
             },
             "speed": 5,
             "wheel_speed": 50,
@@ -58,9 +58,10 @@
         "editor": {
             "configuration_open": false,
             "console_open": false,
-            "properties_open": false,
+            "properties_open": true,
             "demo_open": false,
-            "editor_active": true
+            "editor_active": true,
+            "hierarchy_open": false
         }
     },
     "name": "JoJoEngine",

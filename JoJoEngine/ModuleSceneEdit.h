@@ -35,11 +35,11 @@ public:
 
 	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
 public:
-	GameObject* root_GO;
-private:
 
-	std::vector<GameObject*> game_objects;
+	GameObject* root_GO;
 	
+private:
+	std::vector<GameObject*> game_objects;
 
 	//Base geometry of the scene
 	PWiredPlane* wplane;

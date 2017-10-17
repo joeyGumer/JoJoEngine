@@ -196,8 +196,7 @@ Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const
 }
 
 void ModuleFBXLoader::LoadNode( aiNode* new_node, GameObject* go) const
-{
-	
+{	
 	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
 
 	for (uint i = 0, num_children = new_node->mNumChildren; i < num_children; i++)

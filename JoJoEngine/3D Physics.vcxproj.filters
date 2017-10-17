@@ -94,6 +94,9 @@
     <Filter Include="Sources\Components">
       <UniqueIdentifier>{772ce4a9-1478-4590-8b05-5e90bff59fc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Editor\WinHierarchy">
+      <UniqueIdentifier>{5a10807c-58b9-4b7f-99a0-6342f842e15f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -393,6 +396,9 @@
     <ClInclude Include="Component.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="WinHierarchy.h">
+      <Filter>Sources\Editor\WinHierarchy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -589,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WinHierarchy.cpp">
+      <Filter>Sources\Editor\WinHierarchy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
