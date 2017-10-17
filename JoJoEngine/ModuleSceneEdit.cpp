@@ -1,5 +1,6 @@
 #include "ModuleSceneEdit.h"
 #include "Primitive.h"
+#include "GameObject.h"
 #include "OpenGl.h"
 #include "Math.h"
 
@@ -50,6 +51,11 @@ update_status ModuleSceneEdit::PreUpdate(float dt)
 
 update_status ModuleSceneEdit::Update(float dt)
 {
+	for (uint i = 0, size = game_objects.size(); i < size; i++)
+	{
+		game_objects[i]->Update();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -71,6 +77,15 @@ void ModuleSceneEdit::Draw()
 
 	world_axis->InnerRender();
 
+}
+
+GameObject* ModuleSceneEdit::AddGameObject()
+{
+	GameObject* GO = new GameObject();
+
+	game_objects.push_back(GO);
+
+	return GO;
 }
 
 bool ModuleSceneEdit::LoadConfig(JSON_Object* data)

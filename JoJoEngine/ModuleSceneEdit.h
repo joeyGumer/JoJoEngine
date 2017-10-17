@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "Globals.h"
 
+#include <vector>
+
 
 class PCube;
 class PCylinder;
@@ -11,6 +13,7 @@ class PWiredPlane;
 class PPlane;
 class PSphere;
 class PAxis;
+class GameObject;
 
 class ModuleSceneEdit : public Module
 {
@@ -30,16 +33,23 @@ public:
 
 	void Draw();
 
-private:
-	//Example primitives
-	PWiredPlane* wplane;
-	//NOTE: temporal
+	GameObject* AddGameObject();
 
+private:
+
+	std::vector<GameObject*> game_objects;
+	GameObject* root_GO;
+
+	//Base geometry of the scene
+	PWiredPlane* wplane;
+	PAxis* world_axis;
+
+	//Primitives for example
 	PCube* ex_cube;
 	PCylinder* ex_cylinder;
 	PPlane* ex_plane;
 	PSphere* ex_sphere;
-	PAxis* world_axis;
+
 };
 
 #endif  __MODULESCENEEDIT_H__

@@ -80,6 +80,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="WinConsole.h" />
