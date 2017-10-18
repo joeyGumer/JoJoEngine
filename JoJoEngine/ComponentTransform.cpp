@@ -1,4 +1,5 @@
 #include "ComponentTransform.h"
+#include "Imgui/imgui.h"
 
 ComponentTransform::ComponentTransform() : Component(COMP_TRANSFORM)
 {
@@ -25,5 +26,15 @@ void ComponentTransform::Update()
 
 void ComponentTransform::OnEditor()
 {
+	if (ImGui::CollapsingHeader("Transform"))
+	{
+		float3 rot = rotation.ToEulerXYZ();
 
+		ImGui::Text("Position :");
+		ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", position.x, position.y, position.z);
+		ImGui::Text("Rotation :");
+		ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", rot.x, rot.y, rot.z);
+		ImGui::Text("Scale :");
+		ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", scale.x, scale.y, scale.z);
+	}
 }

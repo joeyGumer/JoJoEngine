@@ -1,4 +1,5 @@
 #include "ComponentMesh.h"
+#include "Imgui/imgui.h"
 
 ComponentMesh::ComponentMesh(): Component(COMP_MESH)
 {
@@ -21,5 +22,8 @@ void ComponentMesh::Update()
 
 void ComponentMesh::OnEditor()
 {
+	if (ImGui::CollapsingHeader("Mesh"))
+	{
 
+	}
 }

@@ -1,8 +1,8 @@
 #include "WinProperties.h"
 
 #include "Application.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleFBXLoader.h"
+#include "GameObject.h"
+#include "Component.h"
 
 #include "Imgui/imgui.h"
 
@@ -20,13 +20,25 @@ void WinProperties::Start()
 
 }
 
+void WinProperties::CleanUp()
+{
+
+}
+
 void WinProperties::Update()
 {
 	if (is_open)
 	{
 		ImGui::Begin("Properties", &is_open);
 
-		uint size = App->renderer3D->meshes_array.size();
+		if (go)
+		{
+			for (uint i = 0, size = go->components.size(); i < size; i++)
+			{
+				go->components[i]->OnEditor();
+			}
+		}
+		/*uint size = App->renderer3D->meshes_array.size();
 		if(ImGui::CollapsingHeader("Transform"))
 		{
 			if (size > 0)
@@ -94,13 +106,13 @@ void WinProperties::Update()
 			}
 			else
 				ImGui::Text("No texture loaded");
-		}
+		}*/
 
 		ImGui::End();
 	}
 }
 
-void WinProperties::CleanUp()
+void WinProperties::SetGameObject(GameObject* g)
 {
-
+	go = g;
 }

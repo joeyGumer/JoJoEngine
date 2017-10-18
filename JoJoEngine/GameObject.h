@@ -21,12 +21,11 @@ private:
 public:
 	std::string name;
 	std::vector<GameObject*> children;
+	std::vector<Component*> components;
 
 private:
-
-
 	bool active = true;
-	std::vector<Component*> components;
+
 
 	GameObject* parent = nullptr;
 

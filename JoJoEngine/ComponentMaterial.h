@@ -2,6 +2,8 @@
 #define _COMPONENTMATERIAL_H_
 
 #include "Component.h"
+#include "Math.h"
+#include "Globals.h"
 
 
 struct Mesh;
@@ -9,7 +11,7 @@ class ComponentMaterial : public Component
 {
 public:
 	ComponentMaterial();
-	ComponentMaterial(Mesh* m);
+	ComponentMaterial(uint tex, float2 &s);
 
 	~ComponentMaterial();
 
@@ -18,7 +20,8 @@ public:
 	void OnEditor();
 
 private:
-	int texture;
+	uint texture;
+	float2 size;
 };
 
 #endif

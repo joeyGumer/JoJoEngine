@@ -8,6 +8,7 @@
 
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 #include "Globals.h"
 #include "Math.h"
@@ -18,6 +19,14 @@
 #include "Assimp/include/cfileio.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
+
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+
+#pragma comment(lib, "Devil/libx86/DevIL.lib")
+#pragma comment(lib, "Devil/libx86/ILU.lib")
+#pragma comment(lib, "Devil/libx86/ILUT.lib")
 
 //NOTE: temporal use of OpenGL
 
@@ -46,6 +55,12 @@ bool ModuleFBXLoader::Init()
 {
 	bool ret = true;
 
+	//Init devil 
+	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
+
 	// Stream log messages to Debug window
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
@@ -57,6 +72,9 @@ bool ModuleFBXLoader::Init()
 bool ModuleFBXLoader::CleanUp()
 {
 	bool ret = true;
+
+	//Devil cleanup
+	ilShutDown();
 
 	// detach log stream
 	aiDetachAllLogStreams();
@@ -228,23 +246,68 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 	//Component Mesh	
 	for (uint i = 0, size = new_node->mNumMeshes; i < size; i++)
 	{
-		Mesh* new_mesh = LoadMesh(scene->mMeshes[new_node->mMeshes[i]]);
+		aiMesh* m = scene->mMeshes[new_node->mMeshes[i]];
+		Mesh* new_mesh = LoadMesh(m);
 		ComponentMesh* comp_mesh = new ComponentMesh(new_mesh);
 
 		GO->AddComponent(comp_mesh);
-	}
-	 
-	//Component Material
-	/*new_node->
 
-	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-	aiString path;
-	material->GetTexture(aiTextureType_DIFFUSE, 0, &path);*/
+		//Component Material (from mesh)
+		//NOTE: if different meshes have same material is necessary to load the same texture again?
+		aiMaterial* material = scene->mMaterials[m->mMaterialIndex];
+
+		//NOTE: take number of textures in acount
+		uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
+		aiString path;
+		material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+
+		uint texture;
+		float2 tex_size;
+
+		LoadTexture(path.C_Str(), &texture, &tex_size.x, &tex_size.y);
+
+		ComponentMaterial* comp_material = new ComponentMaterial(texture, tex_size);
+
+		GO->AddComponent(comp_material);
+	}
 
 	//---------------------
+
+	//Iteratin all children
 	for (uint i = 0, num_children = new_node->mNumChildren; i < num_children; i++)
 	{
 		LoadNode(scene, new_node->mChildren[i], GO);
 	}	
+}
+
+bool  ModuleFBXLoader::LoadTexture(const char* file, uint* texture, float* size_x, float* size_y)const
+{
+	bool ret = true;
+
+	ILuint id_image;
+	ilGenImages(1, &id_image);
+	ilBindImage(id_image);
+
+	ret = ilLoadImage(file);
+
+	if (ret)
+	{
+		//NOTE: maybe check if the image is a power of two?
+
+		*texture = ilutGLBindTexImage();
+
+		if (size_x && size_y)
+		{
+			*size_x = ilGetInteger(IL_IMAGE_WIDTH);
+			*size_y = ilGetInteger(IL_IMAGE_HEIGHT);
+		}
+	}
+	else
+	{
+		LOG("Error: failure trying to load texture %s", file);
+	}
+
+	ilDeleteImages(1, &id_image);
+
+	return ret;
 }

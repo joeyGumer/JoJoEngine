@@ -39,6 +39,8 @@ private:
 	bool editor_active;
 
 	std::vector<EditorWindow*> editor_windows;
+
+public:
 	WinConfiguration* configuration = nullptr;
 	WinProperties* properties = nullptr;
 	WinHierarchy* hierarchy = nullptr;

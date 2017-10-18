@@ -1,5 +1,8 @@
 #include "WinHierarchy.h"
 #include "Application.h"
+#include "ModuleEditor.h"
+#include "WinProperties.h"
+#include "Application.h"
 #include "ModuleSceneEdit.h"
 #include "GameObject.h"
 #include "Globals.h"
@@ -43,10 +46,16 @@ void WinHierarchy::ShowGO(GameObject* go)
 {
 	if(ImGui::TreeNodeEx(go->name.c_str()))
 	{
+		if (ImGui::IsItemClicked())
+		{			
+			App->editor->properties->SetGameObject(go);
+		}
+
 		for (uint i = 0, size = go->children.size(); i < size; i++)
 		{
 			//NOTE: have to polish so different nodes with same name doesn't interact at the same time
 			ShowGO(go->children[i]);
+
 		}
 
 		ImGui::TreePop();
