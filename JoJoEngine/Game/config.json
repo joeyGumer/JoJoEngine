@@ -58,7 +58,7 @@
         "editor": {
             "configuration_open": false,
             "console_open": false,
-            "properties_open": true,
+            "properties_open": false,
             "demo_open": false,
             "editor_active": true,
             "hierarchy_open": false

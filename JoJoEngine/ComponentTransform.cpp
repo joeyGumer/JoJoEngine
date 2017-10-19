@@ -19,6 +19,12 @@ void ComponentTransform::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Transform"))
 	{
+		float3 position;
+		Quat rotation;
+		float3 scale; 
+
+		local_transform.Decompose(position, rotation, scale);
+
 		float3 rot = rotation.ToEulerXYZ();
 
 		ImGui::Text("Position :");
@@ -30,12 +36,12 @@ void ComponentTransform::OnEditor()
 	}
 }
 
-float4x4 ComponentTransform::SetTransform(float3 &pos, Quat &rot, float3 &scale)
+float4x4 ComponentTransform::SetTransform(float3 &pos, Quat &rot, float3 &s)
 {
-	return local_transform = local_transform.FromTRS(position, rotation, scale);
+	return local_transform = local_transform.FromTRS(pos, rot, s);
 }
 
 void ComponentTransform::SetTransform(float4x4 &mat)
 {
-	local_transform.Decompose(position, rotation, scale);
+	local_transform = mat;
 }
