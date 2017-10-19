@@ -4,6 +4,8 @@
 #include "Application.h"
 #include "ModuleFBXLoader.h"
 #include "ModuleRenderer3D.h"
+#include "GameObject.h"
+#include "ComponentTransform.h"
 #include "Globals.h"
 #include "Imgui/imgui.h"
 
@@ -26,7 +28,9 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update()
 {
-	App->renderer3D->Draw(mesh);
+
+	float4x4 transform = go->GetComponentTransform()->GetWorldTransform();
+	App->renderer3D->Draw(mesh, transform);
 }
 
 void ComponentMesh::OnEditor()

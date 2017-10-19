@@ -35,3 +35,4 @@ bool Component::IsActive() const
 {
 	return active;
 }
+

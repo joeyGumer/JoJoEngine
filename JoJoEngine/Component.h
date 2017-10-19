@@ -32,8 +32,10 @@ public:
 
 
 private:
-	TypeComp type;
 	bool active = true;
+	TypeComp type;
+//NOTE: protected?
+protected:
 	GameObject* go = nullptr;
 };
 #endif

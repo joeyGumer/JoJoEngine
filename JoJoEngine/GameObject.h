@@ -4,6 +4,7 @@
 #include <vector>
 
 class Component;
+class ComponentTransform;
 enum TypeComp;
 
 class GameObject
@@ -19,6 +20,9 @@ public:
 	//Slow (don't know if will be needed)
 	bool ReleaseComponent(Component* comp);
 
+	GameObject* GetParent() const;
+	ComponentTransform* GetComponentTransform() const;
+
 private:
 	void UpdateComponents();
 
@@ -30,7 +34,7 @@ public:
 private:
 	bool active = true;
 
-
+	ComponentTransform* comp_transform = nullptr;
 	GameObject* parent = nullptr;
 
 };

@@ -22,9 +22,15 @@ public:
 	float4x4 SetTransform(float3 &pos, Quat &rot, float3 &s);
 	void SetTransform(float4x4 &mat);
 
+	float4x4 GetWorldTransform() const;
+
+	void CalculateWorldTransform();
+	
 private:
 
 	float4x4 local_transform;
+	float4x4 world_transform;
+
 	float3 position;
 	Quat rotation;
 	float3 scale;

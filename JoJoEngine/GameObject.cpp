@@ -59,6 +59,7 @@ Component* GameObject::AddComponent(TypeComp type)
 	{
 	case COMP_TRANSFORM:
 		new_comp = new ComponentTransform(this);
+		comp_transform = (ComponentTransform*)new_comp;
 		break;
 	case COMP_MESH:
 		new_comp = new ComponentMesh(this);
@@ -94,4 +95,14 @@ bool GameObject::ReleaseComponent(Component* comp)
 	}
 
 	return false;
+}
+
+GameObject* GameObject::GetParent() const
+{
+	return parent;
+}
+
+ComponentTransform* GameObject::GetComponentTransform() const
+{
+	return comp_transform;
 }

@@ -1,4 +1,6 @@
 #include "ComponentTransform.h"
+
+#include "GameObject.h"
 #include "Imgui/imgui.h"
 
 ComponentTransform::ComponentTransform(GameObject* g) : Component(COMP_TRANSFORM, g)
@@ -83,9 +85,9 @@ void ComponentTransform::SetPosition(float3 &p)
 
 void ComponentTransform::SetRotation(float3 &r)
 {
-	math::DegToRad(r);
+	float3 rot = math::DegToRad(r);
 
-	rotation = rotation.FromEulerXYZ(r.x, r.y, r.z);
+	rotation = rotation.FromEulerXYZ(rot.x, rot.y, rot.z);
 
 	local_transform.SetRotatePart(rotation);
 }
@@ -94,5 +96,23 @@ void ComponentTransform::SetScale(float3 &s)
 	scale = s;
 
 	//NOTE: Theres Scale() but not sure it will overlap the local_transform
-	local_transform.FromTRS(position, rotation, scale);
+	local_transform = local_transform.FromTRS(position, rotation, scale);
+}
+
+float4x4 ComponentTransform::GetWorldTransform() const
+{
+	return world_transform;
+}
+
+void ComponentTransform::CalculateWorldTransform()
+{
+	if (go->GetParent() && go->GetParent()->GetComponentTransform())
+	{
+		ComponentTransform* parent_transform = go->GetParent()->GetComponentTransform();
+
+		//NOTE: if errors, check this
+		world_transform = parent_transform->GetWorldTransform() * local_transform;
+	}
+	else
+		world_transform = local_transform;
 }

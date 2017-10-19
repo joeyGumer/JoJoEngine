@@ -287,8 +287,11 @@ void ModuleRenderer3D::UnloadScene()
 //-----------------------------------------------
 
 //NOTE: pass as references? or pointer? or copy?
-void ModuleRenderer3D::Draw(const Mesh* mesh) const
+void ModuleRenderer3D::Draw(const Mesh* mesh, float4x4 &transform) const
 {
+	glPushMatrix();
+	glMultMatrixf(*transform.v);
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 	//Draw 	
@@ -322,6 +325,8 @@ void ModuleRenderer3D::Draw(const Mesh* mesh) const
 
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glPopMatrix();
 
 }
 
