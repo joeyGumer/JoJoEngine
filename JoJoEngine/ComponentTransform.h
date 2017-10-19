@@ -15,15 +15,19 @@ public:
 
 	void OnEditor();
 
+	void SetPosition(float3 &p);
+	void SetRotation(float3 &r);
+	void SetScale(float3 &s);
+
 	float4x4 SetTransform(float3 &pos, Quat &rot, float3 &s);
 	void SetTransform(float4x4 &mat);
 
 private:
 
 	float4x4 local_transform;
-	/*float3 position;
+	float3 position;
 	Quat rotation;
-	float3 scale;*/	
+	float3 scale;
 };
 
 
