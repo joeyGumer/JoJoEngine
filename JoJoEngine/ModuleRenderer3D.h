@@ -34,7 +34,6 @@ public:
 
 	void OnResize(int width, int height, float fovy);
 
-	bool LoadMesh(const char* file);
 	bool LoadImageTexture(const char* file);
 	void UnloadScene();
 
@@ -72,7 +71,7 @@ public:
 	//NOTE: transform matrix, temporal, until we use GO
 	float4x4 transform;
 
-	std::vector<Mesh*> meshes_array;
+	//std::vector<Mesh*> meshes_array;
 	uint num_meshes = 0;	
 
 private:

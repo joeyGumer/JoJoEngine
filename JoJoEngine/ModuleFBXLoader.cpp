@@ -83,7 +83,7 @@ bool ModuleFBXLoader::CleanUp()
 	return true;
 }
 
-Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh) const
+Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 {
 	//bool ret = true;
 
@@ -99,8 +99,9 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path, uint* n_mesh) const
 			uint num_meshes = scene->mNumMeshes;
 			ret = new  Mesh*[num_meshes];
 
-			if (n_mesh)
-				*n_mesh = num_meshes;
+			//NOTE: see for a way to count all the meshes
+			/*if (n_mesh)
+				*n_mesh = num_meshes;*/
 
 			//Loading all nodes
 			aiNode* root = scene->mRootNode;

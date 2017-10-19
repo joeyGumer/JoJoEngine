@@ -222,54 +222,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleRenderer3D::LoadMesh(const char* file)
-{
-	bool ret = true;
-
-	//NOTE: For this build, we unload the scene before loading everything
-
-	UnloadScene();
-
-	//NOTE: temporal, have to configure library and assets directory
-	uint n_meshes = 0;
-	Mesh** meshes = App->fbx->LoadFBX(file, &n_meshes);
-
-	num_meshes += n_meshes;
-
-	if (meshes != nullptr)
-	{
-		for (uint i = 0; i < n_meshes; i++)
-		{
-			meshes_array.push_back(meshes[i]);
-
-			//NOTE: Still not sure if this is the best spot to generate the buffers
-			glGenBuffers(1, (GLuint*) &(meshes[i]->id_vertices));
-			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_vertices);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_vertices * 3, meshes[i]->vertices, GL_STATIC_DRAW);
-
-			glGenBuffers(1, (GLuint*) &(meshes[i]->id_texture_UVs));
-			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_texture_UVs);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_texture_UVs * 2, meshes[i]->texture_UVs, GL_STATIC_DRAW);
-
-			glGenBuffers(1, (GLuint*) &(meshes[i]->id_normals));
-			glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->id_normals);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float)* meshes[i]->num_normals * 3, meshes[i]->normals, GL_STATIC_DRAW);
-
-			glGenBuffers(1, (GLuint*) &(meshes[i]->id_indices));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->id_indices);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* meshes[i]->num_indices, meshes[i]->indices, GL_STATIC_DRAW);
-		}
-
-		App->camera->CenterCameraOnGeometry(GetAABB());
-	}
-	else
-	{
-		ret = false;
-		LOG("Error: no meshes found to load");
-	}
-
-	return ret;
-}
 
 bool ModuleRenderer3D::LoadImageTexture(const char* file)
 {
@@ -322,23 +274,11 @@ bool ModuleRenderer3D::LoadImageTexture(const char* file)
 	return ret;
 }
 
+//NODE: to delete
 void ModuleRenderer3D::UnloadScene()
 {
 	LOG("Unloading all meshes from the scene");
-	uint size = meshes_array.size();
-	for (uint i = 0; i < size; i++)
-	{
-		Mesh* tmp_mesh = meshes_array[i];
 
-		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_vertices));
-		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_normals));
-		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_texture_UVs));
-		glDeleteBuffers(1, (GLuint*) &(tmp_mesh->id_indices));
-
-		RELEASE(meshes_array[i]);
-	}
-
-	meshes_array.clear();
 	num_meshes = 0;
 }
 
@@ -436,15 +376,7 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 }
 
 
-void ModuleRenderer3D::DrawMeshes() const
-{
 
-	for (uint i = 0; i < num_meshes; i++)
-	{
-		Draw(meshes_array[i]);
-		DrawNormals(meshes_array[i]);
-	}
-}
 
 void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 {
@@ -575,11 +507,12 @@ const vec ModuleRenderer3D::GetTextureSize() const
 	return texture_size;
 }
 
+//NOTE: transport to individual mesh
 const AABB ModuleRenderer3D::GetAABB() const
 {
 	AABB ret(float3(0, 0, 0), float3(0, 0, 0));
 
-	if (!meshes_array.empty())
+	/*if (!meshes_array.empty())
 	{
 		std::vector<float3> vertices;
 		//Calculate a AABB for each individual mesh
@@ -599,6 +532,6 @@ const AABB ModuleRenderer3D::GetAABB() const
 		}
 		//Global AABB
 		ret.Enclose(&vertices[0], vertices.size());
-	}
+	}*/
 	return ret;
 }

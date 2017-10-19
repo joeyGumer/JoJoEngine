@@ -33,6 +33,14 @@ void ComponentMesh::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
+		//Active
+		bool bool_tmp = IsActive();
+		if (ImGui::Checkbox("Active", &bool_tmp))
+		{
+			SetActive(bool_tmp);
+		}
+
+		//
 		uint n_vertices = mesh->num_vertices;
 		uint n_triangles = mesh->num_indices / 3;
 		ImGui::Text("Num Vertices:  %d", n_vertices);

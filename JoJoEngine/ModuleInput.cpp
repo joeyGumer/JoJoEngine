@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleFBXLoader.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleFileSystem.h"
@@ -200,7 +201,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 				if (extension == ".fbx")
 				{
-					App->renderer3D->LoadMesh(e.drop.file);
+					App->fbx->LoadFBX(e.drop.file);
 				}
 				else if (extension == ".png")
 				{
