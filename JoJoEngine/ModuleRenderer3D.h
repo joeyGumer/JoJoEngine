@@ -23,13 +23,14 @@ private:
 	bool LoadConfig(JSON_Object* data);
 	bool SaveConfig(JSON_Object* data)const;
 
-	void Draw(const Mesh* mesh) const;
 	void DrawMeshes() const;
 
 	void DrawNormals(const Mesh* mesh) const;
 	void DrawWireframe(const Mesh* mesh) const;
 
 public:
+
+	void Draw(const Mesh* mesh) const;
 
 	void OnResize(int width, int height, float fovy);
 

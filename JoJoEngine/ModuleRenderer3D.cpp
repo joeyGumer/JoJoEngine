@@ -207,7 +207,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	//Draw 
 	App->level->Draw();
-	DrawMeshes();
+	//DrawMeshes();
 	/*if (debug_draw == true)
 	{
 		BeginDebugDraw();

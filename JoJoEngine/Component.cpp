@@ -16,3 +16,22 @@ void Component::ReleaseGameObject()
 {
 	//go->
 }
+
+void Component::SetActive(bool act)
+{
+	if (active != act)
+	{
+		active = act;
+		if (active)
+		{
+			Enable();
+		}
+		else
+			Disable();
+	}
+}
+
+bool Component::IsActive() const
+{
+	return active;
+}

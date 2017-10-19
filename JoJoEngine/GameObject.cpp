@@ -43,7 +43,10 @@ void GameObject::UpdateComponents()
 {
 	for (uint i = 0, size = components.size(); i < size; i++)
 	{
-		components[i]->Update();
+		if (components[i]->IsActive())
+		{
+			components[i]->Update();
+		}
 	}
 }
 

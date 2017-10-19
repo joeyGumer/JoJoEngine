@@ -16,7 +16,7 @@ public:
 	Component(TypeComp t, GameObject* g);
 	virtual ~Component() {};
 
-	virtual void Enable() {}
+	virtual void Enable(){}
 	virtual void Update() {}
 	virtual void Disable(){}
 
@@ -26,8 +26,14 @@ public:
 	void SetGameObject(GameObject* g);
 	void ReleaseGameObject();
 
+	void SetActive(bool act);
+	bool IsActive() const;
+
+
+
 private:
 	TypeComp type;
+	bool active = true;
 	GameObject* go = nullptr;
 };
 #endif
