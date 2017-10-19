@@ -10,14 +10,15 @@ struct Mesh;
 class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial();
-	ComponentMaterial(uint tex, float2 &s);
+	ComponentMaterial(GameObject* g);
 
 	~ComponentMaterial();
 
 	void Update();
 
 	void OnEditor();
+
+	void SetTexture(uint texture, float x, float y);
 
 private:
 	uint texture;

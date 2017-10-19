@@ -1,19 +1,10 @@
 #include "ComponentTransform.h"
 #include "Imgui/imgui.h"
 
-ComponentTransform::ComponentTransform() : Component(COMP_TRANSFORM)
+ComponentTransform::ComponentTransform(GameObject* g) : Component(COMP_TRANSFORM, g)
 {
-	local_transform.SetIdentity();
-}
-ComponentTransform::ComponentTransform(float4x4 &mat) : Component(COMP_TRANSFORM), local_transform(mat)
-{
-	local_transform.Decompose(position, rotation, scale);
-}
-ComponentTransform::ComponentTransform(float3 &p, Quat &r, float3 &s ) : Component(COMP_TRANSFORM), position(p), rotation(r), scale(s)
-{
-	local_transform = local_transform.FromTRS(position, rotation, scale);
-}
 
+}
 ComponentTransform::~ComponentTransform()
 {
 
@@ -37,4 +28,14 @@ void ComponentTransform::OnEditor()
 		ImGui::Text("Scale :");
 		ImGui::Text("X: %.3f  Y: %.3f  Z: %.3f", scale.x, scale.y, scale.z);
 	}
+}
+
+float4x4 ComponentTransform::SetTransform(float3 &pos, Quat &rot, float3 &scale)
+{
+	return local_transform = local_transform.FromTRS(position, rotation, scale);
+}
+
+void ComponentTransform::SetTransform(float4x4 &mat)
+{
+	local_transform.Decompose(position, rotation, scale);
 }

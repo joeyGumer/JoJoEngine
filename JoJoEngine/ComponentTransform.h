@@ -7,14 +7,16 @@
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform();
-	ComponentTransform(float4x4 &mat);
-	ComponentTransform(float3 &p, Quat &r, float3 &s);
+
+	ComponentTransform(GameObject* go);
 	~ComponentTransform();
 
 	void Update();
 
 	void OnEditor();
+
+	float4x4 SetTransform(float3 &pos, Quat &rot, float3 &scale);
+	void SetTransform(float4x4 &mat);
 
 private:
 

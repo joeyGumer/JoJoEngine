@@ -5,11 +5,7 @@
 #include "Globals.h"
 #include "Imgui/imgui.h"
 
-ComponentMesh::ComponentMesh(): Component(COMP_MESH)
-{
-
-}
-ComponentMesh::ComponentMesh(Mesh* m): Component(COMP_MESH), mesh(m)
+ComponentMesh::ComponentMesh(GameObject* g): Component(COMP_MESH, g)
 {
 
 }
@@ -33,4 +29,10 @@ void ComponentMesh::OnEditor()
 		ImGui::Text("Num Vertices:  %d", n_vertices);
 		ImGui::Text("Num Triangles: %d", n_triangles);
 	}
+}
+
+void ComponentMesh::SetMesh(Mesh* m)
+{
+	//NOTE:: Load buffers here?
+	mesh = m;
 }

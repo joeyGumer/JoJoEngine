@@ -4,6 +4,7 @@
 #include <vector>
 
 class Component;
+enum TypeComp;
 
 class GameObject
 {
@@ -13,7 +14,10 @@ public:
 	~GameObject();
 
 	void Update();
-	bool AddComponent(Component* comp);
+	Component* AddComponent(TypeComp type);
+
+	//Slow (don't know if will be needed)
+	bool ReleaseComponent(Component* comp);
 
 private:
 	void UpdateComponents();

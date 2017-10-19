@@ -2,6 +2,10 @@
 #include "Component.h"
 #include "Globals.h"
 
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+
 GameObject::GameObject()
 {
 	
@@ -43,11 +47,48 @@ void GameObject::UpdateComponents()
 	}
 }
 
-bool GameObject::AddComponent(Component* comp)
-{
-	bool ret = true;
-	//NOTE the boolean is beacuse i will check that it has no more than one transform or material
-	components.push_back(comp);
+Component* GameObject::AddComponent(TypeComp type)
+{	
+	Component* new_comp = nullptr;
 
-	return ret;
+	//NOTE: Check if we have certain components already
+	switch (type)
+	{
+	case COMP_TRANSFORM:
+		new_comp = new ComponentTransform(this);
+		break;
+	case COMP_MESH:
+		new_comp = new ComponentMesh(this);
+		break;
+	case COMP_MATERIAL:
+		new_comp = new ComponentMaterial(this);
+		break;
+	default:
+		break;
+	}
+
+	if (new_comp)
+	{
+		components.push_back(new_comp);
+	}
+
+	return new_comp;
+}
+
+//Slow but, as we need efficiency in-game and components won't be released then, we use a vector either way
+bool GameObject::ReleaseComponent(Component* comp)
+{
+	if (comp)
+	{
+		for (uint i = 0, size = components.size(); i < size; i++)
+		{
+			if (components[i] == comp)
+			{
+				components.erase(components.begin() + i);
+				return true;
+			}
+		}
+	}
+
+	return false;
 }

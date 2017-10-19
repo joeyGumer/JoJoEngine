@@ -9,19 +9,25 @@ enum TypeComp
 	COMP_MATERIAL,
 };
 
+class GameObject;
 class Component
 {
 public:
-	Component(TypeComp t) : type(t) {};
+	Component(TypeComp t, GameObject* g);
 	virtual ~Component() {};
 
 	virtual void Enable() {}
-	virtual void Update() = 0;
+	virtual void Update() {}
 	virtual void Disable(){}
 
-	virtual void OnEditor() = 0;
+	virtual void OnEditor() {}
+
+	//NOTE: needed?
+	void SetGameObject(GameObject* g);
+	void ReleaseGameObject();
 
 private:
 	TypeComp type;
+	GameObject* go = nullptr;
 };
 #endif

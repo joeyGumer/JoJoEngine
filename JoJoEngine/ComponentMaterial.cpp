@@ -1,13 +1,9 @@
 #include "ComponentMaterial.h"
 #include "Imgui/imgui.h"
 
-ComponentMaterial::ComponentMaterial() : Component(COMP_MATERIAL)
+ComponentMaterial::ComponentMaterial(GameObject* g) : Component(COMP_MATERIAL, g)
 {
 
-}
-ComponentMaterial::ComponentMaterial(uint tex, float2 &s) : Component(COMP_MATERIAL), texture(tex), size(s)
-{
-	
 }
 
 ComponentMaterial::~ComponentMaterial()
@@ -32,5 +28,11 @@ void ComponentMaterial::OnEditor()
 		else
 			ImGui::Text("No texture loaded");
 	}
+}
+
+void ComponentMaterial::SetTexture(uint tex, float x, float y)
+{
+	texture = tex;
+	size = { x, y };
 }
 

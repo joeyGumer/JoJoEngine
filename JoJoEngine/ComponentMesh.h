@@ -7,14 +7,15 @@ struct Mesh;
 class ComponentMesh : public Component
 {
 public:
-	ComponentMesh();
-	ComponentMesh(Mesh* m);
+	ComponentMesh(GameObject* g);
 
 	~ComponentMesh();
 
 	void Update();
 
 	void OnEditor();
+
+	void SetMesh(Mesh* m);
 
 private:
 	Mesh* mesh;

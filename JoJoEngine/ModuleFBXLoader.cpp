@@ -225,6 +225,8 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
 
 	//Component Transform
+	ComponentTransform* comp_transform = (ComponentTransform*)GO->AddComponent(COMP_TRANSFORM);
+
 	aiMatrix4x4 transform = new_node->mTransformation;
 	
 	aiVector3D translation;
@@ -237,23 +239,23 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
-	ComponentTransform* comp_transform = new ComponentTransform(pos, rot, scale);
-
-	GO->AddComponent(comp_transform);
+	comp_transform->SetTransform(pos, rot, scale);
 	//----------------------
 
 
 	//Component Mesh	
 	for (uint i = 0, size = new_node->mNumMeshes; i < size; i++)
 	{
+		ComponentMesh* comp_mesh = (ComponentMesh*)GO->AddComponent(COMP_MESH);
+
 		aiMesh* m = scene->mMeshes[new_node->mMeshes[i]];
 		Mesh* new_mesh = LoadMesh(m);
-		ComponentMesh* comp_mesh = new ComponentMesh(new_mesh);
-
-		GO->AddComponent(comp_mesh);
+		comp_mesh->SetMesh(new_mesh);
 
 		//Component Material (from mesh)
 		//NOTE: if different meshes have same material is necessary to load the same texture again?
+		ComponentMaterial* comp_material = (ComponentMaterial*)GO->AddComponent(COMP_MATERIAL);
+
 		aiMaterial* material = scene->mMaterials[m->mMaterialIndex];
 
 		//NOTE: take number of textures in acount
@@ -266,9 +268,7 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 
 		LoadTexture(path.C_Str(), &texture, &tex_size.x, &tex_size.y);
 
-		ComponentMaterial* comp_material = new ComponentMaterial(texture, tex_size);
-
-		GO->AddComponent(comp_material);
+		comp_material->SetTexture(texture, tex_size.x, tex_size.y);
 	}
 
 	//---------------------
