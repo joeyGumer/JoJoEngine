@@ -39,14 +39,14 @@
         },
         "camera": {
             "pos": {
-                "x": 11.422258377075195,
-                "y": 9.3606977462768555,
-                "z": -32.56744384765625
+                "x": 214.913818359375,
+                "y": 97.663825988769531,
+                "z": -102.08860015869141
             },
             "reference": {
-                "x": 0.39187335968017578,
-                "y": 1.7882571220397949,
-                "z": -0.13474655151367188
+                "x": -0.5113525390625,
+                "y": 1.3837814331054688,
+                "z": 0.29167938232421875
             },
             "speed": 5,
             "wheel_speed": 50,
@@ -58,7 +58,7 @@
         "editor": {
             "configuration_open": false,
             "console_open": false,
-            "properties_open": false,
+            "properties_open": true,
             "demo_open": false,
             "editor_active": true,
             "hierarchy_open": false

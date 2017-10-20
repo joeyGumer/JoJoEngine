@@ -29,7 +29,9 @@ ComponentMesh::~ComponentMesh()
 void ComponentMesh::Update()
 {
 
-	float4x4 transform = go->GetComponentTransform()->GetWorldTransform();
+	float4x4 transform = go->GetComponentTransform()->GetFinalTransformMatrix();
+
+
 	App->renderer3D->Draw(mesh, transform);
 }
 
