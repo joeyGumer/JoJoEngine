@@ -108,36 +108,6 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 
 			LoadNode(scene, root, App->level->root_GO);
 
-			//Get texture
-			//NOTE: for now only the renderer needs it
-			/*if (scene->HasMaterials())
-			{
-				//NOTE: for now, we just want one texture
-				aiString texture_path;
-
-				scene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
-
-				//NOTE: call this here or make the function return the path?
-				App->renderer3D->LoadImageTexture(texture_path.C_Str());
-			}*/
-
-
-			//Get transform
-			//NOTE: temporal, until we use GO, we'll show the scene transform
-
-			aiMatrix4x4 root_transform = scene->mRootNode->mTransformation;
-			float4x4 tr;
-
-			for (int i = 0; i < 4; i++)
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					tr.v[i][j] = root_transform[i][j];
-				}
-			}
-			
-			App->renderer3D->transform = tr;
-
 			//Release the scene
 			aiReleaseImport(scene);
 		}
