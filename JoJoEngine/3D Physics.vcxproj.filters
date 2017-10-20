@@ -97,6 +97,9 @@
     <Filter Include="Sources\Editor\WinHierarchy">
       <UniqueIdentifier>{5a10807c-58b9-4b7f-99a0-6342f842e15f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Importer">
+      <UniqueIdentifier>{cd546929-d50f-409e-835f-60da8fa6c0aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -408,6 +411,15 @@
     <ClInclude Include="ComponentMaterial.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Sources\Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterMesh.h">
+      <Filter>Sources\Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterMaterial.h">
+      <Filter>Sources\Importer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -619,6 +631,12 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterMesh.cpp">
+      <Filter>Sources\Importer</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterMaterial.cpp">
+      <Filter>Sources\Importer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

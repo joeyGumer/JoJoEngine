@@ -19,6 +19,7 @@ public:
 
 	// Called before render is available
 	bool LoadConfig(JSON_Object* data);
+	bool SaveConfig(JSON_Object* data) const;
 
 	// Called before quitting
 	bool CleanUp();
@@ -27,10 +28,13 @@ public:
 	bool AddPath(const char* path_or_zip, const char* mount_point = NULL);
 	bool Exists(const char* file) const;
 	bool IsDirectory(const char* file) const;
+
 	const char* GetSaveDirectory() const
 	{
 		return "save/";
 	}
+
+	bool CreateDirectoryFile(const char* directory);
 
 	std::string GetFileExtension(const char* file) const;
 

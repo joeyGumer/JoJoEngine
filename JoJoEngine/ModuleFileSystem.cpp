@@ -3,8 +3,10 @@
 
 #include <algorithm>
 
+#include "JSON/parson.h"
 #include "SDL/include/SDL.h"
 #include "PhysFS\include\physfs.h"
+
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
@@ -20,6 +22,7 @@ ModuleFileSystem::ModuleFileSystem() : Module()
 	// By default we include executable's own directory
 	// without this we won't be able to find config.json :-(
 	AddPath(".");
+
 }
 
 // Destructor
@@ -31,20 +34,13 @@ ModuleFileSystem::~ModuleFileSystem()
 // Called before render is available
 bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 {
-	LOG("Loading File System");
-	bool ret = true;
-
-	// Add all paths in configuration in order
-	/*for (pugi::xml_node path = config.child("path"); path; path = path.next_sibling("path"))
-	{
-		AddPath(path.child_value());
-	}
-
 	// Ask SDL for a write dir
-	char* write_path = SDL_GetPrefPath(App->GetOrganization(), App->GetTitle());
+	char* write_path = (char*)PHYSFS_getBaseDir();//SDL_GetPrefPath(App->GetOrganization().c_str(), App->GetName().c_str());
 
 	if (PHYSFS_setWriteDir(write_path) == 0)
+	{
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+	}
 	else
 	{
 		// We add the writing directory as a reading directory too with speacial mount point
@@ -52,9 +48,48 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 		AddPath(write_path, GetSaveDirectory());
 	}
 
-	SDL_free(write_path);*/
+	SDL_free(write_path);
+
+
+	//NOTE: create Assets and Library folders if they don't exist, not sure if do it here
+	if (!Exists("Assets"))
+	{
+		CreateDirectoryFile("Assets");
+	}
+	if (!Exists("Library"))
+	{
+		CreateDirectoryFile("Library");
+	}
+
+	LOG("Loading File System");
+	bool ret = true;
+
+	// Add all paths in configuration in order
+	JSON_Array* paths = json_object_get_array(data, "paths");
+
+	for (uint i = 0, size = json_array_get_count(paths); i < size; i++)
+	{
+		AddPath(json_array_get_string(paths, i));
+	}
+
+
+
+
 
 	return ret;
+}
+
+bool ModuleFileSystem::SaveConfig(JSON_Object* data) const
+{
+	bool ret = true;
+
+	JSON_Value* paths = json_parse_string("a");
+	json_object_set_value(data, "Paths", paths);
+
+	json_value_free(paths);
+
+	return ret;
+
 }
 
 // Called before quitting
@@ -74,7 +109,10 @@ bool ModuleFileSystem::AddPath(const char* path_or_zip, const char* mount_point)
 		LOG("File System error while adding a path or zip(%s): %s\n", path_or_zip, PHYSFS_getLastError());
 	}
 	else
-		ret = true;
+	{
+		LOG("Added new path to the File System: %s\n", path_or_zip);
+	}
+	ret = true;
 
 	return ret;
 }
@@ -89,6 +127,17 @@ bool ModuleFileSystem::Exists(const char* file) const
 bool ModuleFileSystem::IsDirectory(const char* file) const
 {
 	return PHYSFS_isDirectory(file) != 0;
+}
+
+bool ModuleFileSystem::CreateDirectoryFile(const char* directory)
+{
+	
+	if (!PHYSFS_mkdir(directory))
+	{
+		LOG("Error trying to create directory: %s", PHYSFS_getLastError());
+		return false;
+	}
+	return true;
 }
 
 // Read a whole file and put it in a new buffer

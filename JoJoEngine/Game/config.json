@@ -2,9 +2,15 @@
     "App": {
         "name": "JoJoEngine",
         "organization": "UPC_CITM",
+        "file_system": {
+            "paths": [
+                "Assets",
+                "Library"
+            ]
+        },
         "window": {
-            "width": 1362,
-            "height": 741,
+            "width": 1053,
+            "height": 745,
             "screen_size": 1,
             "window_mode": 0,
             "vsync": true,
@@ -35,18 +41,18 @@
             "face_culling": true,
             "lighting": true,
             "color_material": true,
-            "draw_textures": true
+            "draw_textures": false
         },
         "camera": {
             "pos": {
-                "x": 43.524848937988281,
-                "y": 22.85713005065918,
-                "z": -33.498004913330078
+                "x": 23.311054229736328,
+                "y": 14.347759246826172,
+                "z": 9.9138994216918945
             },
             "reference": {
-                "x": -0.5087890625,
-                "y": 1.3851795196533203,
-                "z": 0.28934478759765625
+                "x": 0.37169837951660156,
+                "y": 1.7808094024658203,
+                "z": -0.074464797973632813
             },
             "speed": 5,
             "wheel_speed": 50,
@@ -58,7 +64,7 @@
         "editor": {
             "configuration_open": false,
             "console_open": false,
-            "properties_open": true,
+            "properties_open": false,
             "demo_open": false,
             "editor_active": true,
             "hierarchy_open": false
