@@ -108,16 +108,9 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 
 			LoadNode(scene, root, App->level->root_GO);
 
-			// Use scene->mNumMeshes to iterate on scene->mMeshes array
-			//NOTE: for now still use this
-			for (uint i = 0; i < scene->mNumMeshes; i++)
-			{
-				ret[i] = LoadMesh(scene->mMeshes[i]);
-			}
-
 			//Get texture
 			//NOTE: for now only the renderer needs it
-			if (scene->HasMaterials())
+			/*if (scene->HasMaterials())
 			{
 				//NOTE: for now, we just want one texture
 				aiString texture_path;
@@ -126,7 +119,7 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 
 				//NOTE: call this here or make the function return the path?
 				App->renderer3D->LoadImageTexture(texture_path.C_Str());
-			}
+			}*/
 
 
 			//Get transform

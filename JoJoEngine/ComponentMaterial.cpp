@@ -36,3 +36,8 @@ void ComponentMaterial::SetTexture(uint tex, float x, float y)
 	size = { x, y };
 }
 
+uint ComponentMaterial::GetTexture() const
+{
+	return texture;
+}
+

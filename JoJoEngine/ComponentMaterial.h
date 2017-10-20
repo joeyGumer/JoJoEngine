@@ -19,6 +19,7 @@ public:
 	void OnEditor();
 
 	void SetTexture(uint texture, float x, float y);
+	uint GetTexture() const;
 
 private:
 	uint texture;

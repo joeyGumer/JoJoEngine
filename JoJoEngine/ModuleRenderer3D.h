@@ -30,7 +30,7 @@ private:
 
 public:
 
-	void Draw(const Mesh* mesh, float4x4 &transform) const;
+	void Draw(const Mesh* mesh, float4x4 &transform, uint &texture_id) const;
 
 	void OnResize(int width, int height, float fovy);
 

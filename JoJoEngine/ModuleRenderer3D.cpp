@@ -287,7 +287,7 @@ void ModuleRenderer3D::UnloadScene()
 //-----------------------------------------------
 
 //NOTE: pass as references? or pointer? or copy?
-void ModuleRenderer3D::Draw(const Mesh* mesh, float4x4 &transform) const
+void ModuleRenderer3D::Draw(const Mesh* mesh, float4x4 &transform, uint &texture_id) const
 {
 	glPushMatrix();
 	glMultMatrixf(*transform.v);
@@ -308,7 +308,7 @@ void ModuleRenderer3D::Draw(const Mesh* mesh, float4x4 &transform) const
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texture_UVs);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, texture_channel);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
 
 	if (draw_meshes)
 	{

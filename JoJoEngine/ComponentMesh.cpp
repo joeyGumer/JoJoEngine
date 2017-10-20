@@ -6,6 +6,7 @@
 #include "ModuleRenderer3D.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentMaterial.h"
 #include "Globals.h"
 #include "Imgui/imgui.h"
 
@@ -30,13 +31,15 @@ void ComponentMesh::Update()
 {
 
 	float4x4 transform = go->GetComponentTransform()->GetFinalTransformMatrix();
-
-
-	App->renderer3D->Draw(mesh, transform);
+	
+	uint texture = ((ComponentMaterial*)go->GetComponent(COMP_MATERIAL))->GetTexture();
+	
+	App->renderer3D->Draw(mesh, transform, texture);
 }
 
 void ComponentMesh::OnEditor()
 {
+	//NOTE: more info about the mesh to add
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
 		//Active

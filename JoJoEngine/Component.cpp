@@ -36,3 +36,7 @@ bool Component::IsActive() const
 	return active;
 }
 
+TypeComp Component::GetComponentType() const
+{
+	return type;
+}

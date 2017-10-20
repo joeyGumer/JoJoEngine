@@ -22,6 +22,7 @@ public:
 
 	GameObject* GetParent() const;
 	ComponentTransform* GetComponentTransform() const;
+	Component* GetComponent(TypeComp type)const;
 
 private:
 	void UpdateComponents();

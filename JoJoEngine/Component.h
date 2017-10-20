@@ -29,6 +29,8 @@ public:
 	void SetActive(bool act);
 	bool IsActive() const;
 
+	TypeComp GetComponentType() const;
+
 
 
 private:

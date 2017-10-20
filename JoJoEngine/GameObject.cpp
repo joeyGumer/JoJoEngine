@@ -106,3 +106,22 @@ ComponentTransform* GameObject::GetComponentTransform() const
 {
 	return comp_transform;
 }
+
+Component* GameObject::GetComponent(TypeComp type) const
+{
+	if(type != COMP_TRANSFORM)
+	{
+		for (uint i = 0, size = components.size(); i < size; i++)
+		{
+			//NOTE: make a check because it may have more than one comp of the same type
+			if (components[i]->GetComponentType() == type)
+			{
+				return components[i];
+			}
+		}
+		//NOTE: LOG here
+		return nullptr;
+	}
+	else
+		return comp_transform;
+}
