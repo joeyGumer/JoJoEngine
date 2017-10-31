@@ -28,7 +28,9 @@ private:
 	void DrawNormals(const Mesh* mesh) const;
 	void DrawWireframe(const Mesh* mesh) const;
 
+
 public:
+	void DrawAABB(const AABB* box)const;
 
 	void Draw(const Mesh* mesh, float4x4 &transform, uint &texture_id) const;
 
@@ -51,9 +53,12 @@ public:
 	void SetEnableCullFace(const bool& enable);
 	void SetEnableLight(const bool& enable);
 
+
 	const AABB GetAABB() const;
 	const uint GetTextureChannel() const;
 	const vec GetTextureSize() const;
+
+
 
 public:
 	//Geometry

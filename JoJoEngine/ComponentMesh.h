@@ -2,6 +2,7 @@
 #define _COMPONENTMESH_H_
 
 #include "Component.h"
+#include "Math.h"
 
 struct Mesh;
 class ComponentMesh : public Component
@@ -19,6 +20,8 @@ public:
 
 private:
 	Mesh* mesh;
+
+
 };
 
 #endif

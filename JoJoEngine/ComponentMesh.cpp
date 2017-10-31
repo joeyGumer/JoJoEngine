@@ -35,6 +35,10 @@ void ComponentMesh::Update()
 	uint texture = ((ComponentMaterial*)go->GetComponent(COMP_MATERIAL))->GetTexture();
 	
 	App->renderer3D->Draw(mesh, transform, texture);
+
+	//NOTE: have to change structure, it should not go like this
+	//Draw AABB
+	App->renderer3D->DrawAABB(&go->bb_axis);
 }
 
 void ComponentMesh::OnEditor()
@@ -81,4 +85,9 @@ void ComponentMesh::SetMesh(Mesh* m)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 	}
+
+
+	//Set  Aabb/OBB
+	go->SetAABB(m->vertices, m->num_vertices);
+
 }

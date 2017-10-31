@@ -41,18 +41,18 @@
             "face_culling": true,
             "lighting": true,
             "color_material": true,
-            "draw_textures": false
+            "draw_textures": true
         },
         "camera": {
             "pos": {
-                "x": 23.311054229736328,
-                "y": 14.347759246826172,
-                "z": 9.9138994216918945
+                "x": 228.19097900390625,
+                "y": 175.92794799804688,
+                "z": 126.91002655029297
             },
             "reference": {
-                "x": 0.37169837951660156,
-                "y": 1.7808094024658203,
-                "z": -0.074464797973632813
+                "x": 0.4001007080078125,
+                "y": 1.7778778076171875,
+                "z": -0.05626678466796875
             },
             "speed": 5,
             "wheel_speed": 50,
@@ -63,7 +63,7 @@
         },
         "editor": {
             "configuration_open": false,
-            "console_open": false,
+            "console_open": true,
             "properties_open": false,
             "demo_open": false,
             "editor_active": true,

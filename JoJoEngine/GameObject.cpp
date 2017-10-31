@@ -8,7 +8,7 @@
 
 GameObject::GameObject()
 {
-	
+
 }
 
 GameObject::GameObject(const char* n, GameObject* p): name(n), parent(p)
@@ -124,4 +124,17 @@ Component* GameObject::GetComponent(TypeComp type) const
 	}
 	else
 		return comp_transform;
+}
+
+void GameObject::SetAABB(float* vertices, int n_vertices)
+{
+	bb_axis.SetNegativeInfinity();
+	bb_object.SetNegativeInfinity();
+
+	bb_axis.Enclose((float3 *)vertices, n_vertices);
+
+
+	//NOTE: very slow alternative, should watch for an alternative
+	bb_object = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
+	bb_axis = bb_object.MinimalEnclosingAABB();
 }

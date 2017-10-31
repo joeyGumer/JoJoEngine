@@ -380,6 +380,64 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 	}
 }
 
+void ModuleRenderer3D::DrawAABB(const AABB* box) const
+{
+	
+	
+
+	//NOTE: And using box function?
+	float3 box_vertices[8];
+
+	float3 min = box->minPoint;
+	float3 max = box->maxPoint;
+
+	box_vertices[0] = min;
+	box_vertices[1] = { max.x, min.y, min.z };
+	box_vertices[2] = { max.x, max.y, min.z };
+	box_vertices[3] = { min.x, max.y, min.z };
+	box_vertices[4] = { min.x, min.y, max.z };
+	box_vertices[5] = { max.x, min.y, max.z };
+	box_vertices[6] = max;
+	box_vertices[7] = { min.x, max.y, max.z };
+
+	glBegin(GL_LINES);
+	glLineWidth(1.0f);
+	glColor3f(0.0f, 3.0f, 0.0f);
+
+	float3 v;
+
+	//NOTE: just thingds done because too lazy to program
+	for (int i = 0; i <= 4; i += 4)
+	{
+		v = box_vertices[i];
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[i+1];
+		glVertex3d(v.x, v.y, v.z);
+
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[i+2];
+		glVertex3d(v.x, v.y, v.z);
+
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[i+3];
+		glVertex3d(v.x, v.y, v.z);
+
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[i];
+		glVertex3d(v.x, v.y, v.z);
+	}
+
+	for (int i = 0, j = i + 4; i < 4; i++, j++)
+	{
+		v = box_vertices[i];
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[j];
+		glVertex3d(v.x, v.y, v.z);
+	}
+
+
+
+};
 
 
 

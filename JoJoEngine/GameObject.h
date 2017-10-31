@@ -2,6 +2,7 @@
 #define _GAMEOBJECT_H_
 
 #include <vector>
+#include "Math.h"
 
 class Component;
 class ComponentTransform;
@@ -24,6 +25,8 @@ public:
 	ComponentTransform* GetComponentTransform() const;
 	Component* GetComponent(TypeComp type)const;
 
+	void SetAABB(float* vertices, int n_vertices);
+
 private:
 	void UpdateComponents();
 
@@ -32,11 +35,17 @@ public:
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 
+	OBB bb_object;
+	AABB bb_axis;
+
 private:
 	bool active = true;
 
 	ComponentTransform* comp_transform = nullptr;
 	GameObject* parent = nullptr;
+	
+	OBB obb;
+	AABB aabb;
 
 };
 
