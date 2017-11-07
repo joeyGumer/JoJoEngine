@@ -47,6 +47,8 @@ private:
 	OBB obb;
 	AABB aabb;
 
+	long unsigned int UUID;
+
 };
 
 #endif // !_GAMEOBJECT_H_

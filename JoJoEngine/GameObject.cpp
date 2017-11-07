@@ -6,13 +6,19 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
+#include "MathGeoLib\Include\Algorithm\Random\LCG.h"
+
 GameObject::GameObject()
 {
-
+	math::LCG random;
+	UUID = random.Int();
 }
 
 GameObject::GameObject(const char* n, GameObject* p): name(n), parent(p)
 {
+	math::LCG random;
+	UUID = random.Int();
+
 	if (parent)
 	{
 		parent->children.push_back(this);
