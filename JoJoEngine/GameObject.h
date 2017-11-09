@@ -26,7 +26,7 @@ public:
 	Component* GetComponent(TypeComp type)const;
 
 	void SetAABB(float* vertices, int n_vertices);
-	void SetOBB(float4x4 &trans);
+	void SetOBB(float4x4 &trans, float4x4& previous_trans);
 
 private:
 	void UpdateComponents();

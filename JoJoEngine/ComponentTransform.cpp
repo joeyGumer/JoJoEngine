@@ -7,6 +7,7 @@
 
 ComponentTransform::ComponentTransform(GameObject* g) : Component(COMP_TRANSFORM, g)
 {
+	previous_world_transform.SetIdentity();
 	world_transform.SetIdentity();
 	local_transform.SetIdentity();
 
@@ -109,7 +110,7 @@ void ComponentTransform::SetRotation(float3 &r)
 
 	rotation = rotation.FromEulerXYZ(rot.x, rot.y, rot.z);
 
-	local_transform.SetRotatePart(rotation);
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 
 	CalculateWorldTransform();
 }
@@ -157,5 +158,7 @@ void ComponentTransform::CalculateWorldTransform()
 
 
 	//Set OBB
-	go->SetOBB(GetFinalTransformMatrix());
+	go->SetOBB(world_transform, previous_world_transform);
+
+	previous_world_transform = world_transform;
 }

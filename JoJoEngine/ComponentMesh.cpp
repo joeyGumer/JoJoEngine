@@ -87,8 +87,6 @@ void ComponentMesh::SetMesh(Mesh* m)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 	}
 
-
 	//Set  Aabb/OBB
 	go->SetAABB(m->vertices, m->num_vertices);
-
 }

@@ -142,12 +142,24 @@ void GameObject::SetAABB(float* vertices, int n_vertices)
 
 	//NOTE: very slow alternative, should watch for an alternative
 	bb_object = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
-	bb_axis = bb_object.MinimalEnclosingAABB();
+	//bb_axis = bb_object.MinimalEnclosingAABB();
+
+	float4x4 trans = ((ComponentTransform*)GetComponent(COMP_TRANSFORM))->GetWorldTransform();
+	float4x4 prev = float4x4::identity;
+	SetOBB(trans, prev);
 }
 
-void GameObject::SetOBB(float4x4& trans)
+void GameObject::SetOBB(float4x4& trans, float4x4& previous_trans)
 {
+	//NOTE: look if i can do this without using the inversed
+
+	bb_object.Transform(previous_trans.Inverted());
 	bb_object.Transform(trans);
+
+	if (bb_object.IsDegenerate())
+	{
+		//Mesh* m = ((ComponentMesh*)GetComponent(COMP_MESH)).;
+	}
 
 	bb_axis = bb_object.MinimalEnclosingAABB();
 }

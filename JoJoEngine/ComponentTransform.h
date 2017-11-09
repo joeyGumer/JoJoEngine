@@ -31,6 +31,7 @@ private:
 
 	float4x4 local_transform;
 	float4x4 world_transform;
+	float4x4 previous_world_transform;
 
 	float3 position;
 	Quat rotation;
