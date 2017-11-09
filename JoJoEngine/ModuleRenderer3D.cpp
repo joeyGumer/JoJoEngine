@@ -380,6 +380,30 @@ void ModuleRenderer3D::DrawWireframe(const Mesh* mesh) const
 	}
 }
 
+void ModuleRenderer3D::DrawOBB(const OBB* box)const
+{
+	float3 box_vertices[24];
+
+	box->ToEdgeList(box_vertices);
+
+	glBegin(GL_LINES);
+	glLineWidth(1.0f);
+	glColor3f(3.0f, 0.0f, 0.0f);
+
+
+	for (uint i = 0; i < 12; i++)
+	{
+		uint tmp = i * 2;
+
+		float3 v = box_vertices[tmp];
+		glVertex3d(v.x, v.y, v.z);
+		v = box_vertices[tmp + 1];
+		glVertex3d(v.x, v.y, v.z);
+	}
+
+	glEnd();
+}
+
 void ModuleRenderer3D::DrawAABB(const AABB* box) const
 {
 	
@@ -435,7 +459,7 @@ void ModuleRenderer3D::DrawAABB(const AABB* box) const
 		glVertex3d(v.x, v.y, v.z);
 	}
 
-
+	glEnd();
 
 };
 

@@ -39,6 +39,7 @@ void ComponentMesh::Update()
 	//NOTE: have to change structure, it should not go like this
 	//Draw AABB
 	App->renderer3D->DrawAABB(&go->bb_axis);
+	App->renderer3D->DrawOBB(&go->bb_object);
 }
 
 void ComponentMesh::OnEditor()

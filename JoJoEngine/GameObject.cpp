@@ -137,10 +137,17 @@ void GameObject::SetAABB(float* vertices, int n_vertices)
 	bb_axis.SetNegativeInfinity();
 	bb_object.SetNegativeInfinity();
 
-	bb_axis.Enclose((float3 *)vertices, n_vertices);
+	//bb_axis.Enclose((float3 *)vertices, n_vertices);
 
 
 	//NOTE: very slow alternative, should watch for an alternative
 	bb_object = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
+	bb_axis = bb_object.MinimalEnclosingAABB();
+}
+
+void GameObject::SetOBB(float4x4& trans)
+{
+	bb_object.Transform(trans);
+
 	bb_axis = bb_object.MinimalEnclosingAABB();
 }

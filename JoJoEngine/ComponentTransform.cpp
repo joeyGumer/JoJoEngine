@@ -154,4 +154,8 @@ void ComponentTransform::CalculateWorldTransform()
 			go->children[i]->GetComponentTransform()->CalculateWorldTransform();
 		}
 	}
+
+
+	//Set OBB
+	go->SetOBB(GetFinalTransformMatrix());
 }

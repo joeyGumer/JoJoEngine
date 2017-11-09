@@ -31,6 +31,7 @@ private:
 
 public:
 	void DrawAABB(const AABB* box)const;
+	void DrawOBB(const OBB* box)const;
 
 	void Draw(const Mesh* mesh, float4x4 &transform, uint &texture_id) const;
 
