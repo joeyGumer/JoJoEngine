@@ -153,8 +153,7 @@ void GameObject::SetOBB(float4x4& trans, float4x4& previous_trans)
 {
 	//NOTE: look if i can do this without using the inversed
 
-	bb_object.Transform(previous_trans.Inverted());
-	bb_object.Transform(trans);
+	bb_object.Transform(previous_trans.Inverted() * trans);
 
 	if (bb_object.IsDegenerate())
 	{

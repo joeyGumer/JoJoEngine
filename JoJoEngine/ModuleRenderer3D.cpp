@@ -404,6 +404,26 @@ void ModuleRenderer3D::DrawOBB(const OBB* box)const
 	glEnd();
 }
 
+void ModuleRenderer3D::DrawFrustrum(const Frustum& frustum) const
+{
+
+	glBegin(GL_LINES);
+	glLineWidth(1.0f);
+	glColor3f(0.0f, 0.0f, 3.0f);
+
+	for (uint i = 0; i < 12; i++)
+	{
+		LineSegment edge = frustum.Edge(i);
+
+		float3 v = edge.a;
+		glVertex3d(v.x, v.y, v.z);
+		v = edge.b;
+		glVertex3d(v.x, v.y, v.z);
+	}
+
+	glEnd();
+}
+
 void ModuleRenderer3D::DrawAABB(const AABB* box) const
 {
 	
