@@ -13,6 +13,10 @@ public:
 	ComponentCamera(GameObject* go);
 	~ComponentCamera();
 
+	void Update();
+
+	void OnEditor();
+
 	void SetFrustrum();
 
 private:

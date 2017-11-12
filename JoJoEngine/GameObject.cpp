@@ -5,6 +5,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 
 #include "MathGeoLib\Include\Algorithm\Random\LCG.h"
 
@@ -72,6 +73,9 @@ Component* GameObject::AddComponent(TypeComp type)
 		break;
 	case COMP_MATERIAL:
 		new_comp = new ComponentMaterial(this);
+		break;
+	case COMP_CAMERA:
+		new_comp = new ComponentCamera(this);
 		break;
 	default:
 		break;

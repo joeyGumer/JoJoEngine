@@ -4,10 +4,12 @@
 
 enum TypeComp
 {
+	COMP_DEFAULT,
 	COMP_TRANSFORM,
 	COMP_MESH,
 	COMP_MATERIAL,
 	COMP_CAMERA,
+
 };
 
 class GameObject;
