@@ -1,6 +1,9 @@
 #include "ComponentCamera.h"
+#include "GameObject.h"
+
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleSceneEdit.h"
 #include "Imgui\imgui.h"
 
 
@@ -17,6 +20,18 @@ void ComponentCamera::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Camera"))
 	{		
+
+		bool bool_tmp = false;
+		if (ImGui::Checkbox("Main camera", &main_cam))
+		{
+			if (main_cam)
+			{
+				SetAsMainCamera(main_cam);
+			}
+		}
+		
+		ImGui::Checkbox("Frustum culling", &frustum_culling);
+
 		float2 tmp_float2 = { cam.NearPlaneDistance(), cam.FarPlaneDistance() };
 		float tmp_float = 0.0f;
 		if(ImGui::DragFloat2("Near / Far ", tmp_float2.ptr(), 0.1f))
@@ -64,6 +79,14 @@ void ComponentCamera::SetVerticalFOV(float fov)
 	cam.SetVerticalFovAndAspectRatio(fov, GetAspectRatio());
 }
 
+void ComponentCamera::SetAsMainCamera(bool is_main_camera)
+{
+	if (is_main_camera)
+		App->level->SetAsMainCamera(this);
+	else
+		App->level->SetAsMainCamera(nullptr);
+}
+
 float ComponentCamera::GetAspectRatio() const
 {
 	return cam.AspectRatio();
@@ -72,4 +95,43 @@ float ComponentCamera::GetAspectRatio() const
 float ComponentCamera::GetVerticalFOV() const
 {
 	return cam.VerticalFov();
+}
+
+bool ComponentCamera::IsMainCamera() const
+{
+	return main_cam;
+}
+
+bool ComponentCamera::CullGameObject(GameObject* go) const
+{
+	//NOTE: if needed, this function will have to be optimized
+
+	AABB aabb = go->bb_axis;
+	float3 frustum_center = cam.CenterPoint();
+
+	for (uint i = 0; i < 6; i++)
+	{
+		Plane plane = cam.GetPlane(i);
+		bool go_inside = false;
+
+		for (uint j = 0; j < 8; j++)
+		{
+			float3 aabb_point = aabb.CornerPoint(j);
+
+			if (plane.AreOnSameSide(frustum_center, aabb_point))
+			{
+				go_inside = true;
+				break;
+			}
+		}
+
+		if (!go_inside)
+		{
+			return false;
+		}
+
+	}
+	
+	return true;
+
 }

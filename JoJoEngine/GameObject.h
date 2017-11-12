@@ -39,6 +39,8 @@ public:
 	OBB bb_object;
 	AABB bb_axis;
 
+	bool to_draw = false;
+
 private:
 	bool active = true;
 

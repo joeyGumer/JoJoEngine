@@ -1,6 +1,8 @@
 #include "ModuleSceneEdit.h"
 #include "Primitive.h"
 #include "GameObject.h"
+#include "ComponentCamera.h"
+
 #include "OpenGl.h"
 #include "Math.h"
 
@@ -55,6 +57,9 @@ bool ModuleSceneEdit::CleanUp()
 
 update_status ModuleSceneEdit::PreUpdate(float dt)
 {
+	if (main_camera && main_camera->frustum_culling)
+		FrustumCulling();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -87,6 +92,14 @@ void ModuleSceneEdit::Draw()
 	world_axis->InnerRender();
 
 }
+//NOTE: do this here or in GO update?
+void ModuleSceneEdit::FrustumCulling()
+{
+	for (uint i = 0, size = game_objects.size(); i < size; i++)
+	{
+		game_objects[i]->to_draw = main_camera->CullGameObject(game_objects[i]);
+	}
+}
 
 GameObject* ModuleSceneEdit::AddGameObject(const char* name, GameObject* parent)
 {
@@ -95,6 +108,11 @@ GameObject* ModuleSceneEdit::AddGameObject(const char* name, GameObject* parent)
 	game_objects.push_back(GO);
 
 	return GO;
+}
+
+void ModuleSceneEdit::SetAsMainCamera(ComponentCamera* cam)
+{
+	main_camera = cam;
 }
 
 bool ModuleSceneEdit::LoadConfig(JSON_Object* data)

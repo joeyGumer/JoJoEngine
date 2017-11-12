@@ -34,7 +34,8 @@ void ComponentMesh::Update()
 	
 	uint texture = ((ComponentMaterial*)go->GetComponent(COMP_MATERIAL))->GetTexture();
 	
-	App->renderer3D->Draw(mesh, transform, texture);
+	if(go->to_draw)
+		App->renderer3D->Draw(mesh, transform, texture);
 
 	//NOTE: have to change structure, it should not go like this
 	//Draw AABB
