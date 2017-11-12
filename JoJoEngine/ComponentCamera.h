@@ -17,7 +17,16 @@ public:
 
 	void OnEditor();
 
-	void SetFrustrum();
+	void InitFrustrum();
+
+	void SetAspectRatio(float ratio);
+	void SetVerticalFOV(float fov);
+
+	float GetAspectRatio() const;
+	float GetVerticalFOV() const;
+private:
+
+	float CalculateAspectRatio()const;
 
 private:
 	Frustum cam;
