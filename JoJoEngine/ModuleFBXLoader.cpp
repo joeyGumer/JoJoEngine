@@ -1,7 +1,7 @@
 #include "ModuleFBXLoader.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleSceneEdit.h"
+#include "ModuleGOManager.h"
 
 #include "GameObject.h"
 #include "Component.h"
@@ -106,7 +106,7 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 			//Loading all nodes
 			aiNode* root = scene->mRootNode;
 
-			LoadNode(scene, root, App->level->root_GO);
+			LoadNode(scene, root, App->go_manager->root_GO);
 
 			//Release the scene
 			aiReleaseImport(scene);
@@ -187,7 +187,7 @@ Mesh* ModuleFBXLoader::LoadMesh(const aiMesh* new_mesh) const
 
 void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObject* go ) const
 {	
-	GameObject* GO = App->level->AddGameObject(new_node->mName.C_Str(), go);
+	GameObject* GO = App->go_manager->AddGameObject(new_node->mName.C_Str(), go);
 
 	//Component Transform
 	ComponentTransform* comp_transform = (ComponentTransform*)GO->AddComponent(COMP_TRANSFORM);

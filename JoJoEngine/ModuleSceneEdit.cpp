@@ -30,7 +30,7 @@ bool ModuleSceneEdit::Start()
 	ex_plane = new PPlane(2.0f, 0.0f, 1.0f, 0.0f, 0.0f);
 	world_axis = new PAxis();
 
-	root_GO = AddGameObject("Root");
+	
 
 	return true;
 }
@@ -46,9 +46,6 @@ bool ModuleSceneEdit::CleanUp()
 
 	//Delete all game_objects by deleting the root (recursive destructor)
 	//NOTE: wich is better, recursive destructor (more secure) or vector delete iteration (more fast)?
-	RELEASE(root_GO);
-
-	game_objects.clear();
 
 	return true;
 }
@@ -57,19 +54,12 @@ bool ModuleSceneEdit::CleanUp()
 
 update_status ModuleSceneEdit::PreUpdate(float dt)
 {
-	if (main_camera && main_camera->frustum_culling)
-		FrustumCulling();
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleSceneEdit::Update(float dt)
 {
-	for (uint i = 0, size = game_objects.size(); i < size; i++)
-	{
-		game_objects[i]->Update();
-	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -92,28 +82,8 @@ void ModuleSceneEdit::Draw()
 	world_axis->InnerRender();
 
 }
-//NOTE: do this here or in GO update?
-void ModuleSceneEdit::FrustumCulling()
-{
-	for (uint i = 0, size = game_objects.size(); i < size; i++)
-	{
-		game_objects[i]->to_draw = main_camera->CullGameObject(game_objects[i]);
-	}
-}
 
-GameObject* ModuleSceneEdit::AddGameObject(const char* name, GameObject* parent)
-{
-	GameObject* GO = new GameObject(name, parent);
 
-	game_objects.push_back(GO);
-
-	return GO;
-}
-
-void ModuleSceneEdit::SetAsMainCamera(ComponentCamera* cam)
-{
-	main_camera = cam;
-}
 
 bool ModuleSceneEdit::LoadConfig(JSON_Object* data)
 {

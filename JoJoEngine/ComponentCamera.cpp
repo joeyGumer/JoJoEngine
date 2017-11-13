@@ -3,7 +3,7 @@
 
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleSceneEdit.h"
+#include "ModuleGOManager.h"
 #include "Imgui\imgui.h"
 
 
@@ -82,9 +82,9 @@ void ComponentCamera::SetVerticalFOV(float fov)
 void ComponentCamera::SetAsMainCamera(bool is_main_camera)
 {
 	if (is_main_camera)
-		App->level->SetAsMainCamera(this);
+		App->go_manager->SetAsMainCamera(this);
 	else
-		App->level->SetAsMainCamera(nullptr);
+		App->go_manager->SetAsMainCamera(nullptr);
 }
 
 float ComponentCamera::GetAspectRatio() const

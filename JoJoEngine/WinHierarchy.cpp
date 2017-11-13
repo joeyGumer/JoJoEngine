@@ -3,7 +3,7 @@
 #include "ModuleEditor.h"
 #include "WinProperties.h"
 #include "Application.h"
-#include "ModuleSceneEdit.h"
+#include "ModuleGOManager.h"
 #include "GameObject.h"
 #include "Globals.h"
 
@@ -33,9 +33,11 @@ void WinHierarchy::Update()
 {
 	ImGui::Begin("Hierarchy", &is_open);
 	
-	GameObject* root = App->level->root_GO;
+	GameObject* root = App->go_manager->root_GO;
 
-	//Iterate as tree is faster than iterating the vector?
+	//Iterate as tree is faster than iterating the vector?ç
+	//Is the hierarchy so this is fine
+	//NOTE: not show root as GO
 	ShowGO(root);
 
 	ImGui::End();

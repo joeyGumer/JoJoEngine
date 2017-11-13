@@ -35,19 +35,10 @@ public:
 	bool SaveConfig(JSON_Object* data)const;
 
 	void Draw();
-	void FrustumCulling();
-
-	void SetAsMainCamera(ComponentCamera* cam);
-
-	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
 public:
 
-	GameObject* root_GO;
 	
 private:
-	//NOTE: sure to be a vector?
-	std::vector<GameObject*> game_objects;
-	ComponentCamera* main_camera = nullptr;
 
 	//Base geometry of the scene
 	PWiredPlane* wplane;

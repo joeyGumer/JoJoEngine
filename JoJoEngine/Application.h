@@ -15,6 +15,7 @@ class ModulePhysiscs3D;
 class ModuleSceneEdit;
 class ModuleFileSystem;
 class ModuleFBXLoader;
+class ModuleGOManager;
  
 
 class Application
@@ -29,6 +30,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleSceneEdit* level;
+	ModuleGOManager* go_manager;
 
 
 private:

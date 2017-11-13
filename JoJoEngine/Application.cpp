@@ -8,6 +8,7 @@
 #include "ModuleSceneEdit.h"
 #include "ModuleFileSystem.h"
 #include "ModuleFBXLoader.h"
+#include "ModuleGOManager.h"
 
 #include "JSON\parson.h"
 
@@ -21,7 +22,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D();
 	camera = new ModuleCamera3D();
 	level = new ModuleSceneEdit();
-
+	go_manager = new ModuleGOManager();
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -36,7 +37,9 @@ Application::Application()
 
 	// Scenes
 	AddModule(level);
+	AddModule(go_manager);
 	AddModule(editor);
+
 	// Renderer last!
 	AddModule(renderer3D);
 

@@ -100,6 +100,9 @@
     <Filter Include="Sources\Importer">
       <UniqueIdentifier>{cd546929-d50f-409e-835f-60da8fa6c0aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\ModuleGOManager">
+      <UniqueIdentifier>{5666eb39-219c-4b7a-88ae-892a1a412d3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -423,6 +426,9 @@
     <ClInclude Include="ComponentCamera.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleGOManager.h">
+      <Filter>Sources\Modules\ModuleGOManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -643,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGOManager.cpp">
+      <Filter>Sources\Modules\ModuleGOManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
