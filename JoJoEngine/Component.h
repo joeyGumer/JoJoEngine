@@ -13,6 +13,7 @@ enum TypeComp
 };
 
 class GameObject;
+
 class Component
 {
 public:
@@ -24,6 +25,7 @@ public:
 	virtual void Disable(){}
 
 	virtual void OnEditor() {}
+	virtual void OnTransform() {}
 
 	//NOTE: needed?
 	void SetGameObject(GameObject* g);

@@ -1,5 +1,6 @@
 #include "ComponentCamera.h"
 #include "GameObject.h"
+#include "ComponentTransform.h"
 
 #include "Application.h"
 #include "ModuleRenderer3D.h"
@@ -54,6 +55,16 @@ void ComponentCamera::OnEditor()
 			SetAspectRatio(tmp_float);
 		}
 	}
+}
+
+void ComponentCamera::OnTransform()
+{
+	//NOTE: Maybe give options if the user wants the camera to transform too
+	float4x4 transform = go->GetTransform();
+	float4x4 previous = ((ComponentTransform*)go->GetComponent(COMP_TRANSFORM))->GetPreviousWorldTransform();
+
+	cam.Transform(previous.Inverted() * transform);
+
 }
 
 void  ComponentCamera::Update()

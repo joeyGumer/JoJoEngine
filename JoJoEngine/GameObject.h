@@ -23,10 +23,13 @@ public:
 
 	GameObject* GetParent() const;
 	ComponentTransform* GetComponentTransform() const;
+	float4x4 GetTransform()const;
 	Component* GetComponent(TypeComp type)const;
 
 	void SetAABB(float* vertices, int n_vertices);
 	void SetOBB(float4x4 &trans, float4x4& previous_trans);
+
+	void OnTransform();
 
 private:
 	void UpdateComponents();

@@ -113,6 +113,15 @@ bool GameObject::ReleaseComponent(Component* comp)
 	return false;
 }
 
+void GameObject::OnTransform()
+{
+	for (uint i = 0, size = components.size(); i < size; i++)
+	{
+		components[i]->OnTransform();
+	}
+
+}
+
 GameObject* GameObject::GetParent() const
 {
 	return parent;
@@ -121,6 +130,11 @@ GameObject* GameObject::GetParent() const
 ComponentTransform* GameObject::GetComponentTransform() const
 {
 	return comp_transform;
+}
+
+float4x4 GameObject::GetTransform() const
+{
+	return ((ComponentTransform*)GetComponent(COMP_TRANSFORM))->GetWorldTransform();
 }
 
 Component* GameObject::GetComponent(TypeComp type) const

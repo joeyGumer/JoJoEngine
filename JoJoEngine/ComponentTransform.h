@@ -23,6 +23,7 @@ public:
 	void SetTransform(float4x4 &mat);
 
 	float4x4 GetWorldTransform() const;
+	float4x4 GetPreviousWorldTransform() const;
 	float4x4 GetFinalTransformMatrix() const;
 
 	void CalculateWorldTransform();

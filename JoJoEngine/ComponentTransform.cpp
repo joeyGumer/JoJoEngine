@@ -129,6 +129,11 @@ float4x4 ComponentTransform::GetWorldTransform() const
 	return world_transform;
 }
 
+float4x4 ComponentTransform::GetPreviousWorldTransform() const
+{
+	return previous_world_transform;
+}
+
 float4x4 ComponentTransform::GetFinalTransformMatrix() const
 {
 	return world_transform.Transposed();
@@ -156,8 +161,9 @@ void ComponentTransform::CalculateWorldTransform()
 		}
 	}
 
+	go->OnTransform();
 
-	//Set OBB
+	//Better here so i don't have to transfer much info
 	go->SetOBB(world_transform, previous_world_transform);
 
 	previous_world_transform = world_transform;

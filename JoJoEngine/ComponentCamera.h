@@ -16,6 +16,7 @@ public:
 	void Update();
 
 	void OnEditor();
+	void OnTransform();
 
 	void InitFrustrum();
 
