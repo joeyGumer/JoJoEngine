@@ -4,7 +4,7 @@
 namespace Importer
 {
 	class ImporterMesh;
-	class ImporterMaterial;
+	
 }
 
 #include "ImporterMaterial.h"

@@ -5,15 +5,10 @@
 
 #include <string>
 
-class Importer::ImporterMaterial
+namespace ImporterMaterial
 {
-public:
 	bool Import(const char* file_name);
 	bool Load(const char* file_name, int * texture);
-
-private:
-
-
 };
 
 #endif // !

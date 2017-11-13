@@ -11,14 +11,12 @@
 #pragma comment(lib, "Devil/libx86/ILU.lib")
 #pragma comment(lib, "Devil/libx86/ILUT.lib")
 
-bool Importer::ImporterMaterial::Import(const char* file_name)
+bool ImporterMaterial::Import(const char* file_name)
 {
 	bool ret = true;
 
 	char* buffer = nullptr;
 	uint buffer_size = App->fs->Load(file_name, &buffer);
-
-	
 
 	ILuint id_image;
 	ilGenImages(1, &id_image);
@@ -46,7 +44,7 @@ bool Importer::ImporterMaterial::Import(const char* file_name)
 	return ret;
 }
 
-bool Importer::ImporterMaterial::Load(const char* file_name, int * texture)
+bool ImporterMaterial::Load(const char* file_name, int * texture)
 {
 	bool ret = true;
 

@@ -10,6 +10,8 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
+#include "ImporterMaterial.h"
+
 #include "Globals.h"
 #include "Math.h"
 
@@ -228,12 +230,13 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 		aiString path;
 		material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 
-		uint texture;
+		int texture;
 		float2 tex_size;
 
-		LoadTexture(path.C_Str(), &texture, &tex_size.x, &tex_size.y);
+		//LoadTexture(path.C_Str(), &texture, &tex_size.x, &tex_size.y);
+		ImporterMaterial::Import(path.C_Str());
 
-		comp_material->SetTexture(texture, tex_size.x, tex_size.y);
+		//comp_material->SetTexture(texture, tex_size.x, tex_size.y);
 	}
 
 	//---------------------
