@@ -42,7 +42,7 @@ public:
 	OBB bb_object;
 	AABB bb_axis;
 
-	bool to_draw = false;
+	bool to_draw = true;
 
 private:
 	bool active = true;

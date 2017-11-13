@@ -60,10 +60,11 @@ void ComponentCamera::OnEditor()
 void ComponentCamera::OnTransform()
 {
 	//NOTE: Maybe give options if the user wants the camera to transform too
-	float4x4 transform = go->GetTransform();
+	//Not working as expected
+	/*float4x4 transform = go->GetTransform();
 	float4x4 previous = ((ComponentTransform*)go->GetComponent(COMP_TRANSFORM))->GetPreviousWorldTransform();
 
-	cam.Transform(previous.Inverted() * transform);
+	cam.Transform(previous.Inverted() * transform);*/
 
 }
 

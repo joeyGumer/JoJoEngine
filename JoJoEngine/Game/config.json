@@ -34,8 +34,8 @@
             },
             "GL_2D_texture": true,
             "GL_color_material": true,
-            "draw_normals": false,
-            "draw_wireframe": false,
+            "draw_normals": true,
+            "draw_wireframe": true,
             "draw_meshes": true,
             "depth": false,
             "face_culling": false,
@@ -45,14 +45,14 @@
         },
         "camera": {
             "pos": {
-                "x": 180.08480834960938,
-                "y": 178.6024169921875,
-                "z": 185.44844055175781
+                "x": 17.263582229614258,
+                "y": 17.941057205200195,
+                "z": 15.777734756469727
             },
             "reference": {
-                "x": -7.3911285400390625,
-                "y": 0.46673583984375,
-                "z": -33.221282958984375
+                "x": 0.07283782958984375,
+                "y": -0.076948165893554688,
+                "z": -1.7840290069580078
             },
             "speed": 5,
             "wheel_speed": 50,
