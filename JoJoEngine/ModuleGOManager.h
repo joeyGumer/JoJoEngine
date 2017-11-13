@@ -23,12 +23,19 @@ public:
 	void FrustumCulling();
 
 	void SetAsMainCamera(ComponentCamera* cam);
+	void SetGoSelected(GameObject* s_go);
+
+	GameObject* GetGoSelected()const;
 	
 	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
+
+	void FocusGameObject() const;
 public:
 	GameObject* root_GO;
 
 private:
+	GameObject* selected_GO = nullptr;
+
 	std::vector<GameObject*> game_objects;
 	ComponentCamera* main_camera = nullptr;
 };

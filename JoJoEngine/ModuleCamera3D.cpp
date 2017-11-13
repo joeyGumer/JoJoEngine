@@ -68,10 +68,6 @@ update_status ModuleCamera3D::Update(float dt)
 	Position += newPos;
 	Reference = Position - (Z * length(Reference - Position));
 
-	//Camera Focus on Geometry
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
-		CenterCameraOnGeometry(App->renderer3D->GetAABB());
-
 	// Mouse Orbital ----------------
 	if(App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
@@ -141,7 +137,7 @@ void ModuleCamera3D::LookAt( const vec3 &Spot)
 }
 
 // -----------------------------------------------------------------
-void ModuleCamera3D::CenterCameraOnGeometry(const AABB box)
+void ModuleCamera3D::CenterCameraOnGeometry(const AABB &box)
 {
 	if (box.MaxX() != 0 && box.MaxY() != 0 && box.MaxZ() != 0)
 	{

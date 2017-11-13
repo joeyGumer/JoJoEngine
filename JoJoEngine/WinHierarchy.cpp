@@ -49,8 +49,8 @@ void WinHierarchy::ShowGO(GameObject* go)
 	if(ImGui::TreeNodeEx(go->name.c_str()))
 	{
 		if (ImGui::IsItemClicked())
-		{			
-			App->editor->properties->SetGameObject(go);
+		{
+			App->go_manager->SetGoSelected(go);
 		}
 
 		for (uint i = 0, size = go->children.size(); i < size; i++)

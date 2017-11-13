@@ -46,9 +46,6 @@ private:
 
 	ComponentTransform* comp_transform = nullptr;
 	GameObject* parent = nullptr;
-	
-	OBB obb;
-	AABB aabb;
 
 	long unsigned int UUID;
 

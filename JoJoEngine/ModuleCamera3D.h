@@ -35,7 +35,7 @@ public:
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void LookAt(const vec3 &Spot);
-	void CenterCameraOnGeometry(const AABB box);
+	void CenterCameraOnGeometry(const AABB &box);
 	void Move(const vec3 &Movement);
 	void Move(Direction d, float speed);
 	float* GetViewMatrix();

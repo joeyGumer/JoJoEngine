@@ -13,6 +13,9 @@ GameObject::GameObject()
 {
 	math::LCG random;
 	UUID = random.Int();
+
+	bb_axis.SetNegativeInfinity();
+	bb_object.SetNegativeInfinity();
 }
 
 GameObject::GameObject(const char* n, GameObject* p): name(n), parent(p)
@@ -24,6 +27,9 @@ GameObject::GameObject(const char* n, GameObject* p): name(n), parent(p)
 	{
 		parent->children.push_back(this);
 	}
+
+	bb_axis.SetNegativeInfinity();
+	bb_object.SetNegativeInfinity();
 }
 GameObject::~GameObject()
 {

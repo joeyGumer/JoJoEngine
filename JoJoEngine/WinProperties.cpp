@@ -1,6 +1,8 @@
 #include "WinProperties.h"
 
 #include "Application.h"
+#include "ModuleGOManager.h"
+
 #include "GameObject.h"
 #include "Component.h"
 
@@ -30,6 +32,9 @@ void WinProperties::Update()
 	if (is_open)
 	{
 		ImGui::Begin("Properties", &is_open);
+
+		//NOTE: change by event?
+		go = App->go_manager->GetGoSelected();
 
 		if (go)
 		{
