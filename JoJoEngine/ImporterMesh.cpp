@@ -21,6 +21,66 @@ bool ImporterMesh::Import(aiMesh* ai_mesh ,std::string& output_filename)
 	return true;
 }
 
+Mesh* ImporterMesh::Load(const char* filename)
+{
+	Mesh* mesh = new Mesh();
+
+	char* buffer;
+	App->fs->Load(filename, &buffer);
+
+	char* cursor = buffer;
+
+	// amount of indices / vertices / normals / texture_coords / colors 
+	uint ranges[5];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	//Data groups quantity
+	mesh->num_indices = ranges[0];
+	mesh->num_vertices = ranges[1];
+	mesh->num_normals = ranges[2];
+	mesh->num_texture_UVs = ranges[3];
+	mesh->num_colors = ranges[4];
+
+	//Data groups
+	uint vert_size = mesh->num_vertices * 3 * sizeof(float);
+	uint ind_size = mesh->num_indices * sizeof(uint);
+	uint norm_size = mesh->num_normals * 3 * sizeof(float);
+	uint uv_size = mesh->num_texture_UVs * 2 * sizeof(float);
+	uint color_size = mesh->num_colors * 3 * sizeof(uint);
+
+	//Indices
+	cursor += bytes;
+	bytes = ind_size;
+	mesh->indices = new uint[ind_size];
+	memcpy(mesh->indices, cursor, bytes);
+
+	//Vertices
+	cursor += bytes;
+	bytes = vert_size;
+	mesh->vertices = new float[vert_size];
+	memcpy(mesh->vertices, cursor, bytes);
+
+	//Normals
+	cursor += bytes;
+	bytes = norm_size;
+	mesh->normals = new float[norm_size];
+	memcpy(mesh->normals, cursor, bytes);
+
+	//UVs
+	cursor += bytes;
+	bytes = uv_size;
+	mesh->texture_UVs = new float[uv_size];
+	memcpy(mesh->texture_UVs, cursor, bytes);
+
+	//Colors
+	cursor += bytes;
+	bytes = color_size;
+	mesh->colors = new uint[color_size];
+	memcpy(mesh->colors, cursor, bytes);
+
+	return mesh;
+}
 
 bool ImporterMesh::LoadAssimpMesh(Mesh* m, aiMesh* new_mesh)
 {
@@ -75,6 +135,7 @@ bool ImporterMesh::LoadAssimpMesh(Mesh* m, aiMesh* new_mesh)
 		LOG("New mesh with %d UVs", m->num_texture_UVs);
 	}
 
+	//Colors
 	return true;
 }
 
@@ -90,10 +151,10 @@ bool ImporterMesh::SaveAssimpMesh(Mesh& mesh, std::string& output_filename)
 	uint ind_size = mesh.num_indices * sizeof(uint);
 	uint norm_size = mesh.num_normals * 3 * sizeof(float);
 	uint uv_size = mesh.num_texture_UVs * 2 * sizeof(float);
-	uint color_size = mesh.num_colors * 3 * sizeof(float);
+	uint color_size = mesh.num_colors * 3 * sizeof(uint);
 
 	//Total size of the buffer
-	uint size = vert_size + ind_size + norm_size + uv_size + color_size + sizeof(ranges);
+	uint size = vert_size + ind_size + norm_size + uv_size + sizeof(ranges);
 
 	char* data = new char[size];
 	char* cursor = data;

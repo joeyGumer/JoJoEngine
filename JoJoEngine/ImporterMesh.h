@@ -16,7 +16,7 @@ namespace ImporterMesh
 	bool LoadAssimpMesh(Mesh* mesh, aiMesh* ai_mesh);
 	bool SaveAssimpMesh(Mesh& mesh, std::string& output_filename);
 
-	bool Load();
+	Mesh* Load(const char* filename);
 };
 
 #endif

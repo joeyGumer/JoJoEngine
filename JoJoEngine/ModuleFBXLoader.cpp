@@ -11,6 +11,7 @@
 #include "ComponentMaterial.h"
 
 #include "ImporterMaterial.h"
+#include "ImporterMesh.h"
 
 #include "Globals.h"
 #include "Math.h"
@@ -213,15 +214,15 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 	//Component Mesh	
 	for (uint i = 0, size = new_node->mNumMeshes; i < size; i++)
 	{
-		//ComponentMesh* comp_mesh = (ComponentMesh*)GO->AddComponent(COMP_MESH);
+		ComponentMesh* comp_mesh = (ComponentMesh*)GO->AddComponent(COMP_MESH);
 
 		aiMesh* m = scene->mMeshes[new_node->mMeshes[i]];
 
 		std::string mesh_file;
 		ImporterMesh::Import(m, mesh_file);
 
-		//Mesh* new_mesh = LoadMesh(m);
-		//comp_mesh->SetMesh(new_mesh);
+		Mesh* new_mesh = ImporterMesh::Load(mesh_file.c_str());
+		comp_mesh->SetMesh(new_mesh);
 
 		//Component Material (from mesh)
 		//NOTE: if different meshes have same material is necessary to load the same texture again?

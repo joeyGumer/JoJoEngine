@@ -188,6 +188,7 @@ SDL_RWops* ModuleFileSystem::Load(const char* file) const
 
 	if (size > 0)
 	{
+		//NOTE: should i release the created buffer?
 		SDL_RWops* r = SDL_RWFromConstMem(buffer, size);
 		if (r != NULL)
 			r->close = close_sdl_rwops;
