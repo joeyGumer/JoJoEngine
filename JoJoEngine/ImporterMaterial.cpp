@@ -11,7 +11,7 @@
 #pragma comment(lib, "Devil/libx86/ILU.lib")
 #pragma comment(lib, "Devil/libx86/ILUT.lib")
 
-bool ImporterMaterial::Import(const char* file_name)
+bool ImporterMaterial::Import(const char* file_name, std::string& output)
 {
 	bool ret = true;
 
@@ -35,19 +35,38 @@ bool ImporterMaterial::Import(const char* file_name)
 			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
 			{
 				//NOTE: should do it in a more secure way?
-				ret = App->fs->Save(file_name, (char*)data, size);
+				ret = App->fs->SaveUnique(file_name, (char*)data, size, "Library/", "dds", output);
 			}
 			RELEASE_ARRAY(data);
 		}
 	}
+
+	ilDeleteImages(1, &id_image);
 
 	return ret;
 }
 
 bool ImporterMaterial::Load(const char* file_name, int * texture)
 {
-	bool ret = true;
+	bool ret = false;
 
+	ILuint id_image;
+	ilGenImages(1, &id_image);
+	ilBindImage(id_image);
+
+
+	ret = ilLoadImage(file_name);
+
+	if (ret)
+	{
+		*texture = ilutGLBindTexImage();
+	}
+	else
+	{
+		LOG("Error: failure trying to load texture %s", file_name);
+	}
+
+	ilDeleteImages(1, &id_image);
 
 	return ret;
 }

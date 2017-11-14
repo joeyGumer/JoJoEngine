@@ -178,7 +178,8 @@ bool Application::LoadConfig()
 	bool ret = true;
 
 	//LoadData from Config
-	JSON_Value* config = json_parse_file("config.json");
+	//NOTE: will need to be changed
+	JSON_Value* config = json_parse_file("Game/config.json");
 
 	assert(config != nullptr);
 
@@ -208,7 +209,7 @@ bool Application::SaveConfig()
 {
 	bool ret = true;
 
-	JSON_Value* file = json_parse_file("config.json");
+	JSON_Value* file = json_parse_file("Game/config.json");
  	JSON_Object* config = json_value_get_object(file);
 	JSON_Object* app_config = json_object_get_object(config, "App");
 

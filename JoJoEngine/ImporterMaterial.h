@@ -7,7 +7,7 @@
 
 namespace ImporterMaterial
 {
-	bool Import(const char* file_name);
+	bool Import(const char* file_name, std::string& output);
 	bool Load(const char* file_name, int * texture);
 };
 

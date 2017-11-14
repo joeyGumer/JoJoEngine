@@ -233,10 +233,13 @@ void ModuleFBXLoader::LoadNode(const aiScene* scene, aiNode* new_node, GameObjec
 		int texture;
 		float2 tex_size;
 
+		std::string file_name;
 		//LoadTexture(path.C_Str(), &texture, &tex_size.x, &tex_size.y);
-		ImporterMaterial::Import(path.C_Str());
+		ImporterMaterial::Import(path.C_Str(), file_name);
+		ImporterMaterial::Load(file_name.c_str(), &texture);
 
-		//comp_material->SetTexture(texture, tex_size.x, tex_size.y);
+
+		comp_material->SetTexture(texture, tex_size.x, tex_size.y);
 	}
 
 	//---------------------

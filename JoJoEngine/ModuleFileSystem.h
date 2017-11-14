@@ -33,6 +33,7 @@ public:
 	{
 		return "save/";
 	}
+	const char* GetBasePath() const;
 
 	bool CreateDirectoryFile(const char* directory);
 
@@ -43,6 +44,8 @@ public:
 	SDL_RWops* Load(const char* file) const;
 
 	unsigned int Save(const char* file, const char* buffer, unsigned int size) const;
+	bool SaveUnique(const char* file, const char* buffer, unsigned int size, const char* path, const char* extension, std::string& output_filename);
+
 
 private:
 

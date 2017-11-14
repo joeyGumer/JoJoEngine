@@ -63,7 +63,7 @@
         },
         "editor": {
             "configuration_open": false,
-            "console_open": false,
+            "console_open": true,
             "properties_open": true,
             "demo_open": false,
             "editor_active": true,

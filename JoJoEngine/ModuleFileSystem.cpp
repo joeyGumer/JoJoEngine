@@ -19,6 +19,8 @@ ModuleFileSystem::ModuleFileSystem() : Module()
 	PHYSFS_init(base_path);
 	SDL_free(base_path);
 
+	LOG("FileSystem Operations base is [%s] plus:", GetBasePath());
+
 	// By default we include executable's own directory
 	// without this we won't be able to find config.json :-(
 	AddPath(".");
@@ -35,8 +37,8 @@ ModuleFileSystem::~ModuleFileSystem()
 bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 {
 	// Ask SDL for a write dir
-	char* write_path = (char*)PHYSFS_getBaseDir();//SDL_GetPrefPath(App->GetOrganization().c_str(), App->GetName().c_str());
-
+	char* write_path = (char*)PHYSFS_getBaseDir();
+	//(char*)PHYSFS_getBaseDir();
 	if (PHYSFS_setWriteDir(write_path) == 0)
 	{
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
@@ -48,7 +50,9 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 		AddPath(write_path, GetSaveDirectory());
 	}
 
-	SDL_free(write_path);
+
+	//NOTE: may give an error
+	//SDL_free(write_path);
 
 
 	//NOTE: create Assets and Library folders if they don't exist, not sure if do it here
@@ -60,7 +64,6 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 	{
 		CreateDirectoryFile("Library");
 	}
-
 	LOG("Loading File System");
 	bool ret = true;
 
@@ -69,7 +72,9 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 
 	for (uint i = 0, size = json_array_get_count(paths); i < size; i++)
 	{
-		AddPath(json_array_get_string(paths, i));
+		char path[300];
+		sprintf_s(path, 300, "%s%s", GetBasePath(), json_array_get_string(paths, i));
+		AddPath(path);
 	}
 
 
@@ -137,6 +142,8 @@ bool ModuleFileSystem::CreateDirectoryFile(const char* directory)
 		LOG("Error trying to create directory: %s", PHYSFS_getLastError());
 		return false;
 	}
+
+	LOG("New directory created: %s", directory);
 	return true;
 }
 
@@ -224,6 +231,23 @@ unsigned int ModuleFileSystem::Save(const char* file, const char* buffer, unsign
 	return ret;
 }
 
+bool ModuleFileSystem::SaveUnique(const char* file, const char* buffer, unsigned int size, const char* path, const char* extension, std::string& output_filename)
+{
+	
+	char file_name[100];
+	uint name_size = 100;
+
+	sprintf_s(file_name, name_size, "%s%s.%s", path, file, extension);
+
+	if (Save(file_name,buffer, size) > 0)
+	{
+		output_filename = file_name;
+		return true;
+	}
+
+	return false;
+}
+
 //NOTE: issues returning char*
 std::string ModuleFileSystem::GetFileExtension(const char* file) const
 {
@@ -247,4 +271,9 @@ std::string ModuleFileSystem::GetFileExtension(const char* file) const
 
 	return ret;
 	
+}
+
+const char* ModuleFileSystem::GetBasePath() const
+{
+	return PHYSFS_getBaseDir();
 }
