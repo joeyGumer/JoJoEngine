@@ -50,12 +50,17 @@ bool ImporterMaterial::Load(const char* file_name, int * texture)
 {
 	bool ret = false;
 
+	//NOTE: not sure if i have to use ilLoadL too, but the only way to find the file is through FileSystem
+	char* buffer = nullptr;
+	uint buffer_size = App->fs->Load(file_name, &buffer);
+
 	ILuint id_image;
 	ilGenImages(1, &id_image);
 	ilBindImage(id_image);
 
-
-	ret = ilLoadImage(file_name);
+	ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, buffer_size);
+	
+	//ret = ilLoadImage(file_name);
 
 	if (ret)
 	{
@@ -63,7 +68,7 @@ bool ImporterMaterial::Load(const char* file_name, int * texture)
 	}
 	else
 	{
-		LOG("Error: failure trying to load texture %s", file_name);
+		LOG("Error: failure trying to load texture %s: %s", file_name, iluErrorString(ilGetError()));
 	}
 
 	ilDeleteImages(1, &id_image);

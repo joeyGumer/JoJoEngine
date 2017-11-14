@@ -237,11 +237,14 @@ bool ModuleFileSystem::SaveUnique(const char* file, const char* buffer, unsigned
 	char file_name[100];
 	uint name_size = 100;
 
+	sprintf_s(file_name, name_size, "%s.%s", file, extension);
+
+	output_filename = file_name;
+
 	sprintf_s(file_name, name_size, "%s%s.%s", path, file, extension);
 
 	if (Save(file_name,buffer, size) > 0)
 	{
-		output_filename = file_name;
 		return true;
 	}
 
