@@ -3,13 +3,20 @@
 
 #include "Importer.h"
 
-class Importer::ImporterMesh
+#include <string>
+
+struct Mesh;
+struct aiMesh;
+
+//NOTE: namespace or better a class?
+namespace ImporterMesh
 {
-public:
 
+	bool Import(aiMesh* ai_mesh, std::string& output_filename);
+	bool LoadAssimpMesh(Mesh* mesh, aiMesh* ai_mesh);
+	bool SaveAssimpMesh(Mesh& mesh, std::string& output_filename);
 
-private:
-
+	bool Load();
 };
 
 #endif
