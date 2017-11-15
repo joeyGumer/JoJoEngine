@@ -27,7 +27,11 @@ void ComponentTransform::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		ImGui::Checkbox("Static", &go->is_static);
+		bool tmp_bool = go->IsStatic();
+		if(ImGui::Checkbox("Static", &tmp_bool))
+		{
+			go->SetStatic(tmp_bool);
+		}
 
 		//Position
 		ImGui::Text("Position: ");

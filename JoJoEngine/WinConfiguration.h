@@ -24,7 +24,9 @@ private:
 	void TabCamera();
 	void TabInput();
 	void TabGoManager();
+private:
 
+	void RecursiveDrawQuadtree(void* node);
 private:
 	//FPS graphs
 	int slider_fps;

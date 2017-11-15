@@ -34,13 +34,17 @@ public:
 	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
 
 	void FocusGameObject() const;
+
+	void FillQuadTree();
 public:
 	GameObject* root_GO;
 
+	//NOTE: temporaly public
+	Quadtree tree;
 private:
 	GameObject* selected_GO = nullptr;
 
-	Quadtree tree;
+	
 	float tree_size = 100.0;
 
 	std::vector<GameObject*> game_objects;

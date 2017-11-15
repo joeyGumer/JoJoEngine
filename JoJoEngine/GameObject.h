@@ -25,9 +25,11 @@ public:
 	ComponentTransform* GetComponentTransform() const;
 	float4x4 GetTransform()const;
 	Component* GetComponent(TypeComp type)const;
+	bool IsStatic()const;
 
 	void SetAABB(float* vertices, int n_vertices);
 	void SetOBB(float4x4 &trans, float4x4& previous_trans);
+	void SetStatic(bool is_stat);
 
 	void OnTransform();
 
@@ -43,10 +45,10 @@ public:
 	AABB bb_axis;
 
 	bool to_draw = true;
-	bool is_static = true;
 
 private:
 	bool active = true;
+	bool is_static = true;
 
 	ComponentTransform* comp_transform = nullptr;
 	GameObject* parent = nullptr;

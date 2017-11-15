@@ -107,3 +107,21 @@ void ModuleGOManager::FrustumCulling()
 	}
 }
 
+void ModuleGOManager::FillQuadTree()
+{
+	float3 point = { tree_size,tree_size, tree_size };
+	AABB tree_aabb;
+	tree_aabb.maxPoint = point;
+	tree_aabb.minPoint = -point;
+	tree.Create(tree_aabb);
+
+
+	for (int i = 0, size = game_objects.size(); i < size; i++)
+	{
+		//If parent is static children should be too
+		if (game_objects[i]->IsStatic())
+		{
+			tree.Insert(game_objects[i]);
+		}
+	}
+}

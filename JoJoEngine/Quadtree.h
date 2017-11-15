@@ -30,7 +30,7 @@ public:
 	//void Intersect(std::vector<GameObject*>&, PRIMITIVE);
 
 	void Draw();
-private:
+public:
 	QuadNode root_node;
 
 };

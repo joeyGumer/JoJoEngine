@@ -159,13 +159,17 @@ Component* GameObject::GetComponent(TypeComp type) const
 		return comp_transform;
 }
 
+bool GameObject::IsStatic()const
+{
+	return is_static;
+}
+
 void GameObject::SetAABB(float* vertices, int n_vertices)
 {
 	bb_axis.SetNegativeInfinity();
 	bb_object.SetNegativeInfinity();
 
 	//bb_axis.Enclose((float3 *)vertices, n_vertices);
-
 
 	//NOTE: very slow alternative, should watch for an alternative
 	bb_object = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
@@ -188,4 +192,14 @@ void GameObject::SetOBB(float4x4& trans, float4x4& previous_trans)
 	}
 
 	bb_axis = bb_object.MinimalEnclosingAABB();
+}
+
+void GameObject::SetStatic(bool is_stat)
+{
+	is_static = is_stat;
+
+	for (int i = 0, size = children.size(); i < size; i++)
+	{
+		children[i]->SetStatic(is_stat);
+	}
 }
