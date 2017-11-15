@@ -24,6 +24,7 @@ ModuleFileSystem::ModuleFileSystem() : Module()
 	// By default we include executable's own directory
 	// without this we won't be able to find config.json :-(
 	AddPath(".");
+	AddPath(GetBasePath());
 
 }
 
@@ -37,16 +38,17 @@ ModuleFileSystem::~ModuleFileSystem()
 bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 {
 	// Ask SDL for a write dir
-	//char* write_path = (char*)PHYSFS_getBaseDir();
+	const char* write_path = GetBasePath();
 	//(char*)PHYSFS_getBaseDir();
-	if (PHYSFS_setWriteDir(".") == 0)
+	
+	if (PHYSFS_setWriteDir(write_path) == 0)
 	{
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 	}
 	else
 	{
 		// We add the writing directory as a reading directory too with speacial mount point
-		//LOG("Writing directory is %s\n", write_path);
+		LOG("Writing directory is %s\n", write_path);
 		//AddPath(write_path, GetSaveDirectory());
 	}
 
@@ -276,10 +278,11 @@ bool ModuleFileSystem::SaveUnique(const char* file, const char* buffer, unsigned
 
 	output_filename = file_name;
 
-	sprintf_s(file_name, name_size, "%s/%s", path, output_filename.c_str());
+	sprintf_s(file_name, name_size, "%s%s", path, output_filename.c_str());
 
 	if (Save(file_name,buffer, size) > 0)
 	{
+		output_filename = file_name;
 		return true;
 	}
 

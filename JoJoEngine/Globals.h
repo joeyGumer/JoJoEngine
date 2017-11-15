@@ -50,5 +50,5 @@ enum update_status
 //Directories
 #define LIBRARY "Library/"
 #define ASSETS "Assets/"
-#define LIBRARY_MESHES "Library/Meshes"
-#define LIBRARY_MATERIALS "Library/Materials"
+#define LIBRARY_MESHES "Library/Meshes/"
+#define LIBRARY_MATERIALS "Library/Materials/"

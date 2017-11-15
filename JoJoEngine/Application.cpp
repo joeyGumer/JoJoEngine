@@ -179,7 +179,7 @@ bool Application::LoadConfig()
 
 	//LoadData from Config
 	//NOTE: will need to be changed
-	JSON_Value* config = json_parse_file("Game/config.json");
+	JSON_Value* config = json_parse_file("config.json");
 
 	assert(config != nullptr);
 
