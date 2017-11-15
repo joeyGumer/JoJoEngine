@@ -26,6 +26,7 @@ public:
 	float4x4 GetTransform()const;
 	Component* GetComponent(TypeComp type)const;
 	bool IsStatic()const;
+	bool HasMesh()const;
 
 	void SetAABB(float* vertices, int n_vertices);
 	void SetOBB(float4x4 &trans, float4x4& previous_trans);

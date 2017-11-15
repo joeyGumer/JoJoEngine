@@ -159,6 +159,14 @@ Component* GameObject::GetComponent(TypeComp type) const
 		return comp_transform;
 }
 
+bool GameObject::HasMesh()const
+{
+	if (GetComponent(COMP_MESH))
+		return true;
+
+	return false;
+}
+
 bool GameObject::IsStatic()const
 {
 	return is_static;

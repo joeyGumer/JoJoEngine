@@ -94,8 +94,8 @@ GameObject*  ModuleGOManager::GetGoSelected()const
 }
 void ModuleGOManager::FocusGameObject() const
 {
-	bool degenerate = selected_GO->bb_axis.IsDegenerate();
-	if (selected_GO && !degenerate)
+	
+	if (selected_GO && selected_GO->HasMesh())
 		App->camera->CenterCameraOnGeometry(selected_GO->bb_axis);
 }
 
