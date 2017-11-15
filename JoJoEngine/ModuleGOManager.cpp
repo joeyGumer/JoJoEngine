@@ -23,6 +23,13 @@ bool ModuleGOManager::Start()
 {
 	root_GO = AddGameObject("Root");
 
+	//NOTE: put to a separate function
+	float3 point = { tree_size,tree_size, tree_size };
+	AABB tree_aabb;
+	tree_aabb.maxPoint = point;
+	tree_aabb.minPoint = -point;
+	tree.Create(tree_aabb);
+
 	return true;
 }
 bool ModuleGOManager::CleanUp()
@@ -51,10 +58,14 @@ update_status ModuleGOManager::Update(float dt)
 }
 update_status ModuleGOManager::PostUpdate(float dt)
 {
+	
 	for (uint i = 0, size = game_objects.size(); i < size; i++)
 	{
 		game_objects[i]->Update();
 	}
+
+	//NOTE: on second though, GO_manager should be reserved for GO iteration, but need to check this temporaly
+	tree.Draw();
 
 	return UPDATE_CONTINUE;
 }

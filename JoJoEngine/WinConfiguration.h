@@ -23,6 +23,7 @@ private:
 	void TabHardware();
 	void TabCamera();
 	void TabInput();
+	void TabGoManager();
 
 private:
 	//FPS graphs

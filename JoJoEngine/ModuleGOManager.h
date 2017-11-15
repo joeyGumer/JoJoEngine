@@ -2,6 +2,10 @@
 #define _MODULEGOMANAGER_H_
 
 #include "Module.h"
+
+//NOTE: direct or forward declaration?
+#include "Quadtree.h"
+
 #include <vector>
 
 class GameObject;
@@ -35,6 +39,9 @@ public:
 
 private:
 	GameObject* selected_GO = nullptr;
+
+	Quadtree tree;
+	float tree_size = 100.0;
 
 	std::vector<GameObject*> game_objects;
 	ComponentCamera* main_camera = nullptr;

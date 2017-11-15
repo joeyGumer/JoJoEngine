@@ -429,6 +429,9 @@
     <ClInclude Include="ModuleGOManager.h">
       <Filter>Sources\Modules\ModuleGOManager</Filter>
     </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -652,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="ModuleGOManager.cpp">
       <Filter>Sources\Modules\ModuleGOManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

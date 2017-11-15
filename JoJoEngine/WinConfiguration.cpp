@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
+#include "ModuleGOManager.h"
 
 #include "Imgui/imgui.h"
 
@@ -297,4 +298,9 @@ void WinConfiguration::TabInput()
 		ImGui::Spacing();
 		ImGui::Text("Number of joysticks: %i", App->input->GetNumberJoysticks());
 	}
+}
+
+void WinConfiguration::TabGoManager()
+{
+
 }

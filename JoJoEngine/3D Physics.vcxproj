@@ -92,6 +92,7 @@
     <ClInclude Include="ImporterMaterial.h" />
     <ClInclude Include="ImporterMesh.h" />
     <ClInclude Include="ModuleGOManager.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="WinConsole.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="ImporterMaterial.cpp" />
     <ClCompile Include="ImporterMesh.cpp" />
     <ClCompile Include="ModuleGOManager.cpp" />
+    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="WinConsole.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="ImGuiDemo.cpp" />
