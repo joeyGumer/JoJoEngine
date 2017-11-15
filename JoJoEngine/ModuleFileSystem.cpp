@@ -37,17 +37,17 @@ ModuleFileSystem::~ModuleFileSystem()
 bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 {
 	// Ask SDL for a write dir
-	char* write_path = (char*)PHYSFS_getBaseDir();
+	//char* write_path = (char*)PHYSFS_getBaseDir();
 	//(char*)PHYSFS_getBaseDir();
-	if (PHYSFS_setWriteDir(write_path) == 0)
+	if (PHYSFS_setWriteDir(".") == 0)
 	{
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 	}
 	else
 	{
 		// We add the writing directory as a reading directory too with speacial mount point
-		LOG("Writing directory is %s\n", write_path);
-		AddPath(write_path, GetSaveDirectory());
+		//LOG("Writing directory is %s\n", write_path);
+		//AddPath(write_path, GetSaveDirectory());
 	}
 
 
@@ -64,6 +64,14 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 	{
 		CreateDirectoryFile("Library");
 	}
+	if (!Exists(LIBRARY_MESHES))
+	{
+		CreateDirectoryFile(LIBRARY_MESHES);
+	}
+	if (!Exists(LIBRARY_MATERIALS))
+	{
+		CreateDirectoryFile(LIBRARY_MATERIALS);
+	}
 	LOG("Loading File System");
 	bool ret = true;
 
@@ -77,6 +85,8 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 		AddPath(path);
 	}
 
+	AddPath(LIBRARY_MESHES);
+	AddPath(LIBRARY_MATERIALS);
 
 
 
@@ -241,9 +251,32 @@ bool ModuleFileSystem::SaveUnique(const char* file, const char* buffer, unsigned
 	
 	sprintf_s(file_name, name_size, "%s.%s", file, extension);
 
+	std::vector<std::string> path_files;
+	GetEnumerateFiles(path, path_files);
+
+	bool unique = false;
+	uint copies = 0;
+
+	while (!unique)
+	{
+		unique = true;
+
+		for (uint i = 0, size = path_files.size(); i < size; i++)
+		{
+			if (path_files[i].compare(file_name) == 0)
+			{
+				copies++;
+				unique = false;
+				
+				sprintf_s(file_name, name_size, "%s%d.%s", file, copies, extension);
+				break;
+			}
+		}		
+	}
+
 	output_filename = file_name;
 
-	sprintf_s(file_name, name_size, "%s%s.%s", path, file, extension);
+	sprintf_s(file_name, name_size, "%s/%s", path, output_filename.c_str());
 
 	if (Save(file_name,buffer, size) > 0)
 	{
@@ -281,4 +314,19 @@ std::string ModuleFileSystem::GetFileExtension(const char* file) const
 const char* ModuleFileSystem::GetBasePath() const
 {
 	return PHYSFS_getBaseDir();
+}
+
+void ModuleFileSystem::GetEnumerateFiles(const char* dir, std::vector<std::string>& file_names) const
+{
+	if (Exists(dir))
+	{
+		char** files = PHYSFS_enumerateFiles(dir);
+
+		for (uint i = 0; files[i]; i++)
+		{
+			file_names.push_back(files[i]);
+		}
+
+		PHYSFS_freeList(files);
+	}
 }

@@ -115,6 +115,9 @@ bool GameObject::ReleaseComponent(Component* comp)
 
 void GameObject::OnTransform()
 {
+	if (is_static)
+		is_static = false;
+
 	for (uint i = 0, size = components.size(); i < size; i++)
 	{
 		components[i]->OnTransform();

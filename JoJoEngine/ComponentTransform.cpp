@@ -27,6 +27,8 @@ void ComponentTransform::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Transform"))
 	{
+		ImGui::Checkbox("Static", &go->is_static);
+
 		//Position
 		ImGui::Text("Position: ");
 		ImGui::SameLine();

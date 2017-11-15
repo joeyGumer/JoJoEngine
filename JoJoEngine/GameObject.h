@@ -43,6 +43,7 @@ public:
 	AABB bb_axis;
 
 	bool to_draw = true;
+	bool is_static = true;
 
 private:
 	bool active = true;

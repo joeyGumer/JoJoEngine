@@ -45,5 +45,10 @@ enum update_status
 #define GPU_TOTAL_AVAILABLE_MEM 0x9048
 #define GPU_CURRENT_AVAILABLE_MEM 0x9049
 
-//NOTE: tried to create as a safer version of delete
-//#define void RELEASE(void* x){(x==nullptr)? LOG("trying to delete null variable"): delete x};
+
+
+//Directories
+#define LIBRARY "Library/"
+#define ASSETS "Assets/"
+#define LIBRARY_MESHES "Library/Meshes"
+#define LIBRARY_MATERIALS "Library/Materials"

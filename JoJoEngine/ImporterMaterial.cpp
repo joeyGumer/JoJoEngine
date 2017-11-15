@@ -35,7 +35,7 @@ bool ImporterMaterial::Import(const char* file_name, std::string& output)
 			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
 			{
 				//NOTE: should do it in a more secure way?
-				ret = App->fs->SaveUnique(file_name, (char*)data, size, "Library/", "dds", output);
+				ret = App->fs->SaveUnique("Material", (char*)data, size, LIBRARY_MATERIALS, "dds", output);
 			}
 			RELEASE_ARRAY(data);
 		}
@@ -60,7 +60,6 @@ bool ImporterMaterial::Load(const char* file_name, int * texture)
 
 	ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, buffer_size);
 	
-	//ret = ilLoadImage(file_name);
 
 	if (ret)
 	{

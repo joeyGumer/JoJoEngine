@@ -188,7 +188,7 @@ bool ImporterMesh::SaveAssimpMesh(Mesh& mesh, std::string& output_filename)
 	bytes = color_size;
 	memcpy(cursor, mesh.colors, bytes);
 
-	ret = App->fs->SaveUnique("Mesh", data, size, "Library/", "jme", output_filename);
+	ret = App->fs->SaveUnique("Mesh", data, size, LIBRARY_MESHES, "jme", output_filename);
 
 	RELEASE_ARRAY(data);
 

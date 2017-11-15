@@ -2,6 +2,8 @@
 #define _MODULEFILESYSTEM_H_
 
 #include "Module.h"
+#include <vector>
+#include <string>
 
 struct SDL_RWops;
 
@@ -38,6 +40,7 @@ public:
 	bool CreateDirectoryFile(const char* directory);
 
 	std::string GetFileExtension(const char* file) const;
+	void GetEnumerateFiles(const char* dir, std::vector<std::string>& file_names) const;
 
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;
