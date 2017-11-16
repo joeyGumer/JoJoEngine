@@ -124,6 +124,9 @@ bool QuadNode::ToDivide()
 	return (!subdivided && (game_objects.size() > NODE_GO_LIMIT && ( hx > (NODE_LIMIT_SIZE) || hz > (NODE_LIMIT_SIZE))));
 }
 
+
+
+//----------------------------------------------Quadtree
 void Quadtree::Create(AABB& limits)
 {
 	Clear();

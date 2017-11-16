@@ -25,8 +25,10 @@ struct QuadNode
 	void Insert(GameObject* go);
 	void Draw();
 
-	AABB limits;
+	template<typename TYPE>
+	void CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 
+	AABB limits;
 	QuadNode* parent = nullptr;
 	QuadNode* children[4];
 	bool subdivided = false;
@@ -49,7 +51,9 @@ public:
 	void Clear();
 	void Insert(GameObject* go);
 	void Remove(GameObject* go);
-	//void Intersect(std::vector<GameObject*>&, PRIMITIVE);
+
+	template<typename TYPE>
+	void Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 
 	uint AssignId() { return ++id; }
 	void Draw();
@@ -62,5 +66,29 @@ public:
 	uint id = 0;
 };
 
+
+//Intersection functions
+template<typename TYPE>
+inline void QuadNode::CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const
+{
+	if (primitive.Intersects(box))
+	{
+		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		{
+			if (primitive.Intersects((*it)->global_bbox))
+				objects.push_back(*it);
+
+		}
+		for (int i = 0; i < 4; ++i)
+			if (childs[i] != nullptr) childs[i]->CollectIntersections(objects, primitive);
+
+	}
+}
+
+template<typename TYPE>
+inline void Quadtree::Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const
+{
+	root_node->CollectIntersections();
+}
 
 #endif // !_QUADTREE_H_
