@@ -6,8 +6,11 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "ModuleGOManager.h"
+#include "Quadtree.h"
+#include "GameObject.h"
 
 #include "Imgui/imgui.h"
+
 
 WinConfiguration::WinConfiguration() : EditorWindow()
 {
@@ -309,26 +312,28 @@ void WinConfiguration::TabGoManager()
 		{
 			App->go_manager->FillQuadTree();
 		}
+
 		//Quadtree
-		RecursiveDrawQuadtree(&App->go_manager->tree.root_node);
+		/*if (App->go_manager->tree.root_node);
+			RecursiveDrawQuadtree(App->go_manager->tree.root_node);*/
 	}
 }
 
-void WinConfiguration::RecursiveDrawQuadtree(void* node)
+void WinConfiguration::RecursiveDrawQuadtree(QuadNode* node)
 {
-	uint flags = 0;
+	/*uint flags = 0;
 
-	/*if (node->childs[0] == nullptr)
+	if (node->children[0] == nullptr)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 
 	if (ImGui::TreeNodeEx(node, flags, "QNode"))
 	{
-		for (list<GameObject*>::const_iterator it = node->objects.begin(); it != node->objects.end(); ++it)
+		for (list<GameObject*>::const_iterator it = node->game_objects.begin(); it != node->game_objects.end(); ++it)
 			ImGui::Text("%s", (*it)->name.c_str());
 
 		for (uint i = 0; i < 4; ++i)
-			if (node->childs[i] != nullptr)
-				RecursiveDrawQuadtree(node->childs[i]);
+			if (node->children[i] != nullptr)
+				RecursiveDrawQuadtree(node->children[i]);
 
 		ImGui::TreePop();
 	}*/

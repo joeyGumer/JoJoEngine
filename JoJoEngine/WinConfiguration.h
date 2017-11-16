@@ -5,6 +5,7 @@
 #include "Bar.h"
 #include "OpenGl.h"
 
+class QuadNode;
 class WinConfiguration: public EditorWindow
 {
 public:
@@ -26,7 +27,7 @@ private:
 	void TabGoManager();
 private:
 
-	void RecursiveDrawQuadtree(void* node);
+	void RecursiveDrawQuadtree(QuadNode* node);
 private:
 	//FPS graphs
 	int slider_fps;

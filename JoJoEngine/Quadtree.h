@@ -10,23 +10,29 @@
 class GameObject;
 class Quadtree;
 
+#define NODE_GO_LIMIT 1
+#define NODE_LIMIT_SIZE 10.0f
+
+
 struct QuadNode
 {
 	QuadNode(Quadtree* tr, AABB& lim, uint i) : tree(tr), limits(lim) ,id(i){}
+	~QuadNode();
 
 	void Subdivide();
 	bool ToDivide();
+	void RedistributeGoChilds();
 	void Insert(GameObject* go);
 	void Draw();
 
 	AABB limits;
 
 	QuadNode* parent = nullptr;
-	std::vector<QuadNode*> children;
+	QuadNode* children[4];
 	bool subdivided = false;
 
-	std::vector<GameObject*> game_objects;
-	uint go_limit = 1;
+	std::list<GameObject*> game_objects;
+	//uint go_limit = 1;
 
 	uint id = 0;
 	Quadtree* tree;
@@ -34,7 +40,11 @@ struct QuadNode
 
 class Quadtree
 {
+
 public:
+
+	Quadtree() :root_node(nullptr) {}
+
 	void Create(AABB& limits);
 	void Clear();
 	void Insert(GameObject* go);
@@ -44,7 +54,8 @@ public:
 	uint AssignId() { return ++id; }
 	void Draw();
 public:
-	QuadNode* root_node;
+
+	QuadNode* root_node = nullptr;
 
 	std::list<QuadNode*> regions;
 

@@ -6,10 +6,21 @@
 
 #include "GameObject.h"
 
+
+QuadNode::~QuadNode()
+{
+	if (subdivided)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			RELEASE(children[i]);
+		}
+	}
+	game_objects.clear();
+}
+
 void QuadNode::Insert(GameObject* go)
 {
-	if (limits.Intersects(go->bb_axis))
-	{
 		game_objects.push_back(go);
 
 		if (ToDivide())
@@ -17,85 +28,125 @@ void QuadNode::Insert(GameObject* go)
 			Subdivide();
 		}
 
-		for (uint i = 0, size = children.size(); i < size; i++)
+		if (subdivided)
+			RedistributeGoChilds();
+		/*for (uint i = 0, size = children.size(); i < size; i++)
 		{
 			children[i]->Insert(go);
-		}
-	}
-
+		}*/
 	
 }
 void QuadNode::Subdivide()
-{
-	float hx, hy;
-	float3 min = limits.minPoint;
-	float3 max = limits.maxPoint;
+{ 
+	//Ric's subdivide // We need to subdivide this node ...
+	float3 size(limits.Size());
+	float3 new_size(size.x*0.5f, size.y, size.z*0.5f);
 
-	hx = (max.x - min.x) / 2;
-	hy = (max.z - min.z) / 2;
+	float3 center(limits.CenterPoint());
+	float3 new_center(center);
+	AABB aabb;
 
-	for (uint i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		AABB aabb;
-
 		switch (i)
 		{
 		case 0:
-			aabb.maxPoint = max - float3(hx, 0, 0);
-			aabb.minPoint = min + float3(0, 0, hy);
+			new_center.x = center.x + size.x * 0.25f;
+			new_center.z = center.z + size.z * 0.25f;
 			break;
 		case 1:
-			aabb.maxPoint = max;
-			aabb.minPoint = max - float3(hx, 0, hy);
+			new_center.x = center.x + size.x * 0.25f;
+			new_center.z = center.z - size.z * 0.25f;
 			break;
 		case 2:
-			aabb.maxPoint = max - float3(hx, 0, hy);
-			aabb.minPoint = min;
+			new_center.x = center.x - size.x * 0.25f;
+			new_center.z = center.z - size.z * 0.25f;
 			break;
 		case 3:
-			aabb.maxPoint = min + float3(hx, 0, 0);
-			aabb.minPoint = max - float3(0, 0, hy);
+			new_center.x = center.x - size.x * 0.25f;
+			new_center.z = center.z + size.z * 0.25f;
 			break;
 		}
-
-		QuadNode* child = new QuadNode(tree, aabb, tree->AssignId());
-
-		children.push_back(child);
+		
+		aabb.SetFromCenterAndSize(new_center, new_size);
+		children[i] = new QuadNode(tree, aabb, tree->AssignId());
 	}
+
 	subdivided = true;
 }
+
+void QuadNode::RedistributeGoChilds()
+{
+	for (std::list<GameObject*>::iterator go = game_objects.begin(); go != game_objects.end(); )
+	{
+		bool go_intersects[4];
+
+		bool all_intersects = true;
+		for (int i = 0; i < 4; i++)
+		{
+			if (!(go_intersects[i] = children[i]->limits.Intersects((*go)->bb_axis)))
+				all_intersects = false;
+		}
+
+		if (!all_intersects)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (go_intersects[i])
+					children[i]->Insert(*go);
+			}
+
+			go = game_objects.erase(go);
+		}
+		else
+			go++;
+	}
+}
+
 
 //NOTE: later i'll do it with the regions
 void QuadNode::Draw()
 {
 	App->renderer3D->DrawAABB(&limits);
 
-	for (int i = 0, size = children.size(); i < size; i++)
+	if (subdivided)
 	{
-		children[i]->Draw();
+		for (int i = 0; i < 4; i++)
+		{
+			children[i]->Draw();
+		}
 	}
 }
 bool QuadNode::ToDivide()
 {
-	return (!subdivided && game_objects.size() > go_limit);
+	float hx = limits.maxPoint.x - limits.minPoint.x;
+	float hz = limits.maxPoint.z - limits.minPoint.z;
+	return (!subdivided && (game_objects.size() > NODE_GO_LIMIT && ( hx > (NODE_LIMIT_SIZE) || hz > (NODE_LIMIT_SIZE))));
 }
 
 void Quadtree::Create(AABB& limits)
 {
+	Clear();
+
 	root_node = new QuadNode(this, limits, id);
 
-	regions.push_back(root_node);
+	//regions.push_back(root_node);
 }
 
 void Quadtree::Clear()
 {
-
+	if(root_node)
+		RELEASE(root_node);
 }
+
 void Quadtree::Insert(GameObject* go)
 {
 	//Get position
 	//For now, i will recursevily add a gameobject
-	root_node->Insert(go);
+	if (root_node->limits.Intersects(go->bb_axis))
+	{
+		root_node->Insert(go);
+	}
 
 	/*
 	std::list<QuadNode>::iterator i = regions.begin();
