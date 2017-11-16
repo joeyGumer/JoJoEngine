@@ -5,6 +5,7 @@
 #include <list>
 #include "p2Point.h"
 #include "Math.h"
+#include "ComponentCamera.h"
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
@@ -33,18 +34,24 @@ public:
 	bool LoadConfig(JSON_Object* data);
 	bool SaveConfig(JSON_Object* data) const;
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
+	void Look(const float3 &Position, const float3 &Reference, bool RotateAroundReference = false);
+	void LookAt(const float3 &Spot);
 	void CenterCameraOnGeometry(const AABB &box);
-	void Move(const vec3 &Movement);
+	void Move(const float3 &Movement);
 	void Move(Direction d, float speed);
-	float* GetViewMatrix();
+
+	void SetPerspective(float aspect_r, float fovy, float n, float f);
+
+	float* GetViewMatrix() const;
+	float* GetProjectionMatrix() const;
+
+	float3 GetPosition() const;
 
 	void Rotate(float x, float y);
 
 
 	//Transform a 3D point to a point of the screen
-	void From3Dto2D(vec3 point, int& x, int& y); 
+	void From3Dto2D(float3 point, int& x, int& y);
 
 private:
 
@@ -52,7 +59,7 @@ private:
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	float3 X, Y, Z, Position, Reference;
 	float speed, max_speed;
 	float wheel_speed, max_wheel_speed;
 	float sensitivity, max_sensitivity;
@@ -60,4 +67,6 @@ public:
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
+
+	ComponentCamera* cam = nullptr;
 };

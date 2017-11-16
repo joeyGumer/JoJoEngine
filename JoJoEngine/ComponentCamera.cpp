@@ -99,6 +99,17 @@ void ComponentCamera::SetAsMainCamera(bool is_main_camera)
 		App->go_manager->SetAsMainCamera(nullptr);
 }
 
+void ComponentCamera::SetCameraFrame(float3& pos, float3& front, float3& up)
+{
+	cam.SetFrame(pos, front, up);
+}
+
+void ComponentCamera::SetPerspective(float aspect_ratio, float fovy, float n, float f)
+{
+	cam.SetVerticalFovAndAspectRatio(fovy, aspect_ratio);
+	cam.SetViewPlaneDistances(n, f);
+}
+
 float ComponentCamera::GetAspectRatio() const
 {
 	return cam.AspectRatio();
@@ -107,6 +118,30 @@ float ComponentCamera::GetAspectRatio() const
 float ComponentCamera::GetVerticalFOV() const
 {
 	return cam.VerticalFov();
+}
+
+float* ComponentCamera::GetViewMatrix() const
+{
+	float4x4 mat = cam.ViewMatrix();
+	mat.Transpose();
+	return (float*) mat.v;
+}
+
+float* ComponentCamera::GetProjectionMatrix() const
+{
+	float4x4 mat = cam.ViewProjMatrix();
+	mat.Transpose();
+	return (float*)mat.v;
+}
+
+void ComponentCamera::LookAt(const float3& ref) 
+{
+	float3 dir = cam.Pos() - ref;
+
+	float4x4 rotation = float4x4::LookAt(cam.Front(), dir.Normalized(), cam.Up(), float3::unitY);
+
+	cam.SetFront(rotation.MulDir(cam.Front()).Normalized());
+	cam.SetUp(rotation.MulDir(cam.Up()).Normalized());
 }
 
 bool ComponentCamera::IsMainCamera() const

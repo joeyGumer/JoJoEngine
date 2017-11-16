@@ -72,8 +72,10 @@ public:
 	//-------------------
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	float3x3 NormalMatrix;
+	float* ModelMatrix;
+	float* ViewMatrix;
+	mat4x4 ProjectionMatrix;
 
 	//NOTE: transform matrix, temporal, until we use GO
 	float4x4 transform;

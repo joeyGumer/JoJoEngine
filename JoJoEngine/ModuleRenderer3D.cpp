@@ -7,6 +7,7 @@
 #include "ModuleSceneEdit.h"
 #include "ModuleEditor.h"
 #include "ModuleFBXLoader.h"
+#include "ComponentCamera.h"
 
 #include "JSON\parson.h"
 #include "OpenGl.h"
@@ -194,7 +195,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	float3 pos = App->camera->GetPosition();
+
+	lights[0].SetPos(pos.x, pos.y, pos.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -491,7 +494,9 @@ void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(fovy, (float)width / (float)height, 0.125f, 512.0f);
+	//NOTE: this may give some errors
+	//App->camera->SetPerspective((float)width / (float)height, fovy, 0.125f, 512.0f);
+	ProjectionMatrix = ProjectionMatrix.perspective(fovy, (float)width / (float)height, 0.125f, 512.0f);//App->camera->GetProjectionMatrix();
 	glLoadMatrixf(&ProjectionMatrix);
 
 	glMatrixMode(GL_MODELVIEW);

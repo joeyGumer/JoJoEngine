@@ -23,9 +23,17 @@ public:
 	void SetAspectRatio(float ratio);
 	void SetVerticalFOV(float fov);
 	void SetAsMainCamera(bool is_main_cam);
+	void SetCameraFrame(float3& pos, float3& front, float3& up);
+	void SetPerspective(float aspect_ratio, float fovy, float n, float f);
 
 	float GetAspectRatio() const;
 	float GetVerticalFOV() const;
+
+	float* GetViewMatrix() const;
+	float* GetProjectionMatrix() const;
+
+	void LookAt(const float3& ref);
+
 	bool IsMainCamera() const;
 
 
@@ -33,8 +41,8 @@ public:
 
 public:
 	bool frustum_culling;
-private:
 	Frustum cam;
+private:
 	bool main_cam;
 };
 

@@ -269,11 +269,13 @@ void WinConfiguration::TabCamera()
 {
 	if (ImGui::CollapsingHeader("Camera"))
 	{
-		ImGui::Text("X: %.3f   ", App->camera->Position.x);
+		float3 pos = App->camera->GetPosition();
+
+		ImGui::Text("X: %.3f   ", pos.x);
 		ImGui::SameLine();
-		ImGui::Text("Y: %.3f   ", App->camera->Position.y);
+		ImGui::Text("Y: %.3f   ", pos.y);
 		ImGui::SameLine();
-		ImGui::Text("Z: %.3f", App->camera->Position.z);
+		ImGui::Text("Z: %.3f", pos.z);
 
 		float tmp_float;
 
