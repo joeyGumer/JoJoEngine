@@ -69,6 +69,7 @@ void WinConfiguration::Update()
 		TabRenderer();
 		TabCamera();
 		TabInput();
+		TabGoManager();
 		TabHardware();		
 
 		ImGui::End();
@@ -304,6 +305,10 @@ void WinConfiguration::TabGoManager()
 {
 	if (ImGui::CollapsingHeader("Go Manager"))
 	{
+		if (ImGui::Button("Create Quadtree"))
+		{
+			App->go_manager->FillQuadTree();
+		}
 		//Quadtree
 		RecursiveDrawQuadtree(&App->go_manager->tree.root_node);
 	}

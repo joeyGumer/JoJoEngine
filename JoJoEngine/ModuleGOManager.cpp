@@ -119,7 +119,7 @@ void ModuleGOManager::FillQuadTree()
 	for (int i = 0, size = game_objects.size(); i < size; i++)
 	{
 		//If parent is static children should be too
-		if (game_objects[i]->IsStatic())
+		if (game_objects[i]->HasMesh() && game_objects[i]->IsStatic())
 		{
 			tree.Insert(game_objects[i]);
 		}
