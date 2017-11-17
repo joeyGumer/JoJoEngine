@@ -91,3 +91,23 @@ void ComponentMesh::SetMesh(Mesh* m)
 	//Set  Aabb/OBB
 	go->SetAABB(m->vertices, m->num_vertices);
 }
+
+
+int ComponentMesh::GetTriangles() const
+{
+	return (mesh->num_indices / 3);
+}
+
+void ComponentMesh::GetTrianglesList(std::vector<Triangle>& tris) const
+{
+	for (int i = 0; i < mesh->num_indices;)
+	{
+		Triangle tri;
+
+		tri.a = float3(mesh->vertices[mesh->indices[i++] * 3]);
+		tri.b = float3(mesh->vertices[mesh->indices[i++] * 3]);
+		tri.c = float3(mesh->vertices[mesh->indices[i++] * 3]);
+
+		tris.push_back(tri);
+	}
+}

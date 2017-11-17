@@ -21,6 +21,7 @@ enum Direction
 	GO_DOWN
 };
 
+class GameObject;
 class ModuleCamera3D : public Module
 {
 public:
@@ -39,6 +40,9 @@ public:
 	void CenterCameraOnGeometry(const AABB &box);
 	void Move(const float3 &Movement);
 	void Move(Direction d, float speed);
+	GameObject* MousePick();
+
+
 
 	void SetPerspective(float aspect_r, float fovy, float n, float f);
 
@@ -66,7 +70,9 @@ public:
 
 private:
 
+
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 
 	ComponentCamera* cam = nullptr;
+	LineSegment last_ray;
 };

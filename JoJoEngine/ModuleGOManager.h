@@ -24,18 +24,22 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
-	void FrustumCulling();
+
+	//-----------
 
 	void SetAsMainCamera(ComponentCamera* cam);
 	void SetGoSelected(GameObject* s_go);
 
 	GameObject* GetGoSelected()const;
-	
+	GameObject* CastRayGO(Ray& ray, float3* hit_point) const;
 	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
 
+	void FrustumCulling();
 	void FocusGameObject() const;
-
 	void FillQuadTree();
+
+	
+
 public:
 	GameObject* root_GO;
 
@@ -43,8 +47,6 @@ public:
 	Quadtree tree;
 private:
 	GameObject* selected_GO = nullptr;
-
-	
 	float tree_size = 100.0;
 
 	std::vector<GameObject*> game_objects;

@@ -159,6 +159,41 @@ Component* GameObject::GetComponent(TypeComp type) const
 		return comp_transform;
 }
 
+bool GameObject::GetCastRayDistance(Ray& ray, float* distance, float3* hit_point) const
+{
+	bool is_hit = false;
+
+	*distance = inf;
+
+	std::vector<Triangle> tris;
+
+	((ComponentMesh*)GetComponent(COMP_MESH))->GetTrianglesList(tris);
+	float4x4 w_trans = GetTransform();
+	w_trans.Inverse();
+
+	ray.Transform(w_trans);
+	ray.dir.Normalize();
+
+	for (uint i = 0, size = tris.size(); i < size; i++)
+	{
+		float dist;
+		float3 hit;
+		
+		if (ray.Intersects(tris[i], &dist, &hit))
+		{
+			if (dist < *distance)
+			{
+				*distance = dist;
+				*hit_point = hit;
+			}
+
+			is_hit = true;
+		}
+	}
+	
+	return is_hit;	
+}
+
 bool GameObject::HasMesh()const
 {
 	if (GetComponent(COMP_MESH))

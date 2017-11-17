@@ -4,11 +4,15 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
+#include "ModuleGOManager.h"
+#include "GameObject.h"
 
 #include "JSON\parson.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
+#include <map>
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
@@ -137,7 +141,16 @@ update_status ModuleCamera3D::Update(float dt)
 
 
 	}
+	//NOTE: may change the locatoin to another place
+	//	Pick GO
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		App->go_manager->SetGoSelected(MousePick());
+	}
 
+	//NOTE: just for testing
+	App->renderer3D->DrawFrustrum(cam->cam);
+	App->renderer3D->DrawLineSegment(last_ray);
 
 	return UPDATE_CONTINUE;
 }
@@ -223,6 +236,55 @@ void ModuleCamera3D::Move(Direction d, float speed)
 	CalculateViewMatrix();*/
 }
 
+GameObject* ModuleCamera3D::MousePick() 
+{
+	float mx = App->input->GetMouseX();
+	float my = App->input->GetMouseY();
+	float width = App->window->GetWidth();
+	float height = App->window->GetHeight();
+
+
+	mx = (mx * (2 / width)) - 1.0;
+	my = 1.0 - (my * (2 / height)) ;
+
+	LineSegment lray = cam->cam.UnProjectLineSegment(mx, my);
+
+	last_ray = lray;
+	last_ray.b = -last_ray.b;
+	//NOTE: passing to a ray
+	Ray ray = lray.ToRay();
+	ray.dir = -ray.dir;
+
+	std::map<float, GameObject*> intersect_go;
+
+	float distance;
+	float3 hi_point;
+	GameObject* hit_go = App->go_manager->CastRayGO(ray, &hi_point);
+
+	
+
+	/*//NOTE: have to optimize this point
+	for (uint i = 0, size = game_objects.size(); i < size; i++)
+	{
+		GameObject* go = game_objects[i];
+
+		float dist, f;
+
+		//If thay intersects with the AABB, we check for triangles to know the distances from hit point
+		if (m_ray.Intersects(go->bb_axis))
+		{
+
+
+		}
+
+
+
+	}*/
+
+	return hit_go;
+}
+
+//-----------------------------------------------------------------
 void ModuleCamera3D::SetPerspective(float aspect_r, float fovy, float n, float f)
 {
 	cam->SetPerspective(aspect_r, fovy, n, f);

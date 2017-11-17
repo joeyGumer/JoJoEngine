@@ -25,6 +25,8 @@ public:
 	ComponentTransform* GetComponentTransform() const;
 	float4x4 GetTransform()const;
 	Component* GetComponent(TypeComp type)const;
+	bool GetCastRayDistance(Ray& ray, float* distance, float3* hit_point) const;
+
 	bool IsStatic()const;
 	bool HasMesh()const;
 

@@ -33,6 +33,7 @@ public:
 	void DrawAABB(const AABB* box)const;
 	void DrawOBB(const OBB* box)const;
 	void DrawFrustrum(const Frustum& frustum)const;
+	void DrawLineSegment(const LineSegment& line)const;
 
 	void Draw(const Mesh* mesh, float4x4 &transform, uint &texture_id) const;
 

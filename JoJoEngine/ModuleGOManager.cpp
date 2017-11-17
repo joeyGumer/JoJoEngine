@@ -92,6 +92,38 @@ GameObject*  ModuleGOManager::GetGoSelected()const
 {
 	return selected_GO;
 }
+
+GameObject* ModuleGOManager::CastRayGO(Ray& ray, float3* hit_point)const
+{
+	GameObject* hit_go = nullptr;
+	float distance = inf;
+
+	//NOTE: have to be optimized with quadtree
+	for (uint i = 0, size = game_objects.size(); i < size; i++)
+	{
+		GameObject* go = game_objects[i];
+
+		if (go->HasMesh())
+		{
+			if (ray.Intersects(go->bb_axis))
+			{
+				float dist;
+				if (go->GetCastRayDistance(ray, &dist, hit_point))
+				{
+					if (dist < distance)
+					{
+						distance = dist;
+						hit_go = go;
+					}
+				}
+			}
+		}
+	}
+
+	return hit_go;
+
+}
+
 void ModuleGOManager::FocusGameObject() const
 {
 	

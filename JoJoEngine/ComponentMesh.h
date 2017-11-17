@@ -17,6 +17,9 @@ public:
 	void OnEditor();
 
 	void SetMesh(Mesh* m);
+	
+	int GetTriangles() const;
+	void GetTrianglesList(std::vector<Triangle>& tris) const;
 
 private:
 	Mesh* mesh;
