@@ -159,7 +159,7 @@ Component* GameObject::GetComponent(TypeComp type) const
 		return comp_transform;
 }
 
-bool GameObject::GetCastRayDistance(Ray& ray, float* distance, float3* hit_point) const
+bool GameObject::GetCastRayDistance(LineSegment& ray, float* distance, float3* hit_point) const
 {
 	bool is_hit = false;
 
@@ -167,19 +167,28 @@ bool GameObject::GetCastRayDistance(Ray& ray, float* distance, float3* hit_point
 
 	std::vector<Triangle> tris;
 
-	((ComponentMesh*)GetComponent(COMP_MESH))->GetTrianglesList(tris);
+	Mesh* mesh = ((ComponentMesh*)GetComponent(COMP_MESH))->GetMesh();//->GetTrianglesList(tris);
 	float4x4 w_trans = GetTransform();
-	w_trans.Inverse();
 
-	ray.Transform(w_trans);
-	ray.dir.Normalize();
+	LineSegment trans_ray = ray;
+	trans_ray.Transform(w_trans.Inverted());
 
-	for (uint i = 0, size = tris.size(); i < size; i++)
+	Triangle tri;
+	for (uint i = 0, size = mesh->num_indices; i < size;)
 	{
+		float3 p = float3(&(mesh->vertices[mesh->indices[i++] * 3]));
+		tri.a.Set(p.x, p.y, p.z);
+
+		p = float3(&(mesh->vertices[mesh->indices[i++] * 3]));
+		tri.b.Set(p.x, p.y, p.z);
+
+		p = float3(&(mesh->vertices[mesh->indices[i++] * 3]));
+		tri.c.Set(p.x, p.y, p.z);
+
 		float dist;
 		float3 hit;
 		
-		if (ray.Intersects(tris[i], &dist, &hit))
+		if (ray.Intersects(tri, &dist, &hit))
 		{
 			if (dist < *distance)
 			{

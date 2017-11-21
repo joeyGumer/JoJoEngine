@@ -98,6 +98,11 @@ int ComponentMesh::GetTriangles() const
 	return (mesh->num_indices / 3);
 }
 
+Mesh* ComponentMesh::GetMesh() const
+{
+	return mesh;
+}
+
 void ComponentMesh::GetTrianglesList(std::vector<Triangle>& tris) const
 {
 	for (int i = 0; i < mesh->num_indices;)

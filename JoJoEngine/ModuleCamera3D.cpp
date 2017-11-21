@@ -81,6 +81,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (!movement.IsZero())
 	{
+		//cam->cam.Translate(movement  * dt);
 		cam->cam.SetPos(Position + (movement  * dt));
 		Position = cam->cam.Pos();
 	}
@@ -137,12 +138,11 @@ update_status ModuleCamera3D::Update(float dt)
 		cam->cam.SetPos(Position);
 
 		cam->LookAt(Reference);
-
-
 	}
+
 	//NOTE: may change the locatoin to another place
 	//	Pick GO
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	else if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		App->go_manager->SetGoSelected(MousePick());
 	}
@@ -249,16 +249,13 @@ GameObject* ModuleCamera3D::MousePick()
 	LineSegment lray = cam->cam.UnProjectLineSegment(mx, my);
 
 	last_ray = lray;
-	last_ray.b = -last_ray.b;
-	//NOTE: passing to a ray
-	Ray ray = lray.ToRay();
-	ray.dir = -ray.dir;
+	//last_ray.b = -last_ray.b;
 
 	std::map<float, GameObject*> intersect_go;
 
 	float distance;
 	float3 hi_point;
-	GameObject* hit_go = App->go_manager->CastRayGO(ray, &hi_point);
+	GameObject* hit_go = App->go_manager->CastRayGO(lray, &hi_point);
 
 	
 
@@ -373,10 +370,10 @@ bool ModuleCamera3D::LoadConfig(JSON_Object* data)
 {
 	bool ret = true;
 
-	/*JSON_Object* pos = json_object_get_object(data, "pos");
+	JSON_Object* pos = json_object_get_object(data, "pos");
 	JSON_Object* reference = json_object_get_object(data, "reference");
 
-	Position.x = json_object_get_number(pos, "x");
+	/*Position.x = json_object_get_number(pos, "x");
 	Position.y = json_object_get_number(pos, "y");
 	Position.z = json_object_get_number(pos, "z");
 	Reference.x = json_object_get_number(reference, "x");

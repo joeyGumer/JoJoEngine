@@ -277,19 +277,24 @@ void WinConfiguration::TabCamera()
 		ImGui::SameLine();
 		ImGui::Text("Z: %.3f", pos.z);
 
+		if (ImGui::DragFloat3("Reference", App->camera->Reference.ptr()))
+		{
+			App->camera->LookAt(App->camera->Reference);
+		}
+
 		float tmp_float;
 
-		tmp_float = App->camera->speed * (100 / App->camera->max_speed);
+		tmp_float = App->camera->speed;
 		ImGui::DragFloat("Camera Speed", &tmp_float, 1.0f, 0.0f, 100.0f);
-		App->camera->speed = tmp_float / (100 / App->camera->max_speed);
+		App->camera->speed = tmp_float;
 
-		tmp_float = App->camera->wheel_speed * (100 / App->camera->max_wheel_speed);
+		tmp_float = App->camera->wheel_speed;
 		ImGui::DragFloat("Camera Zoom Speed", &tmp_float, 1.0f, 0.0f, 100.0f);
-		App->camera->wheel_speed = tmp_float / (100 / App->camera->max_wheel_speed);
+		App->camera->wheel_speed = tmp_float;
 
-		tmp_float = App->camera->sensitivity * (100 / App->camera->max_sensitivity);
+		tmp_float = App->camera->sensitivity;
 		ImGui::DragFloat("Camera Rotation Sensitivity", &tmp_float, 1.0f, 0.0f, 100.0f);
-		App->camera->sensitivity = tmp_float / (100 / App->camera->max_sensitivity);
+		App->camera->sensitivity = tmp_float;
 	}
 }
 

@@ -110,8 +110,6 @@ void ComponentCamera::SetPerspective(float aspect_ratio, float fovy, float n, fl
 {
 	cam.SetVerticalFovAndAspectRatio(fovy, aspect_ratio);
 	cam.SetViewPlaneDistances(n, f);
-
-	cam.ComputeProjectionMatrix();
 }
 
 float ComponentCamera::GetAspectRatio() const

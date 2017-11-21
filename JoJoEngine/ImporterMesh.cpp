@@ -3,13 +3,14 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 
+#include "ComponentMesh.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-//NOTE: should not be included here, temporal measure
-#include "ModuleFBXLoader.h"
+
 
 bool ImporterMesh::Import(aiMesh* ai_mesh ,std::string& output_filename)
 {

@@ -8,6 +8,7 @@
 #include "ModuleEditor.h"
 #include "ModuleFBXLoader.h"
 #include "ComponentCamera.h"
+#include "ComponentMesh.h"
 
 #include "JSON\parson.h"
 #include "OpenGl.h"

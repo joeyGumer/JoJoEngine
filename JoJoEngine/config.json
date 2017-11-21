@@ -45,26 +45,26 @@
         },
         "camera": {
             "pos": {
-                "x": 210.28207397460938,
-                "y": 207.29541015625,
-                "z": 220.67019653320313
+                "x": -14.837779998779297,
+                "y": 82.757904052734375,
+                "z": -6.6447744369506836
             },
             "reference": {
-                "x": -7.3910675048828125,
-                "y": 0.467254638671875,
-                "z": -33.22125244140625
+                "x": -15.460448265075684,
+                "y": 86.230857849121094,
+                "z": -6.9236226081848145
             },
-            "speed": 0.05000000074505806,
-            "wheel_speed": 100,
-            "sensitivity": 0.10000000149011612
+            "speed": 5,
+            "wheel_speed": 200,
+            "sensitivity": 5
         },
         "audio": {
             "volume": 100
         },
         "editor": {
-            "configuration_open": false,
+            "configuration_open": true,
             "console_open": false,
-            "properties_open": false,
+            "properties_open": true,
             "demo_open": false,
             "editor_active": true,
             "hierarchy_open": false

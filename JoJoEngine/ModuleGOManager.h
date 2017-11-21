@@ -31,7 +31,7 @@ public:
 	void SetGoSelected(GameObject* s_go);
 
 	GameObject* GetGoSelected()const;
-	GameObject* CastRayGO(Ray& ray, float3* hit_point) const;
+	GameObject* CastRayGO(LineSegment& ray, float3* hit_point) const;
 	GameObject* AddGameObject(const char* name, GameObject* parent = nullptr);
 
 	void FrustumCulling();

@@ -93,7 +93,7 @@ GameObject*  ModuleGOManager::GetGoSelected()const
 	return selected_GO;
 }
 
-GameObject* ModuleGOManager::CastRayGO(Ray& ray, float3* hit_point)const
+GameObject* ModuleGOManager::CastRayGO(LineSegment& ray, float3* hit_point)const
 {
 	GameObject* hit_go = nullptr;
 	float distance = inf;
