@@ -511,8 +511,8 @@ void ModuleRenderer3D::OnResize(int width, int height, float fovy)
 	glLoadIdentity();
 	//NOTE: this may give some errors
 	App->camera->SetPerspective((float)width / (float)height, fovy, 0.125f, 512.0f);
-	ProjectionMatrix = ProjectionMatrix.perspective(fovy, (float)width / (float)height, 0.125f, 512.0f);//App->camera->GetProjectionMatrix();
-	glLoadMatrixf(&ProjectionMatrix);
+	ProjectionMatrix = App->camera->GetProjectionMatrix();
+	glLoadMatrixf(ProjectionMatrix);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

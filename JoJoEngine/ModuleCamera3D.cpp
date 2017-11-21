@@ -30,9 +30,9 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 
 	cam->SetCameraFrame(Position, Z, Y);
 
-	max_speed = 5.0f;
-	max_wheel_speed = 200.0f;
-	max_sensitivity = 5.0f;
+	speed = max_speed = 5.0f;
+	wheel_speed = max_wheel_speed = 200.0f;
+	sensitivity = max_sensitivity = 5.0f;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -69,15 +69,15 @@ update_status ModuleCamera3D::Update(float dt)
 	Position = cam->cam.Pos();
 
 	//Zoom
-	if (App->input->GetMouseZ() > 0) movement -= Z * max_wheel_speed;
-	if (App->input->GetMouseZ() < 0) movement += Z * max_wheel_speed;
+	if (App->input->GetMouseZ() > 0) movement -= Z * wheel_speed;
+	if (App->input->GetMouseZ() < 0) movement += Z * wheel_speed;
 
 	//Movement
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) movement += Y * max_speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) movement -= Y * max_speed;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) movement += Y * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) movement -= Y * speed;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) movement -= X * max_speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) movement += X * max_speed;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) movement -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) movement += X * speed;
 
 	if (!movement.IsZero())
 	{
@@ -118,16 +118,15 @@ update_status ModuleCamera3D::Update(float dt)
 
 		if(dx != 0)
 		{
-			float DeltaX = (float)dx * max_sensitivity * dt;
+			float DeltaX = (float)dx * sensitivity * dt;
 
 			qx = qx.RotateY(DeltaX);
-
 			dir = qx.Transform(dir);
 
 		}		
 		if(dy != 0)
 		{
-			float DeltaY = (float)dy * max_sensitivity * dt;
+			float DeltaY = (float)dy * sensitivity * dt;
 
 			qy = qy.RotateAxisAngle(X, DeltaY);
 			dir = qy.Transform(dir);
@@ -149,7 +148,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	//NOTE: just for testing
-	App->renderer3D->DrawFrustrum(cam->cam);
+	//App->renderer3D->DrawFrustrum(cam->cam);
 	App->renderer3D->DrawLineSegment(last_ray);
 
 	return UPDATE_CONTINUE;

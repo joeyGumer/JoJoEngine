@@ -75,6 +75,8 @@ void  ComponentCamera::Update()
 
 void ComponentCamera::InitFrustrum()
 {
+	cam.SetKind(FrustumSpaceGL, FrustumRightHanded);
+
 	//NOTE: testing
 	cam.SetFrame(float3::zero, { 0.0, 0.0, 1.0 }, { 0.0, 1.0, 0.0 });
 	cam.SetViewPlaneDistances(1.0, 10);
@@ -108,6 +110,8 @@ void ComponentCamera::SetPerspective(float aspect_ratio, float fovy, float n, fl
 {
 	cam.SetVerticalFovAndAspectRatio(fovy, aspect_ratio);
 	cam.SetViewPlaneDistances(n, f);
+
+	cam.ComputeProjectionMatrix();
 }
 
 float ComponentCamera::GetAspectRatio() const
@@ -129,7 +133,7 @@ float* ComponentCamera::GetViewMatrix() const
 
 float* ComponentCamera::GetProjectionMatrix() const
 {
-	float4x4 mat = cam.ViewProjMatrix();
+	float4x4 mat = cam.ProjectionMatrix();
 	mat.Transpose();
 	return (float*)mat.v;
 }
