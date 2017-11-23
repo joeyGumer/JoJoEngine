@@ -44,12 +44,13 @@ public:
 	GameObject* root_GO;
 
 	//NOTE: temporaly public
-	Quadtree tree;
+	Quadtree game_tree;
 private:
 	GameObject* selected_GO = nullptr;
 	float tree_size = 100.0;
 
 	std::vector<GameObject*> game_objects;
+	std::vector<GameObject*> drawn_game_objects;
 	ComponentCamera* main_camera = nullptr;
 };
 

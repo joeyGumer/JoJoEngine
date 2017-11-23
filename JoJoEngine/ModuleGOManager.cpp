@@ -28,7 +28,7 @@ bool ModuleGOManager::Start()
 	AABB tree_aabb;
 	tree_aabb.maxPoint = point;
 	tree_aabb.minPoint = -point;
-	tree.Create(tree_aabb);
+	game_tree.Create(tree_aabb);
 
 	return true;
 }
@@ -65,7 +65,7 @@ update_status ModuleGOManager::PostUpdate(float dt)
 	}
 
 	//NOTE: on second though, GO_manager should be reserved for GO iteration, but need to check this temporaly
-	tree.Draw();
+	game_tree.Draw();
 
 	return UPDATE_CONTINUE;
 }
@@ -133,10 +133,9 @@ void ModuleGOManager::FocusGameObject() const
 
 void ModuleGOManager::FrustumCulling()
 {
-	for (uint i = 0, size = game_objects.size(); i < size; i++)
-	{
-		game_objects[i]->to_draw = main_camera->CullGameObject(game_objects[i]);
-	}
+	drawn_game_objects.clear();
+
+	game_tree.IntersectCamera(drawn_game_objects, main_camera);
 }
 
 void ModuleGOManager::FillQuadTree()
@@ -145,7 +144,7 @@ void ModuleGOManager::FillQuadTree()
 	AABB tree_aabb;
 	tree_aabb.maxPoint = point;
 	tree_aabb.minPoint = -point;
-	tree.Create(tree_aabb);
+	game_tree.Create(tree_aabb);
 
 
 	for (int i = 0, size = game_objects.size(); i < size; i++)
@@ -153,7 +152,7 @@ void ModuleGOManager::FillQuadTree()
 		//If parent is static children should be too
 		if (game_objects[i]->HasMesh() && game_objects[i]->IsStatic())
 		{
-			tree.Insert(game_objects[i]);
+			game_tree.Insert(game_objects[i]);
 		}
 	}
 }

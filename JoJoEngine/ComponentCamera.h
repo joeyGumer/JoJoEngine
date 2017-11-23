@@ -37,7 +37,8 @@ public:
 	bool IsMainCamera() const;
 
 
-	bool CullGameObject(GameObject* go) const;
+	bool IntersectAABB(const AABB& box)const;
+	bool CullGameObject(const GameObject* go) const;
 
 public:
 	bool frustum_culling;

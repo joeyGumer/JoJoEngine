@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 
 #include "GameObject.h"
+#include "ComponentCamera.h"
 
 
 QuadNode::~QuadNode()
@@ -150,32 +151,61 @@ void Quadtree::Insert(GameObject* go)
 	{
 		root_node->Insert(go);
 	}
-
-	/*
-	std::list<QuadNode>::iterator i = regions.begin();
-	for (; i != regions.end(); i++)
-	{
-		QuadNode* node = &(*i);
-		if (node->limits.Intersects(go->bb_axis))
-		{
-			node->game_objects.push_back(go);
-
-			if (node->IsFull())
-			{
-				node->Subdivide();
-				//regions.erase(i)
-			}
-		}
-	}
-*/
 }
 void Quadtree::Remove(GameObject* go)
 {
 
 }
-//void Quadtree::Intersect(std::vector<GameObject*>&, PRIMITIVE);
 
 void Quadtree::Draw()
 {
 	root_node->Draw();
+}
+
+//NOTE: with this method, GameObjects will be repeated, use it anyways?
+//Intersection functions
+template<typename TYPE>
+inline void QuadNode::CollectIntersections(std::vector<GameObject*>& go_list, const TYPE& primitive) const
+{
+	if (primitive.Intersects(limits))
+	{
+		for (std::list<GameObject*>::const_iterator it = game_objects.begin(); it != game_objects.end(); ++it)
+		{
+			if (primitive.Intersects((*it)->bb_axis))
+				go_list.push_back(*it);
+
+		}
+		for (int i = 0; i < 4; ++i)
+			if (children[i] != nullptr) children[i]->CollectIntersections(go_list, primitive);
+
+	}
+}
+
+template<typename TYPE>
+inline void Quadtree::Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const
+{
+	root_node->CollectIntersections();
+}
+
+//Collect intersections with the method created for Frustum intersection faster than the one at MathGeoLib
+void QuadNode::CollectCameraIntersections(std::vector<GameObject*>& go_list, const ComponentCamera* cam) const
+{
+	if (cam->IntersectAABB(limits))
+	{
+		for (std::list<GameObject*>::const_iterator it = game_objects.begin(); it != this->game_objects.end(); ++it)
+		{
+			if (cam->CullGameObject((*it)))
+				go_list.push_back(*it);
+
+		}
+		for (int i = 0; i < 4; ++i)
+			if (children[i] != nullptr) children[i]->CollectCameraIntersections(go_list, cam);
+	}
+}
+
+void Quadtree::IntersectCamera(std::vector<GameObject*>& objects, const ComponentCamera* cam) const
+{
+
+	root_node->CollectCameraIntersections(objects, cam);
+
 }

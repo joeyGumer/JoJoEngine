@@ -151,11 +151,8 @@ bool ComponentCamera::IsMainCamera() const
 	return main_cam;
 }
 
-bool ComponentCamera::CullGameObject(GameObject* go) const
+bool ComponentCamera::IntersectAABB(const AABB& box) const
 {
-	//NOTE: if needed, this function will have to be optimized
-
-	AABB aabb = go->bb_axis;
 	float3 frustum_center = cam.CenterPoint();
 
 	for (uint i = 0; i < 6; i++)
@@ -165,7 +162,7 @@ bool ComponentCamera::CullGameObject(GameObject* go) const
 
 		for (uint j = 0; j < 8; j++)
 		{
-			float3 aabb_point = aabb.CornerPoint(j);
+			float3 aabb_point = box.CornerPoint(j);
 
 			if (plane.AreOnSameSide(frustum_center, aabb_point))
 			{
@@ -180,7 +177,13 @@ bool ComponentCamera::CullGameObject(GameObject* go) const
 		}
 
 	}
-	
+
 	return true;
+}
+
+bool ComponentCamera::CullGameObject(const GameObject* go) const
+{
+	//NOTE: if needed, this function will have to be optimized
+	return IntersectAABB(go->bb_axis);
 
 }

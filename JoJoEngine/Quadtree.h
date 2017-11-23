@@ -9,6 +9,8 @@
 
 class GameObject;
 class Quadtree;
+class ComponentCamera;
+
 
 #define NODE_GO_LIMIT 1
 #define NODE_LIMIT_SIZE 10.0f
@@ -25,6 +27,7 @@ struct QuadNode
 	void Insert(GameObject* go);
 	void Draw();
 
+	void CollectCameraIntersections(std::vector<GameObject*>& objects, const ComponentCamera* cam) const;
 	template<typename TYPE>
 	void CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 
@@ -52,8 +55,10 @@ public:
 	void Insert(GameObject* go);
 	void Remove(GameObject* go);
 
+	void IntersectCamera(std::vector<GameObject*>& objects, const ComponentCamera* cam) const;
 	template<typename TYPE>
 	void Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const;
+	
 
 	uint AssignId() { return ++id; }
 	void Draw();
@@ -67,28 +72,5 @@ public:
 };
 
 
-//Intersection functions
-template<typename TYPE>
-inline void QuadNode::CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const
-{
-	if (primitive.Intersects(box))
-	{
-		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
-		{
-			if (primitive.Intersects((*it)->global_bbox))
-				objects.push_back(*it);
-
-		}
-		for (int i = 0; i < 4; ++i)
-			if (childs[i] != nullptr) childs[i]->CollectIntersections(objects, primitive);
-
-	}
-}
-
-template<typename TYPE>
-inline void Quadtree::Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const
-{
-	root_node->CollectIntersections();
-}
 
 #endif // !_QUADTREE_H_
