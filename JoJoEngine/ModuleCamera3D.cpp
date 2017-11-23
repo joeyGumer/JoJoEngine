@@ -144,7 +144,10 @@ update_status ModuleCamera3D::Update(float dt)
 	//	Pick GO
 	else if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		App->go_manager->SetGoSelected(MousePick());
+		GameObject* select_go = MousePick();
+
+		if (select_go != nullptr)
+			App->go_manager->SetGoSelected(select_go);
 	}
 
 	//NOTE: just for testing
