@@ -333,11 +333,18 @@ std::string ModuleFileSystem::GetFileName(const char* path, std::string& output)
 		{
 		}
 
-		it++;
-
-		for (; it != tmp_str.end(); it++)
+		if (it != tmp_str.begin())
 		{
-			output.push_back(*it);
+			it++;
+			for (; it != tmp_str.end(); it++)
+			{
+				output.push_back(*it);
+			}
+
+		}
+		else
+		{
+			output = path;
 		}
 	}
 

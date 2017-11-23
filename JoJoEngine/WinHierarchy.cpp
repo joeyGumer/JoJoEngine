@@ -38,7 +38,12 @@ void WinHierarchy::Update()
 	//Iterate as tree is faster than iterating the vector?ç
 	//Is the hierarchy so this is fine
 	//NOTE: not show root as GO
-	ShowGO(root);
+	go_id = 0;
+
+	for (uint i = 0; i < root->children.size(); i++)
+	{
+		ShowGO(root->children[i]);
+	}
 
 	ImGui::End();
 }
@@ -46,12 +51,18 @@ void WinHierarchy::Update()
 
 void WinHierarchy::ShowGO(GameObject* go)
 {
-	if(ImGui::TreeNodeEx(go->name.c_str()))
+	//NOTE: Too slow, have to find another way
+	sprintf_s(label, 100, "%s##id_%d", go->name.c_str(), go_id++);
+	
+	//NOTE: EDIT FANCY FUNCTIONALITY
+	if(ImGui::TreeNodeEx(label, 0))
 	{
 		if (ImGui::IsItemClicked())
 		{
 			App->go_manager->SetGoSelected(go);
 		}
+
+
 
 		for (uint i = 0, size = go->children.size(); i < size; i++)
 		{
