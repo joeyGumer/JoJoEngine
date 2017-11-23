@@ -109,7 +109,10 @@ Mesh** ModuleFBXLoader::LoadFBX(const char* file_path) const
 			//Loading all nodes
 			aiNode* root = scene->mRootNode;
 
-			LoadNode(scene, root, App->go_manager->root_GO);
+			for (uint i = 0; i < root->mNumChildren; i++)
+			{
+				LoadNode(scene, root->mChildren[i], App->go_manager->root_GO);
+			}
 
 			//Release the scene
 			aiReleaseImport(scene);
