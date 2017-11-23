@@ -18,6 +18,9 @@ public:
 	void OnEditor();
 	void OnTransform();
 
+	void Transform(const float4x4& trans);
+	void Rotate(const float3 rotation);
+
 	void InitFrustrum();
 
 	void SetAspectRatio(float ratio);
@@ -45,6 +48,11 @@ public:
 	Frustum cam;
 private:
 	bool main_cam;
+
+	float4x4 previous_transform;
+	float4x4 transform;
+	Quat rotation;
+	float3 position;
 };
 
 #endif //_COMPONENTCAMERA_H_

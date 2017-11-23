@@ -20,8 +20,14 @@ ComponentCamera::~ComponentCamera()
 void ComponentCamera::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Camera"))
-	{		
+	{	
+		float3 rot = rotation.ToEulerXYZ();
+		rot = RadToDeg(rot);
 
+		if(ImGui::DragFloat3("Rotation", rot.ptr()))
+		{
+			Rotate(rot);
+		}
 		bool bool_tmp = false;
 		if (ImGui::Checkbox("Main camera", &main_cam))
 		{
@@ -65,12 +71,55 @@ void ComponentCamera::OnTransform()
 	float4x4 previous = ((ComponentTransform*)go->GetComponent(COMP_TRANSFORM))->GetPreviousWorldTransform();
 
 	cam.Transform(previous.Inverted() * transform);*/
+	
 
+
+}
+
+void ComponentCamera::Transform(const float4x4& trans)
+{
+	//NOTE: for now, it will be a global transformation
+	cam.Transform(previous_transform.Inverted());
+	cam.Transform(trans);
+
+	previous_transform = trans;
+}
+
+void ComponentCamera::Rotate(const float3 r)
+{
+	//Note: polish this
+	float3 rot = math::DegToRad(r);
+
+	rotation = rotation.FromEulerXYZ(rot.x, rot.y, rot.z);
+
+	float4x4 trans;
+	float3 pos = float3::zero, scale = float3::one;
+	trans = trans.FromTRS(pos, rotation, scale);
+
+	Transform(trans);
 }
 
 void  ComponentCamera::Update()
 {
+	//Only on editor mode!!!! (should make a separate update for editor options)
 	App->renderer3D->DrawFrustrum(cam);
+
+	float3 up = cam.Up();
+	float3 pos = cam.Pos();
+	float3 front = cam.Front();
+
+	float n = cam.NearPlaneDistance();
+	float f = cam.FarPlaneDistance();
+
+	float3 npos = pos + (front * n);
+
+	float length = (f - n) / 4.0f;
+
+	LineSegment up_line(npos, npos + (up*length));
+	LineSegment front_line(npos, npos + (front * length));
+
+	App->renderer3D->DrawLineSegment(up_line);
+	App->renderer3D->DrawLineSegment(front_line);
 }
 
 void ComponentCamera::InitFrustrum()
@@ -81,6 +130,8 @@ void ComponentCamera::InitFrustrum()
 	cam.SetFrame(float3::zero, { 0.0, 0.0, 1.0 }, { 0.0, 1.0, 0.0 });
 	cam.SetViewPlaneDistances(1.0, 10);
 	cam.SetPerspective(90, 90);
+
+	transform = previous_transform = float4x4::identity;
 }
 
 void ComponentCamera::SetAspectRatio(float ratio)

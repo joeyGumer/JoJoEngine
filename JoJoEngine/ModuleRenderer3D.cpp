@@ -432,7 +432,7 @@ void ModuleRenderer3D::DrawLineSegment(const LineSegment& line) const
 {
 	glBegin(GL_LINES);
 	glLineWidth(1.0f);
-	glColor3f(0.0f, 0.0f, 3.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);
 
 	float3 v = line.a;
 	glVertex3d(v.x, v.y, v.z);
