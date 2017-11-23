@@ -40,6 +40,8 @@ public:
 	bool CreateDirectoryFile(const char* directory);
 
 	std::string GetFileExtension(const char* file) const;
+	std::string GetFileName(const char* path, std::string& output) const;
+
 	void GetEnumerateFiles(const char* dir, std::vector<std::string>& file_names) const;
 
 	// Open for Read/Write

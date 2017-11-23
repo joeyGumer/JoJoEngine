@@ -16,7 +16,10 @@ bool ImporterMaterial::Import(const char* file_name, std::string& output)
 	bool ret = true;
 
 	char* buffer = nullptr;
-	uint buffer_size = App->fs->Load(file_name, &buffer);
+
+	std::string name;
+	App->fs->GetFileName(file_name, name).c_str();
+	uint buffer_size = App->fs->Load(name.c_str(), &buffer);
 
 	ILuint id_image;
 	ilGenImages(1, &id_image);

@@ -90,6 +90,10 @@ bool ModuleFileSystem::LoadConfig(JSON_Object* data)
 	AddPath(LIBRARY_MESHES);
 	AddPath(LIBRARY_MATERIALS);
 
+	//NOTE: testing
+	PHYSFS_permitSymbolicLinks(1);
+
+
 
 
 
@@ -299,7 +303,8 @@ std::string ModuleFileSystem::GetFileExtension(const char* file) const
 	uint i = tmp_str.length() - 1;
 
 	for (; tmp_str[i] != '.'; i--)
-	{}
+	{
+	}
 
 	for (; i < tmp_str.length(); i++)
 	{
@@ -311,8 +316,38 @@ std::string ModuleFileSystem::GetFileExtension(const char* file) const
 	char* ret = (char*)ext.c_str();
 
 	return ret;
-	
 }
+
+
+std::string ModuleFileSystem::GetFileName(const char* path, std::string& output) const
+{
+	std::string file_name;
+	std::string tmp_str = path;
+
+
+	if (tmp_str.size() > 0)
+	{
+		std::string::iterator it = tmp_str.end() - 1;
+
+		for (; it != tmp_str.begin() && (*it != '/') && (*it != '\\'); it--)
+		{
+		}
+
+		it++;
+
+		for (; it != tmp_str.end(); it++)
+		{
+			output.push_back(*it);
+		}
+	}
+
+	char* ret = (char*)file_name.c_str();
+
+	return ret;
+}
+
+
+
 
 const char* ModuleFileSystem::GetBasePath() const
 {
