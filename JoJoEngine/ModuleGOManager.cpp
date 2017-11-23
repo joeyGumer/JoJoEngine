@@ -87,7 +87,6 @@ GameObject* ModuleGOManager::AddGameObject(const char* name, GameObject* parent)
 	GameObject* GO = new GameObject(name, parent);
 
 	game_objects.push_back(GO);
-	game_tree.Insert(GO);
 
 	return GO;
 }
@@ -162,8 +161,9 @@ void ModuleGOManager::FillQuadTree()
 
 	for (int i = 0, size = game_objects.size(); i < size; i++)
 	{
+		//Note: For now, we don't check for static GO
 		//If parent is static children should be too
-		if (game_objects[i]->HasMesh() && game_objects[i]->IsStatic())
+		if (game_objects[i]->HasMesh())
 		{
 			game_tree.Insert(game_objects[i]);
 		}

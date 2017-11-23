@@ -47,7 +47,7 @@ public:
 	bool frustum_culling;
 	Frustum cam;
 private:
-	bool main_cam;
+	bool main_cam = false;
 
 	float4x4 previous_transform;
 	float4x4 transform;

@@ -7,6 +7,13 @@
 #include "GameObject.h"
 #include "ComponentCamera.h"
 
+QuadNode::QuadNode(Quadtree* tr, AABB& lim, uint i) : tree(tr), limits(lim), id(i)
+{
+	for (uint i = 0; i < 4; i++)
+	{
+		children[i] = nullptr;
+	}
+}
 
 QuadNode::~QuadNode()
 {
@@ -202,7 +209,10 @@ void QuadNode::CollectCameraIntersections(std::vector<GameObject*>& go_list, con
 
 		}
 		for (int i = 0; i < 4; ++i)
-			if (children[i] != nullptr) children[i]->CollectCameraIntersections(go_list, cam);
+		{
+			if (children[i] != nullptr)
+				children[i]->CollectCameraIntersections(go_list, cam);
+		}
 	}
 }
 

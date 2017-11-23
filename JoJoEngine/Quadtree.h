@@ -18,7 +18,7 @@ class ComponentCamera;
 
 struct QuadNode
 {
-	QuadNode(Quadtree* tr, AABB& lim, uint i) : tree(tr), limits(lim) ,id(i){}
+	QuadNode(Quadtree* tr, AABB& lim, uint i);
 	~QuadNode();
 
 	void Subdivide();
@@ -56,6 +56,7 @@ public:
 	void Remove(GameObject* go);
 
 	void IntersectCamera(std::vector<GameObject*>& objects, const ComponentCamera* cam) const;
+
 	template<typename TYPE>
 	void Intersect(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 	
