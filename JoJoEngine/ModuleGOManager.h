@@ -42,6 +42,7 @@ public:
 
 public:
 	GameObject* root_GO;
+	bool use_tree = true;
 
 	//NOTE: temporaly public
 	Quadtree game_tree;

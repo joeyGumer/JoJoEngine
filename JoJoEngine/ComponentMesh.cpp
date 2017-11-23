@@ -30,17 +30,22 @@ ComponentMesh::~ComponentMesh()
 void ComponentMesh::Update()
 {
 
-	float4x4 transform = go->GetComponentTransform()->GetFinalTransformMatrix();
-	
-	uint texture = ((ComponentMaterial*)go->GetComponent(COMP_MATERIAL))->GetTexture();
-	
-	if(go->to_draw)
-		App->renderer3D->Draw(mesh, transform, texture);
 
 	//NOTE: have to change structure, it should not go like this
 	//Draw AABB
 	App->renderer3D->DrawAABB(&go->bb_axis);
 	App->renderer3D->DrawOBB(&go->bb_object);
+}
+
+void ComponentMesh::Draw()
+{
+	//NOTE: instead of this, should use a mesh array in render3D, then this will turn to pass function to the render
+	float4x4 transform = go->GetComponentTransform()->GetFinalTransformMatrix();
+
+	uint texture = ((ComponentMaterial*)go->GetComponent(COMP_MATERIAL))->GetTexture();
+
+	if (go->to_draw)
+		App->renderer3D->Draw(mesh, transform, texture);
 }
 
 void ComponentMesh::OnEditor()

@@ -16,6 +16,7 @@ public:
 	~GameObject();
 
 	void Update();
+	void Draw();
 	Component* AddComponent(TypeComp type);
 
 	//Slow (don't know if will be needed)
@@ -29,6 +30,7 @@ public:
 
 	bool IsStatic()const;
 	bool HasMesh()const;
+
 
 	void SetAABB(float* vertices, int n_vertices);
 	void SetOBB(float4x4 &trans, float4x4& previous_trans);

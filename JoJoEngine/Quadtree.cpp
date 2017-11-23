@@ -146,10 +146,13 @@ void Quadtree::Clear()
 void Quadtree::Insert(GameObject* go)
 {
 	//Get position
-	//For now, i will recursevily add a gameobject
-	if (root_node->limits.Intersects(go->bb_axis))
+	if (go->HasMesh())
 	{
-		root_node->Insert(go);
+		//For now, i will recursevily add a gameobject
+		if (root_node->limits.Intersects(go->bb_axis))
+		{
+			root_node->Insert(go);
+		}
 	}
 }
 void Quadtree::Remove(GameObject* go)

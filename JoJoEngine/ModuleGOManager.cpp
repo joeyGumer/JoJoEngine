@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "ComponentCamera.h"
 
-
+//This module iterates all game functionality, editor functionality should not be added here
 ModuleGOManager::ModuleGOManager(bool start_enabled) : Module(start_enabled)
 {
 	name = "go_manager";
@@ -43,6 +43,7 @@ bool ModuleGOManager::CleanUp()
 
 update_status ModuleGOManager::PreUpdate(float dt)
 {
+	//NOTE: editor functionality, should be out of this module
 	//Camera Focus on Geometry
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 		FocusGameObject();
@@ -51,8 +52,14 @@ update_status ModuleGOManager::PreUpdate(float dt)
 }
 update_status ModuleGOManager::Update(float dt)
 {
+	//NOTE: there should always be a main_camera and frustum culling, if there's not, don't build the game
+	//now we check for debugging and editor purposes
 	if (main_camera && main_camera->frustum_culling)
 		FrustumCulling();
+	else
+	{
+		drawn_game_objects = game_objects;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -62,6 +69,11 @@ update_status ModuleGOManager::PostUpdate(float dt)
 	for (uint i = 0, size = game_objects.size(); i < size; i++)
 	{
 		game_objects[i]->Update();
+	}
+
+	for (uint i = 0, size = drawn_game_objects.size(); i < size; i++)
+	{
+		drawn_game_objects[i]->Draw();
 	}
 
 	//NOTE: on second though, GO_manager should be reserved for GO iteration, but need to check this temporaly
@@ -75,6 +87,7 @@ GameObject* ModuleGOManager::AddGameObject(const char* name, GameObject* parent)
 	GameObject* GO = new GameObject(name, parent);
 
 	game_objects.push_back(GO);
+	game_tree.Insert(GO);
 
 	return GO;
 }

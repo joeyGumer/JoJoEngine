@@ -315,6 +315,8 @@ void WinConfiguration::TabGoManager()
 {
 	if (ImGui::CollapsingHeader("Go Manager"))
 	{
+		ImGui::Checkbox("Use quadtree", &App->go_manager->use_tree);
+	
 		if (ImGui::Button("Create Quadtree"))
 		{
 			App->go_manager->FillQuadTree();

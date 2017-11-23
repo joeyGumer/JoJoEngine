@@ -43,6 +43,7 @@ public:
 	~ComponentMesh();
 
 	void Update();
+	void Draw();
 
 	void OnEditor();
 
