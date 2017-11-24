@@ -38,6 +38,13 @@ void WinProperties::Update()
 
 		if (go)
 		{
+			
+			if (go->name.capacity() < 100)
+			{
+				go->name.resize(100);
+			}
+			ImGui::InputText("", (char*)go->name.c_str(), 100);
+
 			for (uint i = 0, size = go->components.size(); i < size; i++)
 			{
 				go->components[i]->OnEditor();
