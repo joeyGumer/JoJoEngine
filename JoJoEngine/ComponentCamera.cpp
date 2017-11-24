@@ -189,7 +189,7 @@ float* ComponentCamera::GetProjectionMatrix() const
 
 void ComponentCamera::LookAt(const float3& ref) 
 {
-	float3 dir = cam.Pos() - ref;
+	float3 dir = ref - cam.Pos();
 
 	float4x4 rotation = float4x4::LookAt(cam.Front(), dir.Normalized(), cam.Up(), float3::unitY);
 

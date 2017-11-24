@@ -68,6 +68,8 @@ update_status ModuleCamera3D::Update(float dt)
 	X = cam->cam.WorldRight();
 	Position = cam->cam.Pos();
 
+	float3 dir = Position - Reference;
+	
 	//Zoom
 	if (App->input->GetMouseZ() > 0) movement -= Z * wheel_speed;
 	if (App->input->GetMouseZ() < 0) movement += Z * wheel_speed;
@@ -84,9 +86,12 @@ update_status ModuleCamera3D::Update(float dt)
 		//cam->cam.Translate(movement  * dt);
 		cam->cam.SetPos(Position + (movement  * dt));
 		Position = cam->cam.Pos();
+
+		Reference = Position + (Z * dir.Length());
+
+		Reference = Reference;
 	}
 
-	Reference = Position - (Z * (Reference - Position).Length());
 
 	/*
 	float3 movement(0,0,0);
@@ -110,10 +115,11 @@ update_status ModuleCamera3D::Update(float dt)
 	// Mouse Orbital ----------------
 	if(App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
+		//NOTE: it can orbit over the item (Dead point)
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float3 dir = Position - Reference;
+		dir = Position - Reference;
 		
 		Quat qx, qy;
 
@@ -179,6 +185,7 @@ void ModuleCamera3D::Look(const float3 &Position, const float3 &Reference, bool 
 // -----------------------------------------------------------------
 void ModuleCamera3D::LookAt( const float3 &Spot)
 {
+	Reference = Spot;
 	cam->LookAt(Spot);
 }
 

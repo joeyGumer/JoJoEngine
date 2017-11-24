@@ -277,9 +277,11 @@ void WinConfiguration::TabCamera()
 		ImGui::SameLine();
 		ImGui::Text("Z: %.3f", pos.z);
 
-		if (ImGui::DragFloat3("Reference", App->camera->Reference.ptr()))
+		float3 tmp_float3 = App->camera->Reference;
+
+		if (ImGui::DragFloat3("Reference", tmp_float3.ptr()))
 		{
-			App->camera->LookAt(App->camera->Reference);
+			App->camera->LookAt(tmp_float3);
 		}
 
 		float tmp_float;
