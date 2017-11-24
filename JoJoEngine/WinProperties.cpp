@@ -38,7 +38,6 @@ void WinProperties::Update()
 
 		if (go)
 		{
-			
 			if (go->name.capacity() < 100)
 			{
 				go->name.resize(100);

@@ -55,9 +55,12 @@ void GameObject::Update()
 void GameObject::Draw()
 {
 	//NOTE: for now, i assume there's only one mesh
-	if (ComponentMesh* mesh = (ComponentMesh*)GetComponent(COMP_MESH))
+	for (uint i = 0; i < components.size(); i++)
 	{
-		mesh->Draw();
+		if (components[i]->GetComponentType() == COMP_MESH)
+		{
+			((ComponentMesh*)components[i])->Draw();			
+		}
 	}
 }
 
