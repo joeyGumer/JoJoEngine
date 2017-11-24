@@ -51,7 +51,10 @@ void ComponentMesh::Draw()
 void ComponentMesh::OnEditor()
 {
 	//NOTE: more info about the mesh to add
-	if (ImGui::CollapsingHeader("Mesh"))
+	char tmp_char[20];
+	sprintf_s(tmp_char, 20, "Mesh ###%d", go->id_comp);
+
+	if (ImGui::CollapsingHeader(tmp_char))
 	{
 		//Active
 		bool bool_tmp = IsActive();

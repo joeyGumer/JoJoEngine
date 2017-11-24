@@ -230,18 +230,36 @@ bool GameObject::IsStatic()const
 
 void GameObject::SetAABB(float* vertices, int n_vertices)
 {
-	bb_axis.SetNegativeInfinity();
-	bb_object.SetNegativeInfinity();
-
-	//bb_axis.Enclose((float3 *)vertices, n_vertices);
-
-	//NOTE: very slow alternative, should watch for an alternative
-	bb_object = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
-	//bb_axis = bb_object.MinimalEnclosingAABB();
+    OBB obb = bb_object.OptimalEnclosingOBB((float3*)vertices, n_vertices);
 
 	float4x4 trans = ((ComponentTransform*)GetComponent(COMP_TRANSFORM))->GetWorldTransform();
 	float4x4 prev = float4x4::identity;
-	SetOBB(trans, prev);
+
+	obb.Transform(trans);
+
+	AABB aabb = obb.MinimalEnclosingAABB();
+
+	if (bb_axis.IsDegenerate())
+	{
+		bb_object = obb;
+		bb_axis = aabb;
+
+		//SetOBB(trans, prev);
+	}
+	else
+	{
+		float3 points[8];
+		obb.GetCornerPoints(points);
+		//In case the Game Object has more than one mesh
+		for (int i = 0; i < 8; i++)
+		{
+			bb_object.Enclose(points[i]);
+		}
+
+		
+		bb_axis = bb_object.MinimalEnclosingAABB();	
+	}
+
 }
 
 void GameObject::SetOBB(float4x4& trans, float4x4& previous_trans)

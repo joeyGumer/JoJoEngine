@@ -4,6 +4,7 @@
 #include <vector>
 #include "Math.h"
 
+
 class Component;
 class ComponentTransform;
 enum TypeComp;
@@ -50,6 +51,7 @@ public:
 	AABB bb_axis;
 
 	bool to_draw = true;
+	int id_comp = 0;
 
 private:
 	bool active = true;
