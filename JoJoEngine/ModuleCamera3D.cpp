@@ -88,8 +88,6 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = cam->cam.Pos();
 
 		Reference = Position + (Z * dir.Length());
-
-		Reference = Reference;
 	}
 
 
@@ -293,9 +291,15 @@ GameObject* ModuleCamera3D::MousePick()
 //-----------------------------------------------------------------
 void ModuleCamera3D::SetPerspective(float aspect_r, float fovy, float n, float f)
 {
+	float fov = math::DegToRad(fovy);
+
 	cam->SetPerspective(aspect_r, fovy, n, f);
 }
 
+void ModuleCamera3D::SetVerticalFov(float fovy)
+{
+	App->renderer3D->OnResize(App->window->GetWidth(), App->window->GetHeight(), fovy);
+}
 // -----------------------------------------------------------------
 float* ModuleCamera3D::GetViewMatrix() const
 {
@@ -307,6 +311,10 @@ float* ModuleCamera3D::GetProjectionMatrix() const
 	return cam->GetProjectionMatrix();
 }
 
+float ModuleCamera3D::GetVerticalFov()const
+{
+	return cam->GetVerticalFOV();
+}
 float3 ModuleCamera3D::GetPosition() const
 {
 	return cam->cam.Pos();

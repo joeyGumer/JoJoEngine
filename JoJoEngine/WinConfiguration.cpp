@@ -278,13 +278,20 @@ void WinConfiguration::TabCamera()
 		ImGui::Text("Z: %.3f", pos.z);
 
 		float3 tmp_float3 = App->camera->Reference;
+		float tmp_float;
 
 		if (ImGui::DragFloat3("Reference", tmp_float3.ptr()))
 		{
 			App->camera->LookAt(tmp_float3);
 		}
 
-		float tmp_float;
+		tmp_float = math::RadToDeg(App->camera->GetVerticalFov());
+
+		if (ImGui::DragFloat("Vertical Fov", &tmp_float, 0.1f))
+		{
+			tmp_float = math::DegToRad(tmp_float);
+			App->camera->SetVerticalFov(tmp_float);
+		}
 
 		tmp_float = App->camera->speed;
 		ImGui::DragFloat("Camera Speed", &tmp_float, 1.0f, 0.0f, 100.0f);

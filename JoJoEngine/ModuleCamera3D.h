@@ -45,10 +45,11 @@ public:
 
 
 	void SetPerspective(float aspect_r, float fovy, float n, float f);
+	void SetVerticalFov(float fovy);
 
 	float* GetViewMatrix() const;
 	float* GetProjectionMatrix() const;
-
+	float GetVerticalFov()const;
 	float3 GetPosition() const;
 
 	void Rotate(float x, float y);
