@@ -69,11 +69,13 @@ public:
 	float wheel_speed, max_wheel_speed;
 	float sensitivity, max_sensitivity;
 
+	ComponentCamera* cam = nullptr;
+
 private:
 
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 
-	ComponentCamera* cam = nullptr;
+	
 	LineSegment last_ray;
 };
