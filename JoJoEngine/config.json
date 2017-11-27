@@ -9,8 +9,8 @@
             ]
         },
         "window": {
-            "width": 1291,
-            "height": 778,
+            "width": 1361,
+            "height": 781,
             "screen_size": 1,
             "window_mode": 0,
             "vsync": true,
@@ -45,14 +45,14 @@
         },
         "camera": {
             "pos": {
-                "x": 24.398971557617188,
-                "y": 24.398971557617188,
-                "z": 24.398971557617188
+                "x": 41.498527526855469,
+                "y": 37.400459289550781,
+                "z": 37.503238677978516
             },
             "reference": {
-                "x": 19.398967742919922,
-                "y": 19.398967742919922,
-                "z": 19.398967742919922
+                "x": 34.179134368896484,
+                "y": 34.179134368896484,
+                "z": 34.179134368896484
             },
             "speed": 5,
             "wheel_speed": 200,
@@ -62,7 +62,7 @@
             "volume": 100
         },
         "editor": {
-            "configuration_open": true,
+            "configuration_open": false,
             "console_open": false,
             "properties_open": true,
             "demo_open": false,

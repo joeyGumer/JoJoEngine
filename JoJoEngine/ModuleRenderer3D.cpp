@@ -194,8 +194,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glMatrixMode(GL_MODELVIEW);
 
-	float* viewMatrix = (float*)((float4x4)App->camera->cam->cam.ViewMatrix()).Transposed().v;
-
 	glLoadMatrixf((float*)((float4x4)App->camera->cam->cam.ViewMatrix()).Transposed().v);
 
 	// light 0 on cam pos

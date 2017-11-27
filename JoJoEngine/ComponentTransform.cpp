@@ -130,6 +130,11 @@ void ComponentTransform::SetScale(float3 &s)
 	CalculateWorldTransform();
 }
 
+float4x4 ComponentTransform::GetLocalTransform() const
+{
+	return local_transform;
+}
+
 float4x4 ComponentTransform::GetWorldTransform() const
 {
 	return world_transform;
