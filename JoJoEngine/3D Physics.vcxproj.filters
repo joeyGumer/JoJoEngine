@@ -103,6 +103,12 @@
     <Filter Include="Sources\Modules\ModuleGOManager">
       <UniqueIdentifier>{5666eb39-219c-4b7a-88ae-892a1a412d3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\ImGuizmo">
+      <UniqueIdentifier>{966cd634-a271-4440-9d2a-c14825198d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\WinGizmo">
+      <UniqueIdentifier>{d26b2dbc-e3d5-480a-a6bb-e114f22e5565}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -432,6 +438,12 @@
     <ClInclude Include="Quadtree.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuizmo\ImGuizmo.h">
+      <Filter>Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="WinGizmo.h">
+      <Filter>Sources\Editor\WinGizmo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -658,6 +670,12 @@
     </ClCompile>
     <ClCompile Include="Quadtree.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="WinGizmo.cpp">
+      <Filter>Sources\Editor\WinGizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo\ImGuizmo.cpp">
+      <Filter>Resources\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

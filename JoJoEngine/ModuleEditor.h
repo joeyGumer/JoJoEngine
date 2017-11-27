@@ -9,6 +9,7 @@ class EditorWindow;
 class WinConfiguration;
 class WinProperties;
 class WinHierarchy;
+class WinGizmo;
 class ImGuiDemo;
 
 class ModuleEditor : public Module
@@ -44,5 +45,6 @@ public:
 	WinConfiguration* configuration = nullptr;
 	WinProperties* properties = nullptr;
 	WinHierarchy* hierarchy = nullptr;
+	WinGizmo* gizmo = nullptr;
 	ImGuiDemo* demo = nullptr;	
 };

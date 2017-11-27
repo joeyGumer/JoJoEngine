@@ -7,7 +7,9 @@
 #include "WinProperties.h"
 #include "WinHierarchy.h"
 #include "WinConsole.h"
+#include "WinGizmo.h"
 #include "ImGuiDemo.h"
+
 
 #include "JSON\parson.h"
 #include <vector>
@@ -227,6 +229,7 @@ void ModuleEditor::CreateWindows()
 	demo = new ImGuiDemo();
 	properties = new WinProperties();
 	hierarchy = new WinHierarchy();
+	gizmo = new WinGizmo();
 
 	//Adding all editor windows to the vector (order is important)
 	AddWindow(configuration);
@@ -234,6 +237,7 @@ void ModuleEditor::CreateWindows()
 	AddWindow(hierarchy);
 	AddWindow(demo);
 	AddWindow(console);
+	AddWindow(gizmo);
 }
 
 bool ModuleEditor::LoadConfig(JSON_Object* data)

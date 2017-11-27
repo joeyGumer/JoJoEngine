@@ -88,6 +88,7 @@
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="Importer.h" />
     <ClInclude Include="ImporterMaterial.h" />
     <ClInclude Include="ImporterMesh.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="WinConfiguration.h" />
+    <ClInclude Include="WinGizmo.h" />
     <ClInclude Include="WinHierarchy.h" />
     <ClInclude Include="WinProperties.h" />
   </ItemGroup>
@@ -199,6 +201,7 @@
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="ImporterMaterial.cpp" />
     <ClCompile Include="ImporterMesh.cpp" />
     <ClCompile Include="ModuleGOManager.cpp" />
@@ -262,6 +265,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinConfiguration.cpp" />
+    <ClCompile Include="WinGizmo.cpp" />
     <ClCompile Include="WinHierarchy.cpp" />
     <ClCompile Include="WinProperties.cpp" />
   </ItemGroup>
