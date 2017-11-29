@@ -44,20 +44,38 @@ void WinGizmo::Update()
 		ImGuizmo::MODE mode = (ImGuizmo::MODE)c_transform->mode;
 
 
-		float4x4 transform = c_transform->GetLocalTransform();
+		//float4x4 transform = c_transform->GetLocalTransform();
+		float4x4 transform = c_transform->GetWorldTransform();
 		transform.Transpose();
 
-		float* v_trans = (float*)transform.v;
+		
 
 
 		float* view = ((float4x4)App->camera->cam->cam.ViewMatrix()).Transposed().ptr();
 		float* projection = App->camera->cam->cam.ProjectionMatrix().Transposed().ptr();
 
 		ImGuizmo::SetRect(0, 0, App->window->GetWidth(), App->window->GetHeight());
-		ImGuizmo::DrawCube(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), v_trans);
+		//ImGuizmo::DrawCube(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), v_trans);
+
+		if(operation != ImGuizmo::SCALE)
+			ImGuizmo::Manipulate(view, projection, operation, mode, transform.ptr());
+		else
+			ImGuizmo::Manipulate(view, projection, operation, ImGuizmo::LOCAL, transform.ptr());
 
 
-		ImGuizmo::Manipulate(view, projection, operation, mode, v_trans);
+		if (ImGuizmo::IsUsing())
+		{
+
+			if (ComponentTransform* parent_transform = ((ComponentTransform*)go_select->GetParent()->GetComponent(COMP_TRANSFORM)))
+			{
+				transform = parent_transform->GetWorldTransform().Inverted() * transform;
+			}
+
+			transform.Transpose();
+
+			c_transform->SetTransform(transform);
+
+		}
 	}
 
 }

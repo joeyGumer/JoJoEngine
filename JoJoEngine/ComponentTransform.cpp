@@ -33,6 +33,60 @@ void ComponentTransform::OnEditor()
 			go->SetStatic(tmp_bool);
 		}
 
+		//Transform operation
+
+		ImGui::Text("Operation:");
+		tmp_bool = (operation == TRANSLATE);
+		if (ImGui::Checkbox("Translation", &tmp_bool))
+		{
+			if (tmp_bool)
+			{
+				operation = TRANSLATE;
+			}
+		}
+
+		ImGui::SameLine();
+		tmp_bool = (operation == ROTATE);
+		if (ImGui::Checkbox("Rotation", &tmp_bool))
+		{
+			if (tmp_bool)
+			{
+				operation = ROTATE;
+			}
+		}
+
+		ImGui::SameLine();
+		tmp_bool = (operation == SCALE);
+		if (ImGui::Checkbox("Scale", &tmp_bool))
+		{
+			if (tmp_bool)
+			{
+				operation = SCALE;
+			}
+		}
+
+		//Transform mode
+		ImGui::Text("Mode:");
+		tmp_bool = (mode == WORLD);
+		if (ImGui::Checkbox("World", &tmp_bool))
+		{
+			if (tmp_bool)
+			{
+				mode = WORLD;
+			}
+		}
+
+		tmp_bool = (mode == LOCAL);
+		if (ImGui::Checkbox("Local", &tmp_bool))
+		{
+			if (tmp_bool)
+			{
+				mode = LOCAL;
+			}
+		}
+
+
+
 		//Position
 		ImGui::Text("Position: ");
 		ImGui::SameLine();
